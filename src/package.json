@@ -1,8 +1,8 @@
 {
-  "name": "reshare-handler-openurl",
+  "name": "reshare-listener-openurl",
   "version": "1.0.0",
   "description": "OpenURL listener for ReShare",
-  "repository": "openlibraryenvironment/handler-openurl",
+  "repository": "openlibraryenvironment/listener-openurl",
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
