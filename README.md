@@ -1,6 +1,6 @@
-# handler-openurl
+# listener-openurl
 
-ReShare handler for requests sent as OpenURL.
+ReShare listener for requests sent as OpenURL.
 
 Documentation:
 
