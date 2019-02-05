@@ -1,0 +1,38 @@
+OpenURL v0.1 keys
+=================
+
+Region	Key
+-----------
+origin-description:
+	sid (typically VendorID:DatabaseId)
+object-description:
+    global-identifier-zone:
+	id (typically Namespace:Identifier, e.g. "doi:10.1/1")
+    object-metadata-zone:
+	genre
+	aulast
+	aufirst
+	auinit
+	auinit1
+	auinitm
+	issn
+	eissn
+	coden
+	isbn
+	sici
+	bici
+	title
+	stitle
+	atitle
+	volume
+	part
+	issue
+	spage
+	epage
+	pages
+	artnum
+	date
+	ssn
+	quarter
+    local-identifier-zone:
+	pid
