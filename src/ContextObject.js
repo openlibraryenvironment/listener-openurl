@@ -25,6 +25,9 @@ function isVersion0point1(originalQuery) {
 
 
 function translateVersion0point1(v01query) {
+  // XXX note that values may be arrays (for repeated fields)
+  // Most metadata keys are simply prefixed with "rft", but "title"
+  // becomes "jtitle" in the context of an article, and maybe some others.
   return v01query; // XXX This will need some work
 }
 
