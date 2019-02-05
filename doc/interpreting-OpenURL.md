@@ -16,6 +16,10 @@ Given the very tight timelines for developing ReShare, we need to prioritise int
 * [OpenURL v0.1 specification](../standards/openurl-01.pdf) downloaded from http://alcme.oclc.org/openurl/docs/pdf/openurl-01.pdf
 * [OpenURL v1.0 standard](../standards/z39_88_2004_r2010.pdf) downloaded from https://groups.niso.org/apps/group_public/download.php/14833/z39_88_2004_r2010.pdf
 
+See also my analyses:
+
+* [Summary of OpenURL v0.1 keys](../standards/OpenURL-v0.1-summary.txt)
+* [Summary of OpenURL v1.0 keys](../standards/OpenURL-v1.0-summary.txt)
 
 ## Examples
 
