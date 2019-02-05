@@ -45,7 +45,7 @@ function translateVersion0point1(v01query) {
       query.rft_dat = val;
     } else if (key === 'title') {
       const genre = v01query.genre;
-      if (genre === 'article' || genre == 'proceeding') {
+      if (genre === 'article' || genre === 'proceeding') {
         query.jtitle = val;
       } else {
         query.btitle = val;
@@ -97,6 +97,9 @@ class ContextObject {
 
 
 module.exports = {
-  ContextObject, // For applications
-  isVersion0point1 // ONLY FOR TESTING
+  // For applications
+  ContextObject,
+  // ONLY FOR TESTING
+  isVersion0point1,
+  translateVersion0point1
 };
