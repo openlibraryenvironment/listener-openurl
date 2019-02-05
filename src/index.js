@@ -6,7 +6,7 @@ const ContextObject = require('./ContextObject');
 
 app.use(ctx => {
   const co = new ContextObject(ctx.query);
-  console.log('got ContextObject', JSON.stringify(co, null, 2));
+  console.log(`got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery(), null, 2));
   ctx.body = 'OpenURL request received\n';
 });
 
