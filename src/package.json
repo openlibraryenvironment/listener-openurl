@@ -6,7 +6,7 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "lint": "semistandard",
+    "lint": "standardx",
     "test": "mocha",
     "start": "echo How?"
   },
@@ -16,6 +16,6 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "semistandard": "^13.0.1"
+    "standardx": "^3.0.1"
   }
 }
