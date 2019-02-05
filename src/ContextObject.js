@@ -69,4 +69,4 @@ class ContextObject {
 module.exports = {
   ContextObject, // For applications
   isVersion0point1 // ONLY FOR TESTING
-}
+};
