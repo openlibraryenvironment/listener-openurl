@@ -2,7 +2,7 @@ const Koa = require('koa');
 const app = new Koa();
 // const Logger = require('stripes-logger');
 // const l = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT);
-const ContextObject = require('./ContextObject');
+const { ContextObject } = require('./ContextObject');
 
 app.use(ctx => {
   const co = new ContextObject(ctx.query);

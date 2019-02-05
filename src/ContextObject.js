@@ -66,4 +66,4 @@ class ContextObject {
   getEntity(name) { return this.entity[name]; }
 }
 
-module.exports = ContextObject;
+module.exports = { ContextObject }
