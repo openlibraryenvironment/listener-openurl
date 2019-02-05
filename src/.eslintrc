@@ -2,6 +2,7 @@
   "rules": {
     "semi": [2, "always"],
     "no-multiple-empty-lines": "off",
-    "space-before-function-paren": [2, "never"]
+    "space-before-function-paren": [2, "never"],
+    "comma-dangle": "off"
   }
 }
