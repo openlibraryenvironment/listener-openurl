@@ -65,4 +65,8 @@ class ContextObject {
   getEntity(name) { return this.entity[name]; }
 }
 
-module.exports = { ContextObject }
+
+module.exports = {
+  ContextObject, // For applications
+  isVersion0point1 // ONLY FOR TESTING
+}
