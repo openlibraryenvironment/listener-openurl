@@ -6,7 +6,7 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "lint": "standardx",
+    "lint": "standardx -v",
     "test": "mocha",
     "start": "echo How?"
   },
