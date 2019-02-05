@@ -1,0 +1,65 @@
+OpenURL v1.0 keys
+=================
+
+Region	Key
+-----------
+
+Picked up from introductory sections
+	req_id = mailto:jane.doe@caltech.edu
+	res_id = http://links.caltech.edu/menu
+	req_ref_fmt = http://lib.caltech.edu/mxt/ldap.html
+	req_ref = ldap://ldap.caltech.edu:389/janed
+	url_ctx_fmt = info:ofi/fmt:kev:mtx:ctx
+	rfr_id = http://www.sciencedirect.com
+
+From Table 13 (section 12.3.1)
+	ctx_ver=Z39.88-2004
+	ctx_enc=info:ofi/enc:UTF-8
+	ctx_id=VALUE
+	ctx_tim=2019-02-05T12:57:23Z
+	rft_id=info:doi/10.1126/science.275.5304.1320
+	rft_val_fmt=info:ofi/fmt:kev:mtx:journal
+	rft.*=METADATA
+	rft_ref_fmt=XXX
+	rft_ref=URL
+	rft_dat=cites/8///citedby/12
+
+From table 14 (for books)
+	rft.aulast
+	rft.aufirst
+	rft.auinit
+	rft.auinit1
+	rft.auinitm
+	rft.ausuffix
+	rft.au
+	rft.aucorp
+	rft.btitle
+	rft.atitle
+	rft.title
+
+From table 16 (entity descriptors)
+
+            |	   _id       _val_fmt	   _ref_fmt       _ref       _dat
+	----+------------------------------------------------------------
+	rft |	rft_id    rft_val_fmt	rft_ref_fmt    rft_ref    rft_dat
+	rfe |	rfe_id    rfe_val_fmt	rfe_ref_fmt    rfe_ref    rfe_dat
+	req |	req_id    req_val_fmt	req_ref_fmt    req_ref    req_dat
+	svc |	svc_id    svc_val_fmt	svc_ref_fmt    svc_ref    svc_dat
+	res |	res_id    res_val_fmt	res_ref_fmt    res_ref    res_dat
+	rfr |	rfr_id    rfr_val_fmt	rfr_ref_fmt    rfr_ref    rfr_dat
+
+From section 22.1 (OpenURL Keys in Inline OpenURL Transports)
+
+	url_ver=Z39.88-2004
+	url_tim=2002-08-16T17:23:45Z
+	url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx
+
+Appendix E.3 (at the very end of the document) enumerates all the
+classes of keys:
+
+	url_* -- about the transport via URLs
+	ctx_* -- about the context object
+	rft_*, rfe_*, etc. -- about the entities
+	rft.*, rfe.*, etc. -- metadata describing the entities
+	anything else -- foreign keys
+
