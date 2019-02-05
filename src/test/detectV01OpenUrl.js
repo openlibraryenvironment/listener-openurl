@@ -1,4 +1,5 @@
-const { assert, expect } = require('chai');
+const { describe, it } = require('mocha');
+const { assert } = require('chai');
 const { isVersion0point1 } = require('../ContextObject');
 
 const v01urls = [
