@@ -20,7 +20,6 @@ const _ = require('lodash');
 //
 function isVersion0point1(originalQuery) {
   const keys = Object.keys(originalQuery);
-  console.log('checking keys', keys);
   return !_.some(keys, key => key.match(/^rft[_.]/));
 }
 
