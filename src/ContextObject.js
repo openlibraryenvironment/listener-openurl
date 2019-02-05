@@ -24,11 +24,38 @@ function isVersion0point1(originalQuery) {
 }
 
 
+// Most metadata keys simply get prefixed with "rft.", but "title" is
+// special. It seems -- the OpenURL 1.0 standard is not really
+// explicit about this -- that it becomes "jtitle" in the context of
+// an article (and maybe some other genres) but "btitle" in the
+// context of a book. So beware: some heuristics here.
+//
+// Note that values may be arrays (for repeated fields)
+//
 function translateVersion0point1(v01query) {
-  // XXX note that values may be arrays (for repeated fields)
-  // Most metadata keys are simply prefixed with "rft", but "title"
-  // becomes "jtitle" in the context of an article, and maybe some others.
-  return v01query; // XXX This will need some work
+  const query = {};
+
+  Object.keys(v01query).forEach(key => {
+    const val = v01query[key];
+    if (key === 'sid') {
+      query.rfr_id = val;
+    } else if (key === 'id') {
+      query.rft_id = val;
+    } else if (key === 'pid') {
+      query.rft_dat = val;
+    } else if (key === 'title') {
+      const genre = v01query.genre;
+      if (genre === 'article' || genre == 'proceeding') {
+        query.jtitle = val;
+      } else {
+        query.btitle = val;
+      }
+    } else {
+      query[`rft.${key}`] = val;
+    }
+  });
+
+  return query;
 }
 
 
