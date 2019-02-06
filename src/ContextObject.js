@@ -66,13 +66,13 @@ function analyseQuery(query) {
 
   const keys = Object.keys(query);
   keys.forEach(key => {
-    let m, area;
+    let m;
     if (m = key.match(/(.*?)([_.])(.*)/)) {
       const realm = m[1];
       const name = m[3];
       const value = query[key];
 
-      area = m[2] === '_' ? admindata : metadata;
+      const area = m[2] === '_' ? admindata : metadata;
       if (!area[realm]) area[realm] = {};
       area[realm][name] = value;
     }
