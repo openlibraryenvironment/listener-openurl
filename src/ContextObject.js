@@ -75,6 +75,8 @@ function analyseQuery(query) {
       const area = m[2] === '_' ? admindata : metadata;
       if (!area[realm]) area[realm] = {};
       area[realm][name] = value;
+    } else {
+      console.warn(`ignoring rogue OpenURL 1.0 key '${key}'`);
     }
   });
 
