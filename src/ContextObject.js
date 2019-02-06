@@ -61,7 +61,7 @@ function translateVersion0point1(v01query) {
 
 
 function analyseQuery(query) {
-  const admin = {};
+  const admindata = {};
   const metadata = {};
 
   const keys = Object.keys(query);
@@ -69,17 +69,17 @@ function analyseQuery(query) {
     let m, area;
     if (m = key.match(/(.*?)([_.])(.*)/)) {
       const realm = m[1];
-      const caption = m[2] === '_' ? 'admin' : 'metadata';
+      const caption = m[2] === '_' ? 'admindata' : 'metadata';
       const name = m[3];
       const value = query[key];
 
-      area = m[2] === '_' ? admin : metadata;
+      area = m[2] === '_' ? admindata : metadata;
       if (!area[realm]) area[realm] = {};
       area[realm][name] = value;
     }
   });
 
-  return { admin, metadata };
+  return { admindata, metadata };
 }
 
 
@@ -99,14 +99,14 @@ class ContextObject {
     this.query = query;
 
     const parts = analyseQuery(query);
-    this.admin = parts.admin;
+    this.admindata = parts.admindata;
     this.metadata = parts.metadata;
   }
 
   getOriginalQuery() { return this.Originalquery; }
   getType() { return this.type; }
   getQuery() { return this.query; }
-  getAdmin() { return this.admin; }
+  getAdmindata() { return this.admindata; }
   getMetadata() { return this.metadata; }
 }
 
