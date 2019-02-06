@@ -7,6 +7,8 @@ const { ContextObject } = require('./ContextObject');
 app.use(ctx => {
   const co = new ContextObject(ctx.query);
   l.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery(), null, 2));
+  l.log('admin', JSON.stringify(co.getAdmin(), null, 2));
+  l.log('metadata', JSON.stringify(co.getMetadata(), null, 2));
   ctx.body = 'OpenURL request received\n';
 });
 
