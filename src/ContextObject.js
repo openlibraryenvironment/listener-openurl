@@ -1,5 +1,6 @@
-// Represents an OpenURL 1.0 ContextObject, which consists of metadata
-// and a set of entities representing the referent, requester, etc.
+// Represents an OpenURL 1.0 ContextObject, which consists of admin
+// data and a set of entities containing metadata that represents the
+// referent, requester, etc.
 //
 // The constructor makes this from a URL query. It sniffs the query to
 // determine whether it represents a v0.1 OpenURL and if so translates
@@ -60,11 +61,25 @@ function translateVersion0point1(v01query) {
 
 
 function analyseQuery(query) {
-  // XXX This will need some work
-  return {
-    metadata: null,
-    entities: [],
-  };
+  const admin = {};
+  const metadata = {};
+
+  const keys = Object.keys(query);
+  keys.forEach(key => {
+    let m, area;
+    if (m = key.match(/(.*?)([_.])(.*)/)) {
+      const realm = m[1];
+      const caption = m[2] === '_' ? 'admin' : 'metadata';
+      const name = m[3];
+      const value = query[key];
+
+      area = m[2] === '_' ? admin : metadata;
+      if (!area[realm]) area[realm] = {};
+      area[realm][name] = value;
+    }
+  });
+
+  return { admin, metadata };
 }
 
 
@@ -84,15 +99,15 @@ class ContextObject {
     this.query = query;
 
     const parts = analyseQuery(query);
+    this.admin = parts.admin;
     this.metadata = parts.metadata;
-    this.entities = parts.entities;
   }
 
   getOriginalQuery() { return this.Originalquery; }
   getType() { return this.type; }
   getQuery() { return this.query; }
+  getAdmin() { return this.admin; }
   getMetadata() { return this.metadata; }
-  getEntity(name) { return this.entity[name]; }
 }
 
 
