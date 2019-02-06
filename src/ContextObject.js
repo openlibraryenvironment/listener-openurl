@@ -116,5 +116,6 @@ module.exports = {
   ContextObject,
   // ONLY FOR TESTING
   isVersion0point1,
-  translateVersion0point1
+  translateVersion0point1,
+  analyseQuery,
 };
