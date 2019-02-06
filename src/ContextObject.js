@@ -66,8 +66,8 @@ function analyseQuery(query) {
 
   const keys = Object.keys(query);
   keys.forEach(key => {
-    let m;
-    if (m = key.match(/(.*?)([_.])(.*)/)) {
+    const m = key.match(/(.*?)([_.])(.*)/);
+    if (m) {
       const realm = m[1];
       const name = m[3];
       const value = query[key];
