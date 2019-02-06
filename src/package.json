@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "standardx -v",
     "test": "mocha",
-    "start": "echo How?"
+    "start": "LOGCAT=start node listener-openurl.js"
   },
   "dependencies": {
     "koa": "^2.7.0"
