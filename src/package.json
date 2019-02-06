@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "OpenURL listener for ReShare",
   "repository": "openlibraryenvironment/listener-openurl",
-  "main": "index.js",
+  "main": "listener-openurl.js",
   "license": "Apache-2.0",
   "scripts": {
     "lint": "standardx -v",
