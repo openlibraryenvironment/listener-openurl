@@ -1,0 +1,48 @@
+const { describe, it } = require('mocha');
+const { assert } = require('chai');
+const { ContextObject } = require('../ContextObject');
+const querystring = require('querystring');
+
+const tests = [
+  // Version 1.0
+  {
+    input: 'rft_id=1',
+    admindata: { rft: { id: '1' } },
+    metadata: {},
+  },
+  {
+    input: 'rft.author=smith&rft.title=water',
+    admindata: {},
+    metadata: { rft: { author: 'smith', title: 'water' } },
+  },
+
+  // Version 0.1
+  {
+    input: '',
+    admindata: {},
+    metadata: {},
+  },
+  {
+    input: 'id=1',
+    admindata: { rft: { id: '1' } },
+    metadata: {},
+  },
+  {
+    input: 'author=smith&title=water',
+    admindata: {},
+    metadata: { rft: { author: 'smith', btitle: 'water' } },
+  },
+];
+
+describe('analyse OpenURL', () => {
+  tests.forEach(test => {
+    it(`correctly analyses OpenURL '${test.input}'`, () => {
+      const query = querystring.parse(test.input);
+      const co = new ContextObject(query);
+      const admindata = co.getAdmindata();
+      assert.deepEqual(admindata, test.admindata, `admindata ${JSON.stringify(admindata, null, 2)} does not match expected ${JSON.stringify(test.admindata, null, 2)}`);
+      const metadata = co.getMetadata();
+      assert.deepEqual(metadata, test.metadata, `metadata ${JSON.stringify(metadata, null, 2)} does not match expected ${JSON.stringify(test.metadata, null, 2)}`);
+    });
+  });
+});
