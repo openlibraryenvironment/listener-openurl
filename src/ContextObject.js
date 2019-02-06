@@ -69,7 +69,6 @@ function analyseQuery(query) {
     let m, area;
     if (m = key.match(/(.*?)([_.])(.*)/)) {
       const realm = m[1];
-      const caption = m[2] === '_' ? 'admindata' : 'metadata';
       const name = m[3];
       const value = query[key];
 
