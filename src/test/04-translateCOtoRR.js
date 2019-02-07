@@ -32,11 +32,11 @@ const tests = [
   {
     input: 'ctx_id=123&rft.title=Xenoposeidon&rft.au=Taylor&req_id=@SomeGuy&svc_id=fulltext',
     output: {
-      "author": "Taylor",
-      "id": "123",
-      "patronReference": "@SomeGuy",
-      "title": "Xenoposeidon",
-      "serviceType": "fulltext",
+      author: 'Taylor',
+      id: '123',
+      patronReference: '@SomeGuy',
+      title: 'Xenoposeidon',
+      serviceType: 'fulltext',
     },
   }
 ];
