@@ -1,8 +1,9 @@
-const Koa = require('koa');
-const app = new Koa();
 const Logger = require('categorical-logger');
-const l = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT);
+const Koa = require('koa');
 const { ContextObject } = require('./ContextObject');
+
+const l = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT);
+const app = new Koa();
 
 app.use(ctx => {
   const co = new ContextObject(ctx.query);
