@@ -9,7 +9,7 @@ const cfg = new Config();
 const tests = [
   // Version 1.0
   {
-    input: 'rft_id=1',
+    input: 'rft_id=1&someBadKey=whatever',
     admindata: { rft: { id: '1' } },
     metadata: {},
   },
