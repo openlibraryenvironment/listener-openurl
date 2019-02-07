@@ -914,6 +914,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+isuuid@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/isuuid/-/isuuid-0.1.0.tgz#508109ac140d6de43b3f846506cdb665dd3e8733"
+  integrity sha1-UIEJrBQNbeQ7P4RlBs22Zd0+hzM=
+
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
