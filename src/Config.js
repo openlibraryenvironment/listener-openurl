@@ -1,10 +1,17 @@
+const fs = require('fs');
 const Logger = require('categorical-logger');
-
+ 
 class Config {
   constructor(args) {
-    // XXX Load other bits of config from file
-    // XXX allow args to override
-    this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT);
+    if (!args) args = {};
+    const configFile = args.configFile || 'config.json';
+    const configText = fs.readFileSync(configFile, 'utf8');
+    this.config = JSON.parse(configText);
+    Object.keys(args).forEach(key => {
+      this.config[key] = args[key];
+    });
+
+    this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.config.loggingCategories);
   }
 
   log(...args) { this.logger.log(...args); }
