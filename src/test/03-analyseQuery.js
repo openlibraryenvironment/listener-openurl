@@ -1,7 +1,10 @@
 const { describe, it } = require('mocha');
 const { assert } = require('chai');
+const { Config } = require('../Config');
 const { ContextObject } = require('../ContextObject');
 const querystring = require('querystring');
+
+const cfg = new Config();
 
 const tests = [
   // Version 1.0
@@ -38,7 +41,7 @@ describe('analyse OpenURL', () => {
   tests.forEach(test => {
     it(`correctly analyses OpenURL '${test.input}'`, () => {
       const query = querystring.parse(test.input);
-      const co = new ContextObject(query);
+      const co = new ContextObject(cfg, query);
       const admindata = co.getAdmindata();
       assert.deepEqual(admindata, test.admindata, `admindata ${JSON.stringify(admindata, null, 2)} does not match expected ${JSON.stringify(test.admindata, null, 2)}`);
       const metadata = co.getMetadata();
