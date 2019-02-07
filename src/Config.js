@@ -4,10 +4,9 @@ const Logger = require('categorical-logger');
 class Config {
   constructor(args) {
     if (!args) args = {};
-    const configFile = args.configFile || 'config.json';
-    const configText = fs.readFileSync(configFile, 'utf8');
+    this.configFile = args.configFile || 'config.json';
+    const configText = fs.readFileSync(this.configFile, 'utf8');
     this.config = JSON.parse(configText);
-    this.config.configFile = configFile;
     Object.keys(args).forEach(key => {
       this.config[key] = args[key];
     });
