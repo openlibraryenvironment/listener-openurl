@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "standardx -v",
     "test": "mocha",
-    "start": "LOGCAT=start,co node listener-openurl.js"
+    "start": "node listener-openurl.js"
   },
   "dependencies": {
     "categorical-logger": "^1.0.0",
