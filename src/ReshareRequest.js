@@ -27,9 +27,7 @@ function translateCOtoRR(co) {
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
 
   // XXX No idea what any of these are until the schema gets bulked out
-  rr.state = '';
-  rr.tags = '';
-  rr.customProperties = '';
+  // rr.state, rr.tags, rr.customProperties
 
   return rr;
 }
