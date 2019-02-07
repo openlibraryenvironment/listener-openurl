@@ -3,6 +3,8 @@
 // The constructor makes this from an OpenURL ContextObject. The
 // object we contruct conforms to the schema
 //      https://github.com/openlibraryenvironment/mod-rs/blob/master/ramls/patronRequest.json
+// But see also Groovy code on the back-end at
+//      https://github.com/openlibraryenvironment/mod-rs/blob/master/grails-app/domain/org/olf/rs/PatronRequest.groovy
 
 const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
