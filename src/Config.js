@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Logger = require('categorical-logger');
- 
+
 class Config {
   constructor(args) {
     if (!args) args = {};
