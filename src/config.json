@@ -1,0 +1,7 @@
+{
+  "loggingCategories": "start",
+  "okapiUrl": "http://localhost:9130",
+  "tenant": "diku",
+  "username": "openurl",
+  "password": "swordfish"
+}
