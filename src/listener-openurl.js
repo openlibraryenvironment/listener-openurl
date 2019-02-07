@@ -4,7 +4,6 @@ const { ContextObject } = require('./ContextObject');
 const { ReshareRequest } = require('./ReshareRequest');
 
 const cfg = new Config();
-console.log('cfg =', cfg);
 const app = new Koa();
 
 app.use(ctx => {
