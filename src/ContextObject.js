@@ -85,7 +85,8 @@ function analyseQuery(query) {
 
 
 class ContextObject {
-  constructor(originalQuery) {
+  constructor(cfg, originalQuery) {
+    this.cfg = cfg;
     this.originalQuery = originalQuery;
 
     let query;

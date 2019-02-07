@@ -7,7 +7,7 @@ const cfg = new Config();
 const app = new Koa();
 
 app.use(ctx => {
-  const co = new ContextObject(ctx.query);
+  const co = new ContextObject(cfg, ctx.query);
   cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery(), null, 2));
   cfg.log('admindata', JSON.stringify(co.getAdmindata(), null, 2));
   cfg.log('metadata', JSON.stringify(co.getMetadata(), null, 2));
