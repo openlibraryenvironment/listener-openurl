@@ -14,7 +14,7 @@ class Config {
     this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.config.loggingCategories);
   }
 
-  getConfig() { return this.config };
+  getConfig() { return this.config; }
   log(...args) { this.logger.log(...args); }
 }
 
