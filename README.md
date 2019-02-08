@@ -1,6 +1,6 @@
 # listener-openurl
 
-![build status](https://travis-ci.org/openlibraryenvironment/listener-openurl.svg?branch=master)
+[![build status](https://travis-ci.org/openlibraryenvironment/listener-openurl.svg?branch=master)](https://travis-ci.org/openlibraryenvironment/listener-openurl)
 
 ReShare listener for requests sent as OpenURL.
 
