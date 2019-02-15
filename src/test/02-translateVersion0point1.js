@@ -24,6 +24,10 @@ const data = [
     'sid=EBSCO:MFA&id=pmid:203456&pid=%3Cauthor%3ESmith%2C%20Paul%20%3B%20Klein%2C%20Calvin%3C%2Fauthor%3E%26%3Cyr%3E98%2F1%3C%2Fyr%3E',
     'rfr_id=EBSCO%3AMFA&rft_id=pmid%3A203456&rft_dat=%3Cauthor%3ESmith%2C%20Paul%20%3B%20Klein%2C%20Calvin%3C%2Fauthor%3E%26%3Cyr%3E98%2F1%3C%2Fyr%3E',
   ],
+  [
+    'id=1&svc_id=contextObject',
+    'rft_id=1&svc_id=contextObject',
+  ],
 ];
 
 describe('translate v0.1 OpenURL to v1.0', () => {
