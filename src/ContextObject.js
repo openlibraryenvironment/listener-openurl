@@ -51,6 +51,8 @@ function translateVersion0point1(v01query) {
       } else {
         query['rft.btitle'] = val;
       }
+    } else if (key === 'svc_id') {
+      query.svc_id = val;
     } else {
       query[`rft.${key}`] = val;
     }
