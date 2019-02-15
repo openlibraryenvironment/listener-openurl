@@ -9,7 +9,7 @@ const { OkapiSession } = require('./OkapiSession');
 
 class OpenURLServer {
   constructor(cfg) {
-    const okapi = new OkapiSession(cfg);
+    this.okapi = new OkapiSession(cfg);
 
     this.app = new Koa();
     this.app.use(ctx => {
@@ -20,8 +20,7 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
-      const svc_id = _.get(admindata, ['svc', 'id']);
-      if (svc_id === 'contextObject') {
+      if (_.get(admindata, ['svc', 'id']) === 'contextObject') {
         return new Promise((resolve) => {
           ctx.body = { admindata, metadata };
           resolve();
@@ -30,12 +29,16 @@ class OpenURLServer {
 
       const rr = new ReshareRequest(co);
       cfg.log('rr', JSON.stringify(rr.getRequest(), null, 2));
-      okapi.post('/rs/patronrequests', rr);
+      this.okapi.post('/rs/patronrequests', rr)
+        .then(res => {
+          console.log('set Okapi request, status', res.status);
+        });
       ctx.body = 'OpenURL request received\n';
     });
   }
 
-  getApp() { return this.app; }
+  okapiLogin() { return this.okapi.login(); }
+  listen(...args) { return this.app.listen(...args); }
 }
 
 module.exports = { OpenURLServer };
