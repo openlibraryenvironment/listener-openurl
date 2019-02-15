@@ -21,7 +21,6 @@ class OpenURLServer {
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
       const svc_id = _.get(admindata, ['svc', 'id']);
-      console.log(`svc_id='${svc_id}'`);
       if (svc_id === 'contextObject') {
         ctx.body = { admindata, metadata };
         return;
