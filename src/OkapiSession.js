@@ -1,7 +1,7 @@
 // Represents an open, authenticated session to an Okapi service.
 
 const fetch = require('node-fetch');
-const HttpError = require('./HttpError');
+const HTTPError = require('./HTTPError');
 
 class OkapiSession {
   constructor(cfg) {
@@ -19,7 +19,7 @@ class OkapiSession {
     this.cfg.log('okapi', `logging into Okapi as ${username}/${password}`);
     return this.post('/bl-users/login', { username, password })
       .then(res => {
-        if (res.status !== 201) throw new HttpError(res, 'cannot login to FOLIO');
+        if (res.status !== 201) throw new HTTPError(res, 'cannot login to FOLIO');
         this.token = res.headers.get('x-okapi-token');
       });
   }
