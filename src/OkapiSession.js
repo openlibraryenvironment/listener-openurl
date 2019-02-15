@@ -7,7 +7,7 @@ class OkapiSession {
   }
 
   post(path, content) {
-    console.log('XXX OkapiSession.post not yet implemented');
+    // XXX OkapiSession.post not yet implemented
   }
 }
 
