@@ -7,7 +7,7 @@ const { Config } = require('../Config');
 const { OpenURLServer } = require('../OpenURLServer');
 
 chai.use(chaiHttp);
-const app = (new OpenURLServer(new Config({ loggingCategories: '' }))).getApp();
+const app = (new OpenURLServer(new Config({ loggingCategories: '' })));
 
 const tests = [
   {
