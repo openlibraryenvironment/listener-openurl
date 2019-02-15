@@ -41,3 +41,18 @@ The following category names are currently used:
 * `metadata` -- logs the metadata section of the analysed ContextObject
 * `rr` -- logs the ReShare request translated from the ContextObject
 
+
+## Service-types
+
+The OpenURL listener defaults to providing the service of posting an ILL reqeust to Okapi, but it also supports the following alternative service-types, which can be specified using the `svc_id` key. (This is a standard key OpenURL 1.0; it is also supported here as a non-standard extension to OpenURL 0.1.)
+
+* `contextObject` -- the parsed contextObject, broken down into admindata and metadata, is returned to the user in the HTTP response with content-type `application/json`.
+
+So:
+
+	$ curl 'http://localhost:3000/?id=123&svc_id=contextObject'
+	{"admindata":{"rft":{"id":"123"},"svc":{"id":"contextObject"}},"metadata":{}}
+
+This is useful mainly for testing.
+
+
