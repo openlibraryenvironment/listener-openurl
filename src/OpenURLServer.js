@@ -22,8 +22,10 @@ class OpenURLServer {
 
       const svc_id = _.get(admindata, ['svc', 'id']);
       if (svc_id === 'contextObject') {
-        ctx.body = { admindata, metadata };
-        return;
+        return new Promise((resolve) => {
+          ctx.body = { admindata, metadata };
+          resolve();
+        });
       }
 
       const rr = new ReshareRequest(co);
