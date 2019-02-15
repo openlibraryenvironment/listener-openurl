@@ -4,5 +4,7 @@ const { OpenURLServer } = require('./OpenURLServer');
 const cfg = new Config();
 const server = new OpenURLServer(cfg);
 
-server.getApp().listen(3000);
-cfg.log('start', 'starting');
+server.okapiLogin().then(res => {
+  server.listen(3000);
+  cfg.log('start', 'starting');
+});
