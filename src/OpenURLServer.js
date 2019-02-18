@@ -45,11 +45,20 @@ class OpenURLServer {
   okapiLogin() { return this.okapi.login(); }
   listen(...args) { return this.app.listen(...args); }
 
-  htmlBody(res, body) {
+  htmlBody(res, text) {
     const status = `${res.status}`;
+
+    const vars = { status };
+    try {
+      const json = JSON.parse(text);
+      vars.json = json;
+    } catch (e) {
+      vars.text = text;
+    };
+
     const ok = (status[0] === '2');
     const template = this.cfg.getTemplate(ok ? 'good' : 'bad');
-    return template({ status, body });
+    return template(vars);
   }
 }
 
