@@ -9,6 +9,7 @@ const { OkapiSession } = require('./OkapiSession');
 class OpenURLServer {
   constructor(cfg) {
     this.okapi = new OkapiSession(cfg);
+    this.cfg = cfg;
 
     this.app = new Koa();
     this.app.use(ctx => {
@@ -32,13 +33,21 @@ class OpenURLServer {
       return this.okapi.post('/rs/patronrequests', req)
         .then(res => {
           cfg.log('posted', `sent request, status ${res.status}`);
-          ctx.body = `OpenURL request received, status ${res.status}\n`;
+          ctx.body = this.htmlBody(res);
         });
     });
   }
 
   okapiLogin() { return this.okapi.login(); }
   listen(...args) { return this.app.listen(...args); }
+
+  htmlBody(res) {
+    const ss = `${res.status}`;
+    const ok = (ss[0] === '2');
+    const template = this.cfg.getTemplate(ok ? 'good' : 'bad');
+    const vars = { status: ss };
+    return template(vars);
+  }
 }
 
 module.exports = { OpenURLServer };
