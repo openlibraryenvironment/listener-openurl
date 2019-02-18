@@ -28,8 +28,9 @@ class OpenURLServer {
       }
 
       const rr = new ReshareRequest(co);
-      cfg.log('rr', JSON.stringify(rr.getRequest(), null, 2));
-      this.okapi.post('/rs/patronrequests', rr)
+      const req = rr.getRequest();
+      cfg.log('rr', JSON.stringify(req, null, 2));
+      this.okapi.post('/rs/patronrequests', req)
         .then(res => {
           cfg.log('posted', `sent request, status ${res.status}`);
         });
