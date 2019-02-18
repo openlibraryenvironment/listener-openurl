@@ -1,5 +1,4 @@
-// Creates an OpenURL server that contains a configured Koa app. It is
-// perfectly OK to directly invoke Koa methods on that app.
+// Creates an OpenURL server that contains a configured Koa app.
 
 const Koa = require('koa');
 const _ = require('lodash');
