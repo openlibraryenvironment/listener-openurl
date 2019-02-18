@@ -42,12 +42,11 @@ class OpenURLServer {
   okapiLogin() { return this.okapi.login(); }
   listen(...args) { return this.app.listen(...args); }
 
-  htmlBody(res) {
-    const ss = `${res.status}`;
-    const ok = (ss[0] === '2');
+  htmlBody(res, body) {
+    const status = `${res.status}`;
+    const ok = (status[0] === '2');
     const template = this.cfg.getTemplate(ok ? 'good' : 'bad');
-    const vars = { status: ss };
-    return template(vars);
+    return template({ status, body });
   }
 }
 
