@@ -33,6 +33,7 @@ class OpenURLServer {
       return this.okapi.post('/rs/patronrequests', req)
         .then(res => {
           cfg.log('posted', `sent request, status ${res.status}`);
+          ctx.set('Content-Type', 'text/html');
           ctx.body = this.htmlBody(res);
         });
     });
