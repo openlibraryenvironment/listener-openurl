@@ -29,11 +29,11 @@ class OpenURLServer {
       const rr = new ReshareRequest(co);
       const req = rr.getRequest();
       cfg.log('rr', JSON.stringify(req, null, 2));
-      this.okapi.post('/rs/patronrequests', req)
+      return this.okapi.post('/rs/patronrequests', req)
         .then(res => {
           cfg.log('posted', `sent request, status ${res.status}`);
+          ctx.body = `OpenURL request received, status ${res.status}\n`;
         });
-      ctx.body = 'OpenURL request received\n';
     });
   }
 
