@@ -1,5 +1,10 @@
 const fs = require('fs');
 const Logger = require('categorical-logger');
+const Handlebars = require('handlebars');
+
+Handlebars.registerHelper('json', function(obj) {
+  return JSON.stringify(obj, null, 2);
+});
 
 class Config {
   constructor(args) {
@@ -16,6 +21,12 @@ class Config {
 
   getConfig() { return this.config; }
   log(...args) { this.logger.log(...args); }
+
+  getTemplate(name) {
+    const filename = this.config[`template.${name}`];
+    const text = fs.readFileSync(filename, 'utf8');
+    return Handlebars.compile(text);
+  }
 }
 
 module.exports = { Config };
