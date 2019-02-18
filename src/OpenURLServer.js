@@ -31,7 +31,7 @@ class OpenURLServer {
       cfg.log('rr', JSON.stringify(rr.getRequest(), null, 2));
       this.okapi.post('/rs/patronrequests', rr)
         .then(res => {
-          console.log('set Okapi request, status', res.status);
+          cfg.log('posted', `sent request, status ${res.status}`);
         });
       ctx.body = 'OpenURL request received\n';
     });
