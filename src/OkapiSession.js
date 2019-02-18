@@ -31,6 +31,7 @@ class OkapiSession {
       'x-okapi-tenant': this.tenant,
     };
     if (this.token) headers['x-token-token'] = this.token;
+    this.cfg.log('okapi', `POST to ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
       method: 'POST',
       body: JSON.stringify(payload),
