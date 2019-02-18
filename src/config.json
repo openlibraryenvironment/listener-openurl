@@ -4,5 +4,8 @@
   "UNUSED-okapiUrl": "http://folio-snapshot-stable.aws.indexdata.com",
   "tenant": "diku",
   "username": "openurl",
-  "password": "swordfish"
+  "password": "swordfish",
+
+  "template.good": "templates/good.html",
+  "template.bad": "templates/bad.html"
 }
