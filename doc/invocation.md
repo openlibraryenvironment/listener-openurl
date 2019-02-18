@@ -35,12 +35,13 @@ The ReShare OpenURL listener uses the [`categorical-logger`](https://github.com/
 The following category names are currently used:
 
 * `start` -- simply logs a message when starting up
+* `okapi` -- logs Okapi-specific operations such as authenticating a new session
 * `badkey` -- logs any bad keys found during analysis of OpenURLs
 * `co` -- logs the complete ContextObject created by analysis of OpenURLs
 * `admindata` -- logs the admin-data section of the analysed ContextObject
 * `metadata` -- logs the metadata section of the analysed ContextObject
 * `rr` -- logs the ReShare request translated from the ContextObject
-
+* `posted` -- notes whenever a new request has been successfully or unsuccessfully posted
 
 ## Service-types
 
