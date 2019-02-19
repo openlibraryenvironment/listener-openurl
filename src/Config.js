@@ -11,7 +11,6 @@ class Config {
     if (!args) args = {};
     this.filename = args.filename || '../config/openurl.json';
     this.path = this.filename.indexOf('/') < 0 ? '.' : this.filename.replace(/(.*)\/.*/, '$1');
-    console.log(`filename=${this.filename}, path=${this.path}`);
     const configText = fs.readFileSync(this.filename, 'utf8');
     this.values = JSON.parse(configText);
     Object.keys(args).forEach(key => {
