@@ -9,8 +9,8 @@ Handlebars.registerHelper('json', function(obj) {
 class Config {
   constructor(args) {
     if (!args) args = {};
-    this.configFile = args.configFile || 'config.json';
-    const configText = fs.readFileSync(this.configFile, 'utf8');
+    this.filename = args.filename || 'config.json';
+    const configText = fs.readFileSync(this.filename, 'utf8');
     this.values = JSON.parse(configText);
     Object.keys(args).forEach(key => {
       this.values[key] = args[key];
@@ -20,7 +20,7 @@ class Config {
   }
 
   getValues() { return this.values; }
-  getFilename() { return this.configFile; }
+  getFilename() { return this.filename; }
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
