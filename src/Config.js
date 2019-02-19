@@ -10,6 +10,8 @@ class Config {
   constructor(args) {
     if (!args) args = {};
     this.filename = args.filename || '../config/openurl.json';
+    this.path = this.filename.indexOf('/') < 0 ? '.' : this.filename.replace(/(.*)\/.*/, '$1');
+    console.log(`filename=${this.filename}, path=${this.path}`);
     const configText = fs.readFileSync(this.filename, 'utf8');
     this.values = JSON.parse(configText);
     Object.keys(args).forEach(key => {
@@ -24,7 +26,7 @@ class Config {
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
-    const filename = this.values[`template.${name}`];
+    const filename = this.path + '/' + this.values[`template.${name}`];
     const text = fs.readFileSync(filename, 'utf8');
     return Handlebars.compile(text);
   }
