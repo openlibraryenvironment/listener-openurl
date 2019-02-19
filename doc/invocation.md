@@ -5,6 +5,7 @@
     * [Downloading](#downloading)
     * [Building](#building)
     * [Running the tests](#running-the-tests)
+    * [Analysing code coverage](#analysing-code-coverage)
 * [Configuration](#configuration)
     * [Environment](#environment)
     * [Configuration file](#configuration-file)
@@ -35,6 +36,12 @@ The source code is in the `src` directory, so go there and install using NPM or 
 Also in the `src` directory:
 
 	yarn test
+
+### Analysing code coverage
+
+Also in the `src` directory:
+
+	yarn coverage
 
 
 ## Configuration
