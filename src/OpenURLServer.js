@@ -36,7 +36,12 @@ class OpenURLServer {
             .then(body => {
               cfg.log('posted', `sent request, status ${res.status}`);
               ctx.set('Content-Type', 'text/html');
-              ctx.body = this.htmlBody(res, body);
+              try {
+                ctx.body = this.htmlBody(res, body);
+              } catch (e) {
+                ctx.response.status = 500;
+                ctx.body = e.message;
+              }
             });
         });
     });
