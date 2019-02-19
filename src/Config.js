@@ -19,6 +19,7 @@ class Config {
     });
 
     this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.values.loggingCategories);
+    this.templates = {}; // cache
   }
 
   getValues() { return this.values; }
@@ -26,9 +27,12 @@ class Config {
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
-    const filename = this.path + '/' + this.values[`template.${name}`];
-    const text = fs.readFileSync(filename, 'utf8');
-    return Handlebars.compile(text);
+    if (!this.templates[name]) {
+      const filename = this.path + '/' + this.values[`template.${name}`];
+      const text = fs.readFileSync(filename, 'utf8');
+      this.templates[name] = Handlebars.compile(text);
+    }
+    return this.templates[name];
   }
 }
 
