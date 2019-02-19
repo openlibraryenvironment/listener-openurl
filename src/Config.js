@@ -27,8 +27,10 @@ class Config {
 
   getTemplate(name) {
     if (!this.templates[name]) {
-      const filename = this.path + '/' + this.values[`template.${name}`];
-      const text = fs.readFileSync(filename, 'utf8');
+      const filename = this.values[`template.${name}`];
+      if (!filename) throw Error(`no template '${name}'`);
+      const fullname = this.path + '/' + filename;
+      const text = fs.readFileSync(fullname, 'utf8');
       this.templates[name] = Handlebars.compile(text);
     }
     return this.templates[name];
