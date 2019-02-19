@@ -20,6 +20,7 @@ class Config {
   }
 
   getValues() { return this.values; }
+  getFilename() { return this.configFile; }
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
