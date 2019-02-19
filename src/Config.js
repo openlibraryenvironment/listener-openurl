@@ -19,7 +19,7 @@ class Config {
     this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.values.loggingCategories);
   }
 
-  getConfig() { return this.values; }
+  getValues() { return this.values; }
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
