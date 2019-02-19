@@ -11,19 +11,19 @@ class Config {
     if (!args) args = {};
     this.configFile = args.configFile || 'config.json';
     const configText = fs.readFileSync(this.configFile, 'utf8');
-    this.config = JSON.parse(configText);
+    this.values = JSON.parse(configText);
     Object.keys(args).forEach(key => {
-      this.config[key] = args[key];
+      this.values[key] = args[key];
     });
 
-    this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.config.loggingCategories);
+    this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.values.loggingCategories);
   }
 
-  getConfig() { return this.config; }
+  getConfig() { return this.values; }
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
-    const filename = this.config[`template.${name}`];
+    const filename = this.values[`template.${name}`];
     const text = fs.readFileSync(filename, 'utf8');
     return Handlebars.compile(text);
   }
