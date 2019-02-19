@@ -75,10 +75,13 @@ For templating:
 * `template.bad` -- the name of a template to be used when generating the HTML for a response when a request has been unsuccessful.
 * `template.*` -- other templates, to be added as necessary.
 
-
 ### Templates
 
-XXX
+The HTML pages that are returned in response to OpenURL requests are generated using [Handlebars](https://handlebarsjs.com/) templates. Each template is stored in its own file, conventionally in the `templates` subdirectory of the `config` directory. The filenames are specified as the values corresponding to `template.*` keys in [the configuration file](#configuration-file), where the part of the key after `template.` is one of a small defined set. A set of values is passed into the template, so it can include them in the generated text. These values can in principle vary by template, because each template is invoked in a different situation where different information is pertinent. However, at present, only two templates are used -- `good` and `bad` -- and they are both passed the same variables:
+
+* `status` -- the HTTP status of the Okapi-mediated response from ReShare. For successful requests this will be a 2XX code, most likely 201; for unsuccessful requests it could be anything.
+* `json` -- when the body of the response received from ReShare is valid JSON, this contains the decoded structure, which can be addressed granularly, and `text` is not present.
+* `text` -- when the body of the response received from ReShare is not valid JSON, this contains the raw text of the response. Exactly one of `json` and `text` is present in any given template invocation.
 
 ### Logging
 
