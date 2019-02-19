@@ -8,10 +8,11 @@ class OkapiSession {
     this.cfg = cfg;
     cfg.log('okapi', 'making Okapi session');
     const values = cfg.getValues();
+    const filename = cfg.getFilename();
     this.okapiUrl = values.okapiUrl;
     this.tenant = values.tenant;
-    if (!this.okapiUrl) throw Error(`no okapiUrl defined in ${cfg.configFile}`);
-    if (!this.tenant) throw Error(`no tenant defined in ${cfg.configFile}`);
+    if (!this.okapiUrl) throw Error(`no okapiUrl defined in ${filename}`);
+    if (!this.tenant) throw Error(`no tenant defined in ${filename}`);
   }
 
   login() {
