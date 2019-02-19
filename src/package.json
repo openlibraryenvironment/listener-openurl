@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "standardx -v",
     "test": "mocha",
+    "coverage": "nyc mocha",
     "start": "node listener-openurl.js"
   },
   "dependencies": {
