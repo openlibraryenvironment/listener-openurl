@@ -7,15 +7,15 @@ class OkapiSession {
   constructor(cfg) {
     this.cfg = cfg;
     cfg.log('okapi', 'making Okapi session');
-    const config = cfg.getConfig();
-    this.okapiUrl = config.okapiUrl;
-    this.tenant = config.tenant;
+    const values = cfg.getValues();
+    this.okapiUrl = values.okapiUrl;
+    this.tenant = values.tenant;
     if (!this.okapiUrl) throw Error(`no okapiUrl defined in ${cfg.configFile}`);
     if (!this.tenant) throw Error(`no tenant defined in ${cfg.configFile}`);
   }
 
   login() {
-    const { username, password } = this.cfg.getConfig();
+    const { username, password } = this.cfg.getValues();
     this.cfg.log('okapi', `logging into Okapi as ${username}/${password}`);
     return this.post('/bl-users/login', { username, password })
       .then(res => {
