@@ -1,4 +1,4 @@
-# Building and running the ReShare OpenURL listener
+# Building, configuring and running the ReShare OpenURL listener
 
 ## Downloading
 
