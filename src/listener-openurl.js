@@ -1,7 +1,7 @@
 const { Config } = require('./Config');
 const { OpenURLServer } = require('./OpenURLServer');
 
-const args = { filename: '../config/openurl.json' };
+const args = {};
 
 // argv[0] is node, argv[1] is a program name, real args start at [2].
 if (process.argv.length == 3) {
