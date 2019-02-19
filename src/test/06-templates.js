@@ -9,17 +9,17 @@ const tests = [
     name: 'good',
     values: { status: 201 },
     checks: [
-        /All is well/,
-        /status = 201/,
+      /All is well/,
+      /status = 201/,
     ]
   },
   {
     name: 'bad',
     values: { status: 500, otherVal: 965 },
     checks: [
-        /Something went wrong/,
-        /status = 500/,
-        /otherVal.*: 965/,
+      /Something went wrong/,
+      /status = 500/,
+      /otherVal.*: 965/,
     ]
   },
   {
@@ -30,7 +30,7 @@ const tests = [
 
 describe('substitute into templates', () => {
   tests.forEach((test, i) => {
-    it(`correctly ${test.fail? 'fails to substitute' : 'substitutes'} in template '${test.name}'`, () => {
+    it(`correctly ${test.fail ? 'fails to substitute' : 'substitutes'} in template '${test.name}'`, () => {
       let template;
       try {
         template = cfg.getTemplate(test.name);
