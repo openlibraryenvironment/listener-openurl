@@ -28,6 +28,18 @@ const data = [
     input: 'id=1&svc_id=contextObject',
     output: 'rft_id=1&svc_id=contextObject',
   },
+  {
+    input: 'genre=book&title=water',
+    output: 'rft.genre=book&rft.btitle=water',
+  },
+  {
+    input: 'genre=article&title=water',
+    output: 'rft.genre=article&rft.jtitle=water',
+  },
+  {
+    input: 'genre=article&atitle=water',
+    output: 'rft.genre=article&rft.atitle=water',
+  },
 ];
 
 describe('translate v0.1 OpenURL to v1.0', () => {
