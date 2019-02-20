@@ -107,7 +107,6 @@ class ContextObject {
     this.metadata = parts.metadata;
   }
 
-  getOriginalQuery() { return this.Originalquery; }
   getType() { return this.type; }
   getQuery() { return this.query; }
   getAdmindata() { return this.admindata; }
