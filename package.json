@@ -9,7 +9,7 @@
     "lint": "standardx -v",
     "test": "mocha",
     "coverage": "nyc mocha",
-    "start": "node listener-openurl.js"
+    "start": "node src/listener-openurl.js"
   },
   "dependencies": {
     "categorical-logger": "^1.0.0",
