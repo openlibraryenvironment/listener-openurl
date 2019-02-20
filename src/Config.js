@@ -9,7 +9,7 @@ Handlebars.registerHelper('json', function(obj) {
 class Config {
   constructor(args) {
     if (!args) args = {};
-    this.filename = args.filename || '../config/openurl.json';
+    this.filename = args.filename || 'config/openurl.json';
     this.path = this.filename.indexOf('/') < 0 ? '.' : this.filename.replace(/(.*)\/.*/, '$1');
     const configText = fs.readFileSync(this.filename, 'utf8');
     this.values = JSON.parse(configText);

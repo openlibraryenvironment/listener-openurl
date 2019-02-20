@@ -107,7 +107,7 @@ Also in the `src` directory. You can run the service using a preselected logging
 
 	node listener-openurl.js
 
-By default, the listener uses the configuration file `../config/openurl.json`; however, if another file is named on the command line, then that configuration is used instead:
+By default, the listener uses the configuration file `config/openurl.json`; however, if another file is named on the command line, then that configuration is used instead:
 
 	node listener-openurl.js path/to/some/other/config.json
 
