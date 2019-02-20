@@ -9,7 +9,7 @@
 
 class HttpError extends Error {
   constructor(response, comment) {
-    super(`${response.status} for ${response.url}${comment ? `: ${comment}` : ''}`);
+    super(`${response.status} for ${response.url}: ${comment}`);
     this.name = 'HttpError';
     this.response = response;
     this.comment = comment;
