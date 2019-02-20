@@ -23,6 +23,16 @@ const tests = [
     ]
   },
   {
+    // Re-use template in part to get code coverage of caching
+    name: 'bad',
+    values: { status: 500, couldBeAnything: 'herring' },
+    checks: [
+      /Something went wrong/,
+      /status = 500/,
+      /couldBeAnything.*herring/,
+    ]
+  },
+  {
     name: 'madeUpName',
     fail: true,
   }
