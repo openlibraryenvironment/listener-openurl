@@ -30,7 +30,9 @@ class OpenURLServer {
       const rr = new ReshareRequest(co);
       const req = rr.getRequest();
       cfg.log('rr', JSON.stringify(req, null, 2));
-      return this.okapi.post('/rs/patronrequests', req)
+      // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
+      const path = _.get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
+      return this.okapi.post(path, req)
         .then(res => {
           return res.text()
             .then(body => {
