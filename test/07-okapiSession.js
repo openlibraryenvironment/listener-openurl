@@ -31,7 +31,7 @@ describe('run an Okapi session', () => {
     }, (e) => {
       if (e.name === 'FetchError') {
         // No Okapi running: skip this test
-        console.log('(skipping)');
+        console.log('      (skipping)');
         // (For some reason this.skip is not defined, so we can't use that.)
       } else {
         assert.equal(e.name, 'HttpError', 'correct type of exception');
