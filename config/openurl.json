@@ -1,5 +1,5 @@
 {
-  "loggingCategories": "start,co",
+  "loggingCategories": "start,okapi,co,rr",
 
   "okapiUrl": "http://localhost:9130",
   "tenant": "diku",
