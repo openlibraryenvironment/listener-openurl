@@ -18,7 +18,7 @@ class Config {
     });
 
     this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.values.loggingCategories);
-    this.templates = {}; // cache
+    this.cachedTemplates = {};
   }
 
   getValues() { return this.values; }
@@ -26,14 +26,14 @@ class Config {
   log(...args) { this.logger.log(...args); }
 
   getTemplate(name) {
-    if (!this.templates[name]) {
+    if (!this.cachedTemplates[name]) {
       const filename = this.values[`template.${name}`];
       if (!filename) throw Error(`no template '${name}'`);
       const fullname = this.path + '/' + filename;
       const text = fs.readFileSync(fullname, 'utf8');
-      this.templates[name] = Handlebars.compile(text);
+      this.cachedTemplates[name] = Handlebars.compile(text);
     }
-    return this.templates[name];
+    return this.cachedTemplates[name];
   }
 }
 
