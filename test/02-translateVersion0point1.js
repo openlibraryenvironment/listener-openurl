@@ -32,13 +32,11 @@ const data = [
 
 describe('translate v0.1 OpenURL to v1.0', () => {
   it('translates version 0.1 OpenURLs', () => {
-    data.forEach(val => {
-      const v01 = val.input;
-      const expected = val.output;
-      const parsed = querystring.parse(v01);
+    data.forEach({ input, output } => {
+      const parsed = querystring.parse(input);
       const translated = translateVersion0point1(parsed);
       const v10 = querystring.stringify(translated);
-      assert.equal(v10, expected, `${v01} conversion failed`);
+      assert.equal(v10, output, `${input} conversion failed`);
     });
   });
 });
