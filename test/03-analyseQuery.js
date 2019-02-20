@@ -1,7 +1,7 @@
 const { describe, it } = require('mocha');
 const { assert } = require('chai');
-const { Config } = require('../Config');
-const { ContextObject } = require('../ContextObject');
+const { Config } = require('../src/Config');
+const { ContextObject } = require('../src/ContextObject');
 const querystring = require('querystring');
 
 const cfg = new Config();

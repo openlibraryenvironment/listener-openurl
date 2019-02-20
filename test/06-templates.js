@@ -1,6 +1,6 @@
 const { describe, it } = require('mocha');
 const { assert } = require('chai');
-const { Config } = require('../Config');
+const { Config } = require('../src/Config');
 
 const cfg = new Config();
 

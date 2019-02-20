@@ -1,6 +1,6 @@
 const { describe, it } = require('mocha');
 const { assert } = require('chai');
-const { isVersion0point1 } = require('../ContextObject');
+const { isVersion0point1 } = require('../src/ContextObject');
 const querystring = require('querystring');
 
 const v01urls = [

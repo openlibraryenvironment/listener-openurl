@@ -3,8 +3,8 @@ const chai = require('chai');
 const assert = chai.assert;
 const chaiHttp = require('chai-http');
 const _ = require('lodash');
-const { Config } = require('../Config');
-const { OpenURLServer } = require('../OpenURLServer');
+const { Config } = require('../src/Config');
+const { OpenURLServer } = require('../src/OpenURLServer');
 
 chai.use(chaiHttp);
 const app = (new OpenURLServer(new Config({ loggingCategories: '' })));
