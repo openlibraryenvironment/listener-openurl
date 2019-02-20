@@ -29,6 +29,16 @@ const tests = [
 ];
 
 describe('substitute into templates', () => {
+  it('correctly fails on a non-existent config', () => {
+    let undefinedCfg;
+    try {
+      undefinedCfg = new Config({ filename: 'no/such/file' });
+    } catch (e) {
+      assert.match(e.message, /no such file/);
+    }
+    assert.isUndefined(undefinedCfg, 'no config was created');
+  });
+
   tests.forEach((test, i) => {
     it(`correctly ${test.fail ? 'fails to substitute' : 'substitutes'} in template '${test.name}'`, () => {
       let template;
