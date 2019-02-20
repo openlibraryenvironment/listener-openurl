@@ -4,6 +4,18 @@ const { Config } = require('../src/Config');
 const { OkapiSession } = require('../src/OkapiSession');
 
 describe('run an Okapi session', () => {
+  it('correctly authenticates with good credentials', (done) => {
+    const cfg = new Config({ loggingCategories: '' });
+    const okapi = new OkapiSession(cfg);
+    const p = okapi.login();
+    p.then(() => {
+      assert.match(okapi.token, /^[a-zA-Z0-9.-]*$/);
+      done();
+    }, (e) => {
+      done(e);
+    });
+  });
+
   it('correctly fails to authenticate with bad credentials', (done) => {
     const cfg = new Config({ loggingCategories: '', password: 'somethingWrong' });
     const okapi = new OkapiSession(cfg);
