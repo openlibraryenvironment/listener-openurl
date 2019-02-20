@@ -49,6 +49,14 @@ describe('substitute into templates', () => {
     assert.isUndefined(undefinedCfg, 'no config was created');
   });
 
+  it('correctly loads a vacuous config from the current directory', () => {
+    let vacuousCfg;
+    vacuousCfg = new Config({ filename: 'package.json' });
+    // For extra credit: is it wrong to peek inside the Config structure in the next line?
+    assert.equal(vacuousCfg.path, '.', 'config path is current directory');
+  });
+
+
   tests.forEach((test, i) => {
     it(`correctly ${test.fail ? 'fails to substitute' : 'substitutes'} in template '${test.name}'`, () => {
       let template;
