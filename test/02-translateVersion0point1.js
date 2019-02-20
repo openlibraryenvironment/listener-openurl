@@ -32,7 +32,8 @@ const data = [
 
 describe('translate v0.1 OpenURL to v1.0', () => {
   it('translates version 0.1 OpenURLs', () => {
-    data.forEach({ input, output } => {
+    data.forEach(val => {
+      const { input, output } = val;
       const parsed = querystring.parse(input);
       const translated = translateVersion0point1(parsed);
       const v10 = querystring.stringify(translated);
