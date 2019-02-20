@@ -9,10 +9,16 @@ describe('run an Okapi session', () => {
     const okapi = new OkapiSession(cfg);
     const p = okapi.login();
     p.then(() => {
-      assert.match(okapi.token, /^[a-zA-Z0-9.-]*$/);
+      assert.match(okapi.token, /^[a-zA-Z0-9_.-]*$/);
       done();
     }, (e) => {
-      done(e);
+      if (e.name === 'FetchError') {
+        // No Okapi running: skip this test
+        console.log('      (skipping)');
+        done();
+      } else {
+        done(e);
+      }
     });
   });
 
@@ -25,6 +31,7 @@ describe('run an Okapi session', () => {
     }, (e) => {
       if (e.name === 'FetchError') {
         // No Okapi running: skip this test
+        console.log('(skipping)');
         // (For some reason this.skip is not defined, so we can't use that.)
       } else {
         assert.equal(e.name, 'HttpError', 'correct type of exception');
