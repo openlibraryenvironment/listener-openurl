@@ -26,20 +26,15 @@ The listener is not released as an NPM package: there's not much point, since no
 
 ### Building
 
-The source code is in the `src` directory, so go there and install using NPM or Yarn, as for most Node projects:
+Install using NPM or Yarn, as for most Node projects:
 
-	cd src
 	yarn install
 
 ### Running the tests
 
-Also in the `src` directory:
-
 	yarn test
 
 ### Analysing code coverage
-
-Also in the `src` directory:
 
 	yarn coverage
 
@@ -103,13 +98,13 @@ The following category names are currently used:
 
 ## Starting the service
 
-Also in the `src` directory. You can run the service using a preselected logging configuration using `yarn start`, or manually using:
+You can run the service using a preselected logging configuration using `yarn start`, or manually using:
 
-	node listener-openurl.js
+	node src/listener-openurl.js
 
 By default, the listener uses the configuration file `config/openurl.json`; however, if another file is named on the command line, then that configuration is used instead:
 
-	node listener-openurl.js path/to/some/other/config.json
+	node src/listener-openurl.js path/to/some/other/config.json
 
 There are no other command-line options.
 
