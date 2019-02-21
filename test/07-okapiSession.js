@@ -40,6 +40,15 @@ describe('run an Okapi session', () => {
         done(e);
       }
     });
+
+    describe('use a logged-in Okapi session', () => {
+      it('posts to a known-bad URL', (done) => {
+        okapi.post('/some/silly/path', {}).then((res) => {
+          assert.equal(res.status, 404, 'bad path is not found');
+          done();
+        });
+      });
+    });
   });
 
   it('correctly fails to authenticate with bad credentials', (done) => {
