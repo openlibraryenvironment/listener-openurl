@@ -4,6 +4,26 @@ const { Config } = require('../src/Config');
 const { OkapiSession } = require('../src/OkapiSession');
 
 describe('run an Okapi session', () => {
+  function rejectConfig(key) {
+    it(`rejects a config with no ${key}`, () => {
+      let okapi, e;
+      try {
+        const vars = { loggingCategories: '' };
+        vars[key] = '';
+        const cfg = new Config(vars);
+        okapi = new OkapiSession(cfg);
+      } catch (e1) {
+        e = e1;
+      }
+      assert.isDefined(e, 'exception is defined');
+      assert.match(e.message, new RegExp(`no ${key} defined`));
+      assert.isUndefined(okapi, 'Okapi session is not defined');
+    });
+  }
+
+  rejectConfig('okapiUrl');
+  rejectConfig('tenant');
+
   it('correctly authenticates with good credentials', (done) => {
     const cfg = new Config({ loggingCategories: '' });
     const okapi = new OkapiSession(cfg);
