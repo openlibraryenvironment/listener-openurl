@@ -1,5 +1,6 @@
 {
   "loggingCategories": "start,okapi,co,rr",
+  "listenPort": 3011,
 
   "okapiUrl": "http://localhost:9130",
   "tenant": "diku",
