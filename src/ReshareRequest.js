@@ -65,6 +65,7 @@ function translateCOtoRR(co) {
     if (match) {
       rr.numberOfPages = match[2] - match[1] + 1;
     }
+    if (!spage) rr.startPage = match[1];
   }
   rr.publicationDate = _.get(m, 'rft.date');
   // rr.publicationDateOfComponent has no corresponding OpenURL field
