@@ -98,7 +98,6 @@ class ReshareRequest {
     this.rr = translateCOtoRR(co);
   }
 
-  getContextObject() { return this.co; }
   getRequest() { return this.rr; }
 }
 
