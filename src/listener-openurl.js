@@ -13,7 +13,7 @@ if (process.argv.length === 3) {
 
 const cfg = new Config(args);
 const server = new OpenURLServer(cfg);
-const port = 3012;
+const port = cfg.getValues().listenPort || 3012;
 
 server.okapiLogin().then(res => {
   server.listen(port);
