@@ -103,9 +103,4 @@ class ReshareRequest {
 }
 
 
-module.exports = {
-  // For applications
-  ReshareRequest,
-  // ONLY FOR TESTING
-  translateCOtoRR,
-};
+module.exports = { ReshareRequest };
