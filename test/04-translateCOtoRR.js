@@ -2,7 +2,7 @@ const { describe, it } = require('mocha');
 const { assert } = require('chai');
 const { Config } = require('../src/Config');
 const { ContextObject } = require('../src/ContextObject');
-const { translateCOtoRR } = require('../src/ReshareRequest');
+const { ReshareRequest } = require('../src/ReshareRequest');
 const querystring = require('querystring');
 const isuuid = require('isuuid');
 
@@ -49,7 +49,8 @@ describe('translate ContextObject to ReshareRequest', () => {
     it(`correctly translates ContextObject '${test.input}'`, () => {
       const query = querystring.parse(test.input);
       const co = new ContextObject(cfg, query);
-      const output = translateCOtoRR(co);
+      const rr = new ReshareRequest(co);
+      const output = rr.getRequest();
       if (isuuid(output.id)) delete output.id; // ignore auto-generated IDs
       assert.deepEqual(output, test.output, `output ${JSON.stringify(output, null, 2)} does not match expected ${JSON.stringify(test.output, null, 2)}`);
     });
