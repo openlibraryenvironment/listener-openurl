@@ -53,9 +53,10 @@ The functioning of the OpenURL listener is affected by the following environment
 
 Configuration of the OpenURL listener is primarily by means of configuration file whose name is [specified on the command-line](#starting-the-service). The file must be well-formed JSON, a single object. The following keys are recognised:
 
-For logging:
+For general functioning:
 
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
+* `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
 
 For communication with the ReShare back-end:
 
@@ -86,7 +87,7 @@ The ReShare OpenURL listener uses the [`categorical-logger`](https://github.com/
 
 The following category names are currently used:
 
-* `start` -- simply logs a message when starting up
+* `start` -- logs a message when starting up, stating what port the listener is listening on
 * `okapi` -- logs Okapi-specific operations such as authenticating a new session
 * `badkey` -- logs any bad keys found during analysis of OpenURLs
 * `co` -- logs the complete ContextObject created by analysis of OpenURLs
