@@ -54,10 +54,10 @@ function translateCOtoRR(co) {
   // rr.placeOfPublication has no corresponding OpenURL field
   rr.volume = _.get(m, 'rft.volume');
   rr.issue = _.get(m, 'rft.issue');
-  rr.startPage = _.get(m, 'rft.spage');
   const spage = _.get(m, 'rft.spage');
   const epage = _.get(m, 'rft.epage');
   const pages = _.get(m, 'rft.pages');
+  rr.startPage = spage;
   if (spage && epage) {
     rr.numberOfPages = epage - spage + 1;
   } else if (pages) {
