@@ -57,6 +57,12 @@ const tests = [
     }
   },
   {
+    input: 'pages=453x-491',
+    output: {
+      // Nothing can be calculated from a malformed page-range
+    }
+  },
+  {
     input: 'spage=996&pages=453-491',
     output: {
       startPage: "996", // Wins over start-page extracted from page-range
