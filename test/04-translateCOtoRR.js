@@ -41,7 +41,28 @@ const tests = [
       title: 'Xenoposeidon',
       serviceType: 'fulltext',
     },
-  }
+  },
+  {
+    input: 'spage=45&epage=72',
+    output: {
+      startPage: "45",
+      numberOfPages: 28, // Calculated from start and end pages
+    }
+  },
+  {
+    input: 'pages=453-491',
+    output: {
+      startPage: "453", // Extracted from page-range
+      numberOfPages: 39, // Calculated from page-range
+    }
+  },
+  {
+    input: 'spage=996&pages=453-491',
+    output: {
+      startPage: "996", // Wins over start-page extracted from page-range
+      numberOfPages: 39, // Calculated from page-range
+    }
+  },
 ];
 
 describe('translate ContextObject to ReshareRequest', () => {
