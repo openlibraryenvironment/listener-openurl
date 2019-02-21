@@ -13,8 +13,9 @@ if (process.argv.length === 3) {
 
 const cfg = new Config(args);
 const server = new OpenURLServer(cfg);
+const port = 3012;
 
 server.okapiLogin().then(res => {
-  server.listen(3012);
-  cfg.log('start', 'starting');
+  server.listen(port);
+  cfg.log('start', `starting up on port ${port}`);
 });
