@@ -12,5 +12,10 @@ To manually mess with the underlying PostgreSQL database:
 
 To expose the development hosts's post 3012 on caliban:
 
-	ssh -R :3012:localhost:3012 caliban
+	ssh -g -R :3012:localhost:3012 caliban
+
+Proxying on diane means that you can then reach the development
+hosts's resolver on openurl.indexdata.com port 80:
+
+	http://openurl.indexdata.com/?rft.id=doi:10.7717/peerj.5212
 
