@@ -10,3 +10,7 @@ To manually mess with the underlying PostgreSQL database:
 	psql> select pr_id from patron_request;
 	psql> delete from from patron_request;
 
+To expose the development hosts's post 3012 on caliban:
+
+	ssh -R :3012:localhost:3012 caliban
+
