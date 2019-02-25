@@ -1,17 +1,20 @@
-/*
-  Detail is by default omitted from 5xx errors. Fix with:
-
-        const err = new Error(e.stack);
-        err.status = 500;
-        err.expose = true;
-        throw err;
-*/
-
 class HttpError extends Error {
   constructor(response, comment) {
-    super(`${response.status} for ${response.url}: ${comment}`);
-    this.name = 'HttpError';
+    let status, url, maybeFor;
+    if (typeof response === 'number') {
+      status = response;
+      url = undefined;
+    } else {
+      status = response.status;
+      url = response.url;
+    }
+
+    maybeFor = url ? ` for ${url}` : '';
+    super(`${status}${maybeFor}: ${comment}`);
     this.response = response;
+    this.name = 'HttpError';
+    this.status = status;
+    this.expose = true; // Not true by default for 500 errors
     this.comment = comment;
   }
 }
