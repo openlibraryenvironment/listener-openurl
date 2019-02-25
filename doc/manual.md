@@ -1,6 +1,6 @@
 # Building, configuring and running the ReShare OpenURL listener
 
-<!-- md2toc -l 2 invocation.md -->
+<!-- md2toc -l 2 manual.md -->
 * [Getting started](#getting-started)
     * [Downloading](#downloading)
     * [Building](#building)
@@ -13,7 +13,9 @@
     * [Logging](#logging)
 * [Starting the service](#starting-the-service)
 * [Implementation of the OpenURL standard](#implementation-of-the-openurl-standard)
+    * [OpenURL v0.1 and v1.0](#openurl-v01-and-v10)
     * [Service-types](#service-types)
+    * [Serving static files](#serving-static-files)
 
 
 ## Getting started
@@ -57,6 +59,7 @@ For general functioning:
 
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
+* `staticPath` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
 
 For communication with the ReShare back-end:
 
@@ -137,5 +140,12 @@ So:
 	{"admindata":{"rft":{"id":"123"},"svc":{"id":"contextObject"}},"metadata":{}}
 
 This is useful mainly for testing.
+
+
+### Serving static files
+
+If a client fetches a URL whose path begins with `/static/`, the OpenURL listener will serve a static file from the area of the filesystem nominated by the `staticPath` entry in the configuration file. This can be used to obtain HTML pages, stylesheets, images, etc. In particular, the HTML generated using templates may refer to stylesheets and images that are provided by the OpenURL listener.
+
+As a special case, the URL `/favicon.ico`, which many web browsers fetch automatically, is interpreted as a request for `/static/favicon.ico`.
 
 
