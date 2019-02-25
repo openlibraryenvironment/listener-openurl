@@ -1,7 +1,7 @@
 // Creates an OpenURL server that contains a configured Koa app.
 
 const Koa = require('koa');
-const KoaStatic = require('koa-static')
+const KoaStatic = require('koa-static');
 const _ = require('lodash');
 const { ContextObject } = require('./ContextObject');
 const { ReshareRequest } = require('./ReshareRequest');
@@ -19,7 +19,7 @@ class OpenURLServer {
     }
 
     this.app = new Koa();
-    this.app.use(async (ctx, next) => {
+    this.app.use(async(ctx, next) => {
       if (ctx.path.startsWith('/static/') || ctx.path === '/favicon.ico') {
         await next();
         return;
