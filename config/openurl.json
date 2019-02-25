@@ -1,7 +1,7 @@
 {
   "loggingCategories": "start,okapi,co,rr",
   "listenPort": 3012,
-  "staticPath": "static",
+  "docRoot": "htdocs",
 
   "okapiUrl": "http://localhost:9130",
   "tenant": "diku",
