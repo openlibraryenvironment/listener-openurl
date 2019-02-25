@@ -18,6 +18,7 @@
     "categorical-logger": "^1.0.0",
     "handlebars": "^4.1.0",
     "koa": "^2.7.0",
+    "koa-static": "^5.0.0",
     "node-fetch": "^2.3.0",
     "uuid": "^3.3.2"
   },
