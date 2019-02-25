@@ -25,12 +25,15 @@ class Config {
   getFilename() { return this.filename; }
   log(...args) { this.logger.log(...args); }
 
+  readFile(filename) {
+    return fs.readFileSync(this.path + '/' + filename, 'utf8');
+  }
+
   getTemplate(name) {
     if (!this.cachedTemplates[name]) {
       const filename = this.values[`template.${name}`];
       if (!filename) throw Error(`no template '${name}'`);
-      const fullname = this.path + '/' + filename;
-      const text = fs.readFileSync(fullname, 'utf8');
+      const text = this.readFile(filename);
       this.cachedTemplates[name] = Handlebars.compile(text);
     }
     return this.cachedTemplates[name];
