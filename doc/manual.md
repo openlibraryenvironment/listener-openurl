@@ -59,7 +59,7 @@ For general functioning:
 
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
-* `staticPath` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
+* `docRoot` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
 
 For communication with the ReShare back-end:
 
@@ -144,8 +144,8 @@ This is useful mainly for testing.
 
 ### Serving static files
 
-If a client fetches a URL whose path begins with `/static/`, the OpenURL listener will serve a static file from the area of the filesystem nominated by the `staticPath` entry in the configuration file. This can be used to obtain HTML pages, stylesheets, images, etc. In particular, the HTML generated using templates may refer to stylesheets and images that are provided by the OpenURL listener.
+If a client fetches a URL whose path begins with `/static/`, the OpenURL listener will serve a static file from the `static` subdirectory of the filesystem nominated by the `docRoot` entry in the configuration file. This can be used to obtain HTML pages, stylesheets, images, etc. In particular, the HTML generated using templates may refer to stylesheets and images that are provided by the OpenURL listener.
 
-As a special case, the URL `/favicon.ico`, which many web browsers fetch automatically, is interpreted as a request for `/static/favicon.ico`.
+As a special case, the URL `/favicon.ico`, which many web browsers fetch automatically, is interpreted as a request to fetch the file of that name from the root of the directory specified by the `docRoot` configuration item.
 
 
