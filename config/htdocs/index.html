@@ -1,0 +1,39 @@
+<title>The ReShare OpenURL resolver</title>
+<h1>The ReShare OpenURL resolver</h1>
+
+<h2>Introduction</h2>
+<p>
+  This resolver is part of
+  <a href="http://projectreshare.org/">Project ReShare</a>,
+  a fully open, community-led initiative to an develop interoperable resource-sharing platform that any library can use irrespective of its choice of ILS. Note that it is <b>in development</b> and has a long way to go.
+</p>
+<p>
+  The resolver accepts OpenURL requests and converts them into ReShare requests which it pushes into an instance of
+  <a href="https://github.com/openlibraryenvironment/mod-rs/">mod-rs</a>
+  running within
+  <a href="https://dev.folio.org/">the FOLIO platform</a>.
+  Consequently, the outcome of making a request to it is not a link to an immediately available electronic copy of the nominated resource, but that an ILL request to a suitable library is initiated.
+</p>
+<p>
+  As a result, to the untrained eye, the pages that display on submitting an OpenURL are low on information. But
+  <a href="https://www.youtube.com/watch?v=pR6z-gm5_cY">to the eye that has brains</a>, they are letting the user know that work is under way to supply the resource.
+</p>
+<p>
+  Note that the result pages, like this page, are deliberately spartan. Styling will come later in the project.
+</p>
+
+<h2>Sample URLs</h2>
+<ul>
+  <li>
+    <a href="/?title=xenoposeidon&date=2018&aulast=taylor&jtitle=peerj&volume=6&issue=e5212&id=doi:10.7717/peerj.5212">OpenURL v0.1</a>
+  </li>
+  <li>
+    <a href="/?Action=10&Form=30&rft.genre=book&rft.title=Property+and+wealth+in+classical+Sparta+%2F&rft.stitle=Property+and+wealth+in+classical+Sparta+%2F&rft.atitle=&rft.date=2000.&rft.month=&rft.volume=&rft.issue=&rft.number=&rft.epage=&rft.spage=&rft.edition=&rft.isbn=0715630407&rft.eisbn=&rft.au=,&rft.auinit=&rft.pub=Duckworth+and+the+Classical+Press+of+Wales&rft.publisher=Duckworth+and+the+Classical+Press+of+Wales&rft.place=London+%3A&rft.doi=&rfe_dat=44786349&rfr_id=info%3Asid%2Fprimo.exlibrisgroup.com-01NWU_ALMA">OpenURL v1.0</a>
+  </li>
+</ul>
+
+<h2>Source code</h2>
+<p>
+  In case you're interested,
+  <a href="https://github.com/openlibraryenvironment/listener-openurl">the code is on GitHub.</a>
+</p>
