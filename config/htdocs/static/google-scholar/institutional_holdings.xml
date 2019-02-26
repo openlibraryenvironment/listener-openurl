@@ -22,10 +22,10 @@ holdings for many libraries (the 1MB limit is before compression).
   <item type="electronic">  <!-- electronic or print; default is electronic -->
 
     <!-- Journal or book title - REQUIRED. -->
-    <title>Journal of Prosimian Dialectical Reasoning</title>
+    <title>Journal of Vertebrate Palaeontology</title>
 
     <!-- ISSN - OPTIONAL, strongly recommended for periodicals. -->
-    <issn>0123-4567</issn>
+    <issn>0272-4634</issn>
 
     <!-- ISBN - OPTIONAL, strongly recommended when applicable. -->
     <!-- <isbn>0-901690-54-6</isbn> -->
@@ -37,38 +37,14 @@ holdings for many libraries (the 1MB limit is before compression).
       <!-- Earliest volume of subscription - OPTIONAL; default is volume 1. -->
       <from>
         <!-- start year of subscription - REQUIRED -->
-        <year>1971</year>
+        <year>2001</year>
         <!-- start month of subscription - OPTIONAL; default is 1 -->
         <month>1</month>
-        <!-- volume number - OPTIONAL -->
-        <volume>12</volume>
-        <!-- issue number - OPTIONAL -->
-        <issue>1</issue>
       </from>
-
-      <!-- Latest volume of subscription - OPTIONAL; default is "ongoing". -->
-      <to>
-        <!-- end year of subscription - REQUIRED -->
-        <year>1999</year>
-        <!-- end month of subscription - OPTIONAL; default is 12 -->
-        <month>12</month>
-        <!-- volume number - OPTIONAL -->
-        <volume>36</volume>
-        <!-- issue number - OPTIONAL -->
-        <issue>11</issue>
-      </to>
-
-      <!-- Embargo on recent or old content - OPTIONAL, default is "none". -->
-      <embargo>
-        <!-- Last six months are NOT available - OPTIONAL. -->
-        <days_not_available>180</days_not_available>
-        <!-- Only last year is available - OPTIONAL. -->
-        <days_available>360</days_available>
-      </embargo>
 
       <!-- Free form comments, for library's convenience - OPTIONAL. -->
       <!-- Comments are normally NOT interpreted by the linking party. -->
-      <comment>Only abstracts available for volume 15 issue 7.</comment>
+      <comment>Journal holdings are not really meaningful for this resolver, which is all about initiating ILL requests.</comment>
 
     </coverage>
 
