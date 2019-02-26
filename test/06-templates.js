@@ -17,8 +17,8 @@ const tests = [
     name: 'bad',
     values: { status: 500, otherVal: 965 },
     checks: [
-      /Something went wrong/,
-      /status = 500/,
+      /Something is wrong/,
+      /status is 500/,
       /otherVal.*: 965/,
     ]
   },
@@ -27,8 +27,8 @@ const tests = [
     name: 'bad',
     values: { status: 500, couldBeAnything: 'herring' },
     checks: [
-      /Something went wrong/,
-      /status = 500/,
+      /Something is wrong/,
+      /status is 500/,
       /couldBeAnything.*herring/,
     ]
   },
