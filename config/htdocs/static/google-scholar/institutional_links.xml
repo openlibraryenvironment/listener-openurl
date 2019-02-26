@@ -35,7 +35,7 @@ the preferences page:
 
   <!-- The full name of your library, for display in preferences. -->
   <!-- (REQUIRED; no more than 60 characters) -->
-  <institution>Bugs Bunny College of Agricultural Science and Technology</institution>
+  <institution>Project ReShare development program (UNSTABLE)</institution>
   <!-- Optional translations of the library's name into other languages. -->
   <!-- (REPEATED; no more than 10 translations, 60 characters each) -->
   <!-- <institution lang="pt-BR">Faculdade do Bugs da Ciência Agricultural e da Tecnologia</institution> -->
@@ -44,18 +44,18 @@ the preferences page:
   <!-- All words from the <institution> field are included automatically. -->
   <!-- Chinese libraries, please include pinyin transcriptions here. -->
   <!-- (OPTIONAL; at most 5 words, no more than 30 characters each) -->
-  <keywords>BBC FBB Daffy Duck</keywords>
+  <keywords>resource-sharing ILL testing</keywords>
 
   <!-- Contact emails for technical issues, etc. -->
   <!-- This is for administrative purposes; users won't see it. -->
   <!-- (REQUIRED; at most 5 emails, no more than 60 characters each) -->
-  <contact>Bob Clampett &lt;bob@bbc.ac.lt&gt;</contact>
-  <contact>Leon Schlesinger &lt;leon@bbc.ac.lt&gt;</contact>
+  <contact>Mike Taylor &lt;mike@indexdata.com&gt;</contact>
+  <contact>Wayne Schneider &lt;wayne@indexdata.com&gt;</contact>
 
   <!-- The label for the links to your electronic full text. -->
   <!-- It should be short and should include the name of your library. -->
   <!-- (REQUIRED; no more than 25 characters) -->
-  <electronic_link_label>BBC eText</electronic_link_label>
+  <electronic_link_label>ReShare Online</electronic_link_label>
   <!-- Optional translations of <electronic_link_label> into other languages. -->
   <!-- (REPEATED; no more than 10 translations, 25 characters each) -->
   <!-- <electronic_link_label lang="pt-BR">FBB eTexto</electronic_link_label> -->
@@ -63,7 +63,7 @@ the preferences page:
   <!-- The label for the links to your print and other resources. -->
   <!-- It should be short and should include the name of your library. -->
   <!-- (REQUIRED; no more than 25 characters) -->
-  <other_link_label>BBC Links</other_link_label>
+  <other_link_label>ReShare Print</other_link_label>
   <!-- Optional translations of <other_link_label> into other languages. -->
   <!-- (REPEATED; no more than 10 translations, 25 characters each) -->
   <!-- <other_link_label lang="pt-BR">FBB Ligações</other_link_label>  -->
@@ -88,7 +88,7 @@ the preferences page:
     Base URL: http://frame.ac.lt/frame?top=logo&url=http://lib.bbc.ac.lt/bbc_link%3Ffmt%3Dfull%26
         Link: http://frame.ac.lt/frame?top=logo&url=http://lib.bbc.ac.lt/bbc_link%3Ffmt%3Dfull%26sid%3Dgoogle%26title%3DThe%2BJournal
    -->
-  <openurl_base>http://lib.bbc.ac.lt/bbc_link</openurl_base>
+  <openurl_base>http://openurl.indexdata.com/resolve</openurl_base>
 
   <!-- Linking options supported in your link resolver. -->
   <!-- (at least one is REQUIRED; please check that they actually work) -->
@@ -106,8 +106,7 @@ the preferences page:
   <!-- come from these IP addresses can see your links if they select -->
   <!-- your library in their preferences (very few people do that). -->
   <!-- (OPTIONAL; no more than 256 ranges) -->
-  <patron_ip_range>66.66.67.*</patron_ip_range>
-  <patron_ip_range>67.66.66.1-67.66.66.63</patron_ip_range> <!-- inclusive -->
+  <patron_ip_range>86.186.104.*</patron_ip_range>
 
   <!-- Don't show links to users unless they come from your IPs. -->
   <!-- They won't be able to select your library in preferences. -->
@@ -123,10 +122,7 @@ the preferences page:
   <!-- (REQUIRED; at most 1000 URLs, each at most 1024 bytes long and -->
   <!-- each carrying at most 1MB of content) -->
   <electronic_holdings>
-    <url>http://lib.bbc.ac.lt/bbc-e-collection/e-journals-0.xml</url>
-    <url>http://lib.bbc.ac.lt/bbc-e-collection/e-journals-A.xml</url>
-    <!-- ... -->
-    <url>http://lib.bbc.ac.lt/bbc-e-collection/e-journals-Z.xml</url>
+    <url>http://openurl.indexdata.com/static/google-scholar/institutional_holdings.xml</url>
   </electronic_holdings>
 
 </institutional_links>
