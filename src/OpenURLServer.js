@@ -20,7 +20,9 @@ class OpenURLServer {
 
     this.app = new Koa();
     this.app.use(async(ctx, next) => {
-      if (ctx.path.startsWith('/static/') || ctx.path === '/favicon.ico') {
+      if (ctx.path.startsWith('/static/') ||
+          ctx.path === '/favicon.ico' ||
+          (ctx.path === '/' && ctx.search === '')) {
         await next();
         return;
       }
