@@ -10,7 +10,7 @@ const tests = [
     values: { status: 201 },
     checks: [
       /All is well/,
-      /status = 201/,
+      /status is 201/,
     ]
   },
   {
