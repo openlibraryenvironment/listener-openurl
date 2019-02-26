@@ -2,6 +2,7 @@ const { describe, it } = require('mocha');
 const { assert } = require('chai');
 const { Config } = require('../src/Config');
 const { OkapiSession } = require('../src/OkapiSession');
+const HTTPError = require('../src/HTTPError');
 
 describe('run an Okapi session', () => {
   function rejectConfig(key) {
@@ -71,11 +72,19 @@ describe('run an Okapi session', () => {
         console.log('      (skipping)');
         // (For some reason this.skip is not defined, so we can't use that.)
       } else {
-        assert.equal(e.name, 'HttpError', 'correct type of exception');
+        assert.equal(e.name, 'HTTPError', 'correct type of exception');
         assert.match(e.comment, /cannot login/);
         assert.equal(e.response.status, 422);
       }
       done();
     });
+  });
+
+  // I'm really only doing this one to get test coverage up
+  it('can make HTTPError objects from numeric codes', () => {
+    const e = new HTTPError(403, 'no permission to read file');
+    assert.equal(e.name, 'HTTPError', 'correct type of exception');
+    assert.equal(e.status, 403);
+    assert.match(e.comment, /no permission/);
   });
 });
