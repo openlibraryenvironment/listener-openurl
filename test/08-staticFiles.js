@@ -10,29 +10,29 @@ const app = (new OpenURLServer(new Config({ XloggingCategories: '' })));
 
 const tests = [
   {
-    path: '/static/thing-that-is-not-there',
+    path: '/static/test/thing-that-is-not-there',
     status: 404,
   },
   {
-    path: '/static/plain.txt',
+    path: '/static/test/plain.txt',
     status: 200,
     contentType: 'text/plain; charset=utf-8',
     match: /plain text/,
   },
   {
-    path: '/static/formatted.html',
+    path: '/static/test/formatted.html',
     status: 200,
     contentType: 'text/html; charset=utf-8',
     match: /earliest known/,
   },
   {
-    path: '/static/upper.HTML',
+    path: '/static/test/upper.HTML',
     status: 200,
     contentType: 'text/html; charset=utf-8',
     match: /also/,
   },
   {
-    path: '/static/xenoposeidon.jpeg',
+    path: '/static/test/xenoposeidon.jpeg',
     status: 200,
     contentType: 'image/jpeg',
   },
