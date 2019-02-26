@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  <!-- encoding must be UTF-8 -->
+<!--
+Configuration for external linking to articles in a library.  This file
+usually lives on a library's website.  It says how to link to the library
+and who should see these links.
+
+The name of the library and the labels for the links can be displayed in
+multiple languages, provided that the appropriate translations are
+specified in this file.  Languages are identified by their ISO 639-1 codes
+and, optionally, ISO 3166 country names.  For example:
+
+  lang attribute     description
+  _________________________________________________________________________
+  en                 English (default value when language is not specified)
+  da                 Danish
+  no                 Norwegian
+  pt-BR              Portuguese (Brazil)
+  zh-CN              Chinese (Simplified)
+  zh-TW              Chinese (Traditional)
+  _________________________________________________________________________
+
+Complete lists of ISO language and country codes can be found here:
+
+  http://www.w3.org/WAI/ER/IG/ert/iso639.htm
+  http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html
+
+The list of interface languages supported in Google Scholar can be found on
+the preferences page:
+
+  http://scholar.google.com/scholar_preferences
+
+-->
+<!DOCTYPE institutional_links PUBLIC "-//GOOGLE//Institutional Links 1.0//EN" "http://scholar.google.com/scholar/institutional_links.dtd">
+<institutional_links>
+
+  <!-- The full name of your library, for display in preferences. -->
+  <!-- (REQUIRED; no more than 60 characters) -->
+  <institution>Bugs Bunny College of Agricultural Science and Technology</institution>
+  <!-- Optional translations of the library's name into other languages. -->
+  <!-- (REPEATED; no more than 10 translations, 60 characters each) -->
+  <!-- <institution lang="pt-BR">Faculdade do Bugs da Ciência Agricultural e da Tecnologia</institution> -->
+
+  <!-- Keywords to help people find your library in preferences. -->
+  <!-- All words from the <institution> field are included automatically. -->
+  <!-- Chinese libraries, please include pinyin transcriptions here. -->
+  <!-- (OPTIONAL; at most 5 words, no more than 30 characters each) -->
+  <keywords>BBC FBB Daffy Duck</keywords>
+
+  <!-- Contact emails for technical issues, etc. -->
+  <!-- This is for administrative purposes; users won't see it. -->
+  <!-- (REQUIRED; at most 5 emails, no more than 60 characters each) -->
+  <contact>Bob Clampett &lt;bob@bbc.ac.lt&gt;</contact>
+  <contact>Leon Schlesinger &lt;leon@bbc.ac.lt&gt;</contact>
+
+  <!-- The label for the links to your electronic full text. -->
+  <!-- It should be short and should include the name of your library. -->
+  <!-- (REQUIRED; no more than 25 characters) -->
+  <electronic_link_label>BBC eText</electronic_link_label>
+  <!-- Optional translations of <electronic_link_label> into other languages. -->
+  <!-- (REPEATED; no more than 10 translations, 25 characters each) -->
+  <!-- <electronic_link_label lang="pt-BR">FBB eTexto</electronic_link_label> -->
+
+  <!-- The label for the links to your print and other resources. -->
+  <!-- It should be short and should include the name of your library. -->
+  <!-- (REQUIRED; no more than 25 characters) -->
+  <other_link_label>BBC Links</other_link_label>
+  <!-- Optional translations of <other_link_label> into other languages. -->
+  <!-- (REPEATED; no more than 10 translations, 25 characters each) -->
+  <!-- <other_link_label lang="pt-BR">FBB Ligações</other_link_label>  -->
+
+  <!-- The base URL for your OpenURL-compatible link resolver. -->
+  <!-- (REQUIRED; no more than 1024 characters) -->
+  <!--
+    Examples:
+
+    Base URL: http://lib.bbc.ac.lt/bbc_link
+        Link: http://lib.bbc.ac.lt/bbc_link?sid=google&title=The+Journal
+
+    Base URL: http://customcat.bbc.ac.lt/link?fmt=full&
+        Link: http://customcat.bbc.ac.lt/link?fmt=full&sid=google&title=The+Journal
+
+    Base URL: http://ezproxy.ac.lt/login?url=http://lib.bbc.ac.lt/bbc_link
+        Link: http://ezproxy.ac.lt/login?url=http://lib.bbc.ac.lt/bbc_link?sid=google&title=The+Journal
+
+    Base URL: http://difproxy.ac.lt/proxy?url=http://lib.bbc.ac.lt/bbc_link%3F
+        Link: http://difproxy.ac.lt/proxy?url=http://lib.bbc.ac.lt/bbc_link%3Fsid%3Dgoogle%26title%3DThe%2BJournal
+
+    Base URL: http://frame.ac.lt/frame?top=logo&url=http://lib.bbc.ac.lt/bbc_link%3Ffmt%3Dfull%26
+        Link: http://frame.ac.lt/frame?top=logo&url=http://lib.bbc.ac.lt/bbc_link%3Ffmt%3Dfull%26sid%3Dgoogle%26title%3DThe%2BJournal
+   -->
+  <openurl_base>http://lib.bbc.ac.lt/bbc_link</openurl_base>
+
+  <!-- Linking options supported in your link resolver. -->
+  <!-- (at least one is REQUIRED; please check that they actually work) -->
+  <!-- http://lib.bbc.ac.lt/bbc_link?sid=google&id=pmid:11130711 -->
+  <openurl_option>pmid</openurl_option>
+  <!-- http://lib.bbc.ac.lt/bbc_link?sid=google&id=doi:10.1111/1468-0270.00266 -->
+  <openurl_option>doi</openurl_option>
+  <!-- http://lib.bbc.ac.lt/bbc_link?sid=google&title=Modern+Operating+Systems&genre=book -->
+  <openurl_option>book-title</openurl_option>
+  <!-- http://lib.bbc.ac.lt/bbc_link?sid=google&title=Nature&volume=227&issue=5259&spage=680 -->
+  <openurl_option>journal-title</openurl_option>
+
+  <!-- The IP address ranges for your patrons, e.g., on-campus students. -->
+  <!-- These people will see your links by default.  People who don't -->
+  <!-- come from these IP addresses can see your links if they select -->
+  <!-- your library in their preferences (very few people do that). -->
+  <!-- (OPTIONAL; no more than 256 ranges) -->
+  <patron_ip_range>66.66.67.*</patron_ip_range>
+  <patron_ip_range>67.66.66.1-67.66.66.63</patron_ip_range> <!-- inclusive -->
+
+  <!-- Don't show links to users unless they come from your IPs. -->
+  <!-- They won't be able to select your library in preferences. -->
+  <!-- Use this only if our _links_ reveal sensitive information, -->
+  <!-- e.g., via highlighting links to your electronic subscriptions. -->
+  <!-- Otherwise, we recommend that you set this to "no" and implement -->
+  <!-- an appropriate authentication policy in your link resolver. -->
+  <!-- (OPTIONAL; yes or no; default is no - strongly recommended) -->
+  <patron_ip_required>no</patron_ip_required>
+
+  <!-- The URLs for your electronic holdings. -->
+  <!-- See institutional_holdings.xml for the format specification. -->
+  <!-- (REQUIRED; at most 1000 URLs, each at most 1024 bytes long and -->
+  <!-- each carrying at most 1MB of content) -->
+  <electronic_holdings>
+    <url>http://lib.bbc.ac.lt/bbc-e-collection/e-journals-0.xml</url>
+    <url>http://lib.bbc.ac.lt/bbc-e-collection/e-journals-A.xml</url>
+    <!-- ... -->
+    <url>http://lib.bbc.ac.lt/bbc-e-collection/e-journals-Z.xml</url>
+  </electronic_holdings>
+
+</institutional_links>

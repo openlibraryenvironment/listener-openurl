@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  <!-- encoding must be UTF-8 -->
+<!--
+A list of library's electronic fulltext subscriptions, to aid in linking
+to the library.  Print holdings are not required, though they may help
+the linking party show more links to the library.
+
+This file lives on the library's website.  Common practice is to generate
+it daily from link resolver's internal configuration files.  The linking
+party periodically fetches it from the library's website to update its data.
+
+The limit is 1MB per holdings file but there may be several files -
+see http://scholar.google.com/scholar/institutional_links.xml .
+Please also consider gzip compression, especially if you're hosting
+holdings for many libraries (the 1MB limit is before compression).
+-->
+<!DOCTYPE institutional_holdings PUBLIC "-//GOOGLE//Institutional Holdings 1.0//EN" "http://scholar.google.com/scholar/institutional_holdings.dtd">
+<institutional_holdings>
+
+  <!-- A single subscription item, e.g., a journal - REPEATED. -->
+  <!-- Use "electronic" type for electronic fulltext subscriptions ONLY. -->
+  <!-- Use "print" type for print journals, abstracts, tables of contents. -->
+  <item type="electronic">  <!-- electronic or print; default is electronic -->
+
+    <!-- Journal or book title - REQUIRED. -->
+    <title>Journal of Prosimian Dialectical Reasoning</title>
+
+    <!-- ISSN - OPTIONAL, strongly recommended for periodicals. -->
+    <issn>0123-4567</issn>
+
+    <!-- ISBN - OPTIONAL, strongly recommended when applicable. -->
+    <!-- <isbn>0-901690-54-6</isbn> -->
+
+    <!-- Subscription range - REPEATED; absense of subscription ranges -->
+    <!-- means ongoing subscription to all volumes back to volume 1. -->
+    <coverage>
+
+      <!-- Earliest volume of subscription - OPTIONAL; default is volume 1. -->
+      <from>
+        <!-- start year of subscription - REQUIRED -->
+        <year>1971</year>
+        <!-- start month of subscription - OPTIONAL; default is 1 -->
+        <month>1</month>
+        <!-- volume number - OPTIONAL -->
+        <volume>12</volume>
+        <!-- issue number - OPTIONAL -->
+        <issue>1</issue>
+      </from>
+
+      <!-- Latest volume of subscription - OPTIONAL; default is "ongoing". -->
+      <to>
+        <!-- end year of subscription - REQUIRED -->
+        <year>1999</year>
+        <!-- end month of subscription - OPTIONAL; default is 12 -->
+        <month>12</month>
+        <!-- volume number - OPTIONAL -->
+        <volume>36</volume>
+        <!-- issue number - OPTIONAL -->
+        <issue>11</issue>
+      </to>
+
+      <!-- Embargo on recent or old content - OPTIONAL, default is "none". -->
+      <embargo>
+        <!-- Last six months are NOT available - OPTIONAL. -->
+        <days_not_available>180</days_not_available>
+        <!-- Only last year is available - OPTIONAL. -->
+        <days_available>360</days_available>
+      </embargo>
+
+      <!-- Free form comments, for library's convenience - OPTIONAL. -->
+      <!-- Comments are normally NOT interpreted by the linking party. -->
+      <comment>Only abstracts available for volume 15 issue 7.</comment>
+
+    </coverage>
+
+  </item>
+
+  <!-- ... other items ... -->
+
+</institutional_holdings>
