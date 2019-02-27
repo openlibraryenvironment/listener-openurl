@@ -9,7 +9,7 @@ Type=simple
 WorkingDirectory=/home/mike/listener-openurl
 ExecStart=/usr/bin/node src/listener-openurl.js config/caliban.json
 StandardOutput=syslog
-SyslogIdentifier=reshare-listener-resolver
+SyslogIdentifier=listener-openurl
 Restart=on-failure
 KillMode=process
 
