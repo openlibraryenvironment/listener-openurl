@@ -7,7 +7,7 @@ ConditionPathExists=/home/mike/listener-openurl/config/caliban.json
 [Service]
 Type=simple
 WorkingDirectory=/home/mike/listener-openurl
-ExecStart=node src/listener-openurl.js config/caliban.json
+ExecStart=/usr/bin/node src/listener-openurl.js config/caliban.json
 Restart=on-failure
 KillMode=process
 
