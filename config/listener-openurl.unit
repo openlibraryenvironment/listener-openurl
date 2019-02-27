@@ -1,0 +1,15 @@
+[Unit]
+Description=OpenURL listener for ReShare
+Documentation=https://github.com/openlibraryenvironment/listener-openurl/blob/master/doc/manual.md
+After=network.target
+ConditionPathExists=/home/mike/listener-openurl/config/caliban.json
+
+[Service]
+Type=simple
+WorkingDirectory=/home/mike/listener-openurl
+ExecStart=node src/listener-openurl.js config/caliban.json
+Restart=on-failure
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
