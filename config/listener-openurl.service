@@ -1,3 +1,6 @@
+# On caliban, copy or hard-link (do not symbolic-link) this file to
+# /lib/systemd/system/listener-openurl.service
+
 [Unit]
 Description=OpenURL listener for ReShare
 Documentation=https://github.com/openlibraryenvironment/listener-openurl/blob/master/doc/manual.md
