@@ -10,6 +10,8 @@ WorkingDirectory=/home/mike/listener-openurl
 ExecStart=/usr/bin/node src/listener-openurl.js config/caliban.json
 StandardOutput=syslog
 SyslogIdentifier=listener-openurl
+# And add this to /etc/rsyslog.conf:
+#	listener-openurl        /var/log/listener-openurl
 Restart=on-failure
 KillMode=process
 
