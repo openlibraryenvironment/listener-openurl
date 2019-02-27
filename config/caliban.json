@@ -1,0 +1,13 @@
+{
+  "loggingCategories": "start,okapi,co",
+  "listenPort": 3012,
+  "docRoot": "htdocs",
+
+  "okapiUrl": "http://folio-snapshot.aws.indexdata.com:9130",
+  "tenant": "diku",
+  "username": "diku_admin",
+  "password": "admin",
+
+  "template.good": "templates/good.html",
+  "template.bad": "templates/bad.html"
+}
