@@ -2,7 +2,7 @@
 
 ## 1.4.0 (IN PROGRESS)
 
-* Add support for a home-page, retrieved when the baseURL is invoked with no arguments. Fixes PR-135.
+* Add support for a home-page, retrieved when the baseURL is invoked with no arguments. Fixes last part of PR-135.
 * Add example configuration for running as a service on a Debian GNU/Linux host: [`config/caliban.json`](config/caliban.json) is a listener configuration file tweaked or the server caliban, and [`config/listener-openurl.service`](config/listener-openurl.service) is a sample systemd unit file suitable for running on caliban.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
