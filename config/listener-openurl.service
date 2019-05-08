@@ -1,5 +1,10 @@
 # On caliban, copy or hard-link (do not symbolic-link) this file to
 # /lib/systemd/system/listener-openurl.service
+#
+# Then you can:
+#	service listener-openurl status
+#	sudo service listener-openurl start
+#	sudo service listener-openurl stop
 
 [Unit]
 Description=OpenURL listener for ReShare
