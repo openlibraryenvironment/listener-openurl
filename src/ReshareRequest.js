@@ -50,8 +50,8 @@ function translateCOtoRR(co) {
   rr.author = _.get(m, 'rft.au') || _.get(m, 'rft.aulast') || _.get(m, 'rft.aufirst');
   // rr.subtitle has no corresponding OpenURL field
   // rr.sponsoringBody has no corresponding OpenURL field
-  // rr.publisher has no corresponding OpenURL field
-  // rr.placeOfPublication has no corresponding OpenURL field
+  rr.publisher = _.get(m, 'rft.pub');
+  rr.placeOfPublication = _.get(m, 'rft.place');
   rr.volume = _.get(m, 'rft.volume');
   rr.issue = _.get(m, 'rft.issue');
   const spage = _.get(m, 'rft.spage');
