@@ -21,11 +21,19 @@ const uuidv4 = require('uuid/v4');
 // enough since this specific schema is only about journals) but with
 // the addition of "issue" and "unknown".
 //
-// Since I am not so far able to determine what the set of possible
-// values is in mod-rs, we just pass values through for now.
+// In mod-rs, publicationType is a refdata value, which means it can
+// any of a set of values which are configured in the database. At
+// present, the default set is [Book, Journal, Other], and
+// unrecognised values are simply discarded rather than rejected.
 //
 function genreToPublicatonType(genre) {
-  return genre;
+  if (genre === 'journal' || genre === 'article') {
+    return 'Journal';
+  } else if (genre === 'book' || genre === 'bookitem') {
+    return 'Book';
+  } else { // conference, preprint, proceeding
+    return 'Other';
+  }
 }
 
 
