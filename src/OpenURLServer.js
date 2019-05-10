@@ -52,6 +52,9 @@ class OpenURLServer {
             .then(body => {
               cfg.log('posted', `sent request, status ${res.status}`);
               ctx.set('Content-Type', 'text/html');
+              if (`${res.status}`[0] !== '2') {
+                cfg.log('error', `POST error ${res.status}:`, body);
+              }
               try {
                 ctx.body = this.htmlBody(res, body);
               } catch (e) {
