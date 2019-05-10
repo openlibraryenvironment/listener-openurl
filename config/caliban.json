@@ -1,5 +1,5 @@
 {
-  "loggingCategories": "start,okapi,co",
+  "loggingCategories": "error,start,okapi,co",
   "listenPort": 3012,
   "docRoot": "htdocs",
 
