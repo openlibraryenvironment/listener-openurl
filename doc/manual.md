@@ -98,7 +98,7 @@ The following category names are currently used:
 * `metadata` -- logs the metadata section of the analysed ContextObject
 * `rr` -- logs the ReShare request translated from the ContextObject
 * `posted` -- notes whenever a new request has been successfully or unsuccessfully posted
-
+* `error` -- logs errors such as failed posting, including HTTP response body
 
 ## Starting the service
 
