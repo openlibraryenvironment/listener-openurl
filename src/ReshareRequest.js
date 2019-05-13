@@ -31,8 +31,10 @@ function genreToPublicatonType(genre) {
     return 'Journal';
   } else if (genre === 'book' || genre === 'bookitem') {
     return 'Book';
-  } else { // conference, preprint, proceeding
+  } else if (genre) { // conference, preprint, proceeding
     return 'Other';
+  } else {
+    return genre;
   }
 }
 
