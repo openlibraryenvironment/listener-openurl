@@ -106,7 +106,7 @@ const tests = [
   },
   {
     input: 'genre=book',
-    output: { publicationType: 'book' },
+    output: { publicationType: 'Book' },
   },
 ];
 
