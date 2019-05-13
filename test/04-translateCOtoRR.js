@@ -104,10 +104,7 @@ const tests = [
       numberOfPages: 39, // Calculated from page-range
     }
   },
-  {
-    input: 'genre=book',
-    output: { publicationType: 'Book' },
-  },
+  { input: 'genre=book', output: { publicationType: 'Book' }, },
 ];
 
 describe('translate ContextObject to ReshareRequest', () => {
