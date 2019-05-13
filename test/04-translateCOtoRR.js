@@ -104,7 +104,13 @@ const tests = [
       numberOfPages: 39, // Calculated from page-range
     }
   },
+  { input: 'genre=journal', output: { publicationType: 'Journal' }, },
+  { input: 'genre=article', output: { publicationType: 'Journal' }, },
   { input: 'genre=book', output: { publicationType: 'Book' }, },
+  { input: 'genre=bookitem', output: { publicationType: 'Book' }, },
+  { input: 'genre=conference', output: { publicationType: 'Other' }, },
+  { input: 'genre=preprint', output: { publicationType: 'Other' }, },
+  { input: 'genre=proceeding', output: { publicationType: 'Other' }, },
 ];
 
 describe('translate ContextObject to ReshareRequest', () => {
