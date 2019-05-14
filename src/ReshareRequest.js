@@ -46,6 +46,15 @@ function genreToPublicatonType(genre) {
 //
 // (There is no analogous list for OpenURL v1.0)
 //
+// We currently do not map the following OpenURL fields:
+//      auinit, auinit1, auinitm
+//      issn, eissn, coden, isbn, sici, bici
+//      stitle (The abbreviated title of a bundle)
+//      part (The part of a bundle, whatever that means)
+//      artnum (The number of an individual item, in cases where there are no pages available)
+//      ssn (The season of publication)
+//      quarter (The quarter of publication)
+//
 function translateCOtoRR(co) {
   const a = co.getAdmindata();
   const m = co.getMetadata();
