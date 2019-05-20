@@ -1,0 +1,26 @@
+This message sent via the contact form at
+https://support.google.com/scholar/contact/general
+on Monday 20 May 2019.
+
+First name: Mike
+Last name: Taylor
+Email address*: mike@indexdata.com
+Subject*: Experimental OpenURL resolver integration
+Full description*:
+
+Dear Google Scholar,
+
+I'm writing to request that you sign our experimental OpenURL resolver up for the Library Links program, in accordance with the instructions at https://scholar.google.com/intl/en/scholar/libraries.html#questions
+
+The resolver baseURL is http://openurl.indexdata.com/
+The institutional links XML file is at http://openurl.indexdata.com/static/google-scholar/institutional_links.xml
+The institutional holdings XML file is at http://openurl.indexdata.com/static/google-scholar/institutional_holdings.xml
+(Though the latter is largely meaningless in this context: see below.)
+
+The resolver is being developed as part of Project ReShare (http://projectreshare.org/), a fully open, community-led initiative to develop an interoperable resource-sharing platform that any library can use irrespective of its choice of ILS. PLEASE NOTE that this software is in development and has a long way to go.
+
+The resolver accepts OpenURL requests and converts them into loan requests which it pushes into a ReShare instance running under the FOLIO platform. Consequently, the outcome of making a request to this resolver is not a link to an immediately available electronic copy of the nominated resource, but the initiation of an ILL request to a suitable library. As a result, the pages that display on submitting an OpenURL are low on information. They serve to let the user know that work is under way to supply the resource. (The result pages are deliberately spartan: styling will come later in the project.)
+
+The resolver's source code is on GitHub: https://github.com/openlibraryenvironment/listener-openurl
+
+THe purpose of this integration is to generate realistic OpenURLs as a way to exercise the ReShare system, including but not limited to its OpenURL resolver. It is one of several such integrations we are establishing so that the system sees a wide variety of OpenURLs created by different software and describing different resources.
