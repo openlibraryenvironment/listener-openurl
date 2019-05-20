@@ -107,6 +107,7 @@ the preferences page:
   <!-- your library in their preferences (very few people do that). -->
   <!-- (OPTIONAL; no more than 256 ranges) -->
   <patron_ip_range>86.186.104.*</patron_ip_range>
+  <patron_ip_range>217.35.231.*</patron_ip_range>
 
   <!-- Don't show links to users unless they come from your IPs. -->
   <!-- They won't be able to select your library in preferences. -->
