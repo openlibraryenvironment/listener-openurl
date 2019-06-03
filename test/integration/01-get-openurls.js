@@ -48,6 +48,8 @@ const tests = [
       ['placeOfPublication', 'Baltimore, MD'],
     ],
   },
+  // XXX What is a "multi-volume monograph"?
+  // XXX And do we really want a "serial volume"?
 ];
 
 describe('send OpenURLs to server', () => {
