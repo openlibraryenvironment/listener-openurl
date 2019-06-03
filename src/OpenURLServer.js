@@ -34,7 +34,8 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
-      if (_.get(admindata, ['svc', 'id']) === 'contextObject') {
+      const svcId = _.get(admindata, ['svc', 'id']);
+      if (svcId === 'contextObject') {
         return new Promise((resolve) => {
           ctx.body = { admindata, metadata };
           resolve();
@@ -44,6 +45,13 @@ class OpenURLServer {
       const rr = new ReshareRequest(co);
       const req = rr.getRequest();
       cfg.log('rr', JSON.stringify(req, null, 2));
+      if (svcId === 'reshareRequest') {
+        return new Promise((resolve) => {
+          ctx.body = req;
+          resolve();
+        });
+      }
+
       // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
       const path = _.get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
       return this.okapi.post(path, req)
