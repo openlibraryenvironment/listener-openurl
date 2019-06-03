@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "standardx -v",
     "test": "mocha",
+    "integration": "mocha test/integration",
     "coverage": "nyc mocha",
     "start": "node src/listener-openurl.js"
   },
