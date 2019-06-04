@@ -47,8 +47,31 @@ const tests = [
       ['placeOfPublication', 'Baltimore, MD'],
     ],
   },
-  // XXX What is a "multi-volume monograph"?
-  // XXX And do we really want a "serial volume"?
+  {
+    title: 'multi-volume monograph', // One volume of an encyclopaedia
+    input: [
+      'rft.genre=book',
+      'rft.aulast=Encyclopaedia Britannica',
+      'rft.isbn=0852296330',
+      'rft.title=The New Encyclopaedia Britannica (15th Ed.)',
+      'rft.stitle=Britannica',
+      'rft.date=1998',
+      'rft.pub=Encyclopaedia Britannica',
+      'rft.place=Chicago, IL',
+      'rft.volume=9'
+    ].join('&'),
+    checks: [
+      ['publicationType', 'Book'],
+      ['author', 'Encyclopaedia Britannica'],
+      // XXX No ISBN in the ReshareRequest object yet
+      ['title', 'The New Encyclopaedia Britannica (15th Ed.)'],
+      ['publicationDate', '1998'],
+      ['publisher', 'Encyclopaedia Britannica'],
+      ['placeOfPublication', 'Chicago, IL'],
+      ['volume', 9],
+    ],
+  },
+  // "serial volume"?
 ];
 
 describe('send OpenURLs to server', () => {
