@@ -71,7 +71,26 @@ const tests = [
       ['volume', 9],
     ],
   },
-  // "serial volume"?
+  {
+    title: 'serial volume', // Issues are bound, and lent as a single item
+    input: [
+      'rft.genre=journal',
+      'rft.issn=0272-4634',
+      'rft.title=Journal of Vertebrate Paleontology',
+      'rft.stitle=JVP',
+      'rft.volume=29',
+      'rft.date=2010',
+      'rft.pub=Taylor %26 Francis',
+    ].join('&'),
+    checks: [
+      ['publicationType', 'Journal'],
+      // XXX No ISSN in the ReshareRequest object yet
+      ['title', 'Journal of Vertebrate Paleontology'],
+      ['volume', '29'],
+      ['publicationDate', '2010'],
+      ['publisher', 'Taylor & Francis'],
+    ],
+  },
 ];
 
 describe('send OpenURLs to server', () => {
