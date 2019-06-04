@@ -21,7 +21,6 @@ const tests = [
   {
     title: 'monographic item',
     input: [
-      'rft_id=123',
       'rft.genre=book',
       'rft.aulast=Hallett',
       'rft.aufirst=Mark',
