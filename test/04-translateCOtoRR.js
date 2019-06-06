@@ -111,6 +111,32 @@ const tests = [
   { input: 'genre=conference', output: { publicationType: 'Other' }, },
   { input: 'genre=preprint', output: { publicationType: 'Other' }, },
   { input: 'genre=proceeding', output: { publicationType: 'Other' }, },
+  {
+    input: [
+      'issn=2376-5992',
+      'isbn=9780253213136',
+      'coden=NATUAS',
+      'sici=10.1002/0002-8231(199601)47:1<23:TDOMII>2.0.TX;2-2',
+      'bici=0226103900(1969)<15:DRNAB>2.2.TX;1-9',
+      'eissn=1937-2809',
+      'part=3',
+      'artnum=78214',
+      'ssn=spring',
+      'quarter=2',
+    ].join('&'),
+    output: {
+      issn: '2376-5992',
+      isbn: '9780253213136',
+      coden: 'NATUAS',
+      sici: '10.1002/0002-8231(199601)47:1<23:TDOMII>2.0.TX;2-2',
+      bici: '0226103900(1969)<15:DRNAB>2.2.TX;1-9',
+      eissn: '1937-2809',
+      part: '3',
+      artnum: '78214',
+      ssn: 'spring',
+      quarter: '2',
+    }
+  },
 ];
 
 describe('translate ContextObject to ReshareRequest', () => {
