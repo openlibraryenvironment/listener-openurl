@@ -59,9 +59,16 @@ function hashString(str) {
 const Names = ['Mike', 'Ian', 'Marc', 'Steve', 'Chas', 'Filip', 'Sebastian', 'Kristen', 'Allen'];
 //
 function generatePatronReference(co) {
+  const a = co.getAdmindata();
+  const id = _.get(a, 'req.id');
+  if (id) return id;
+
+  const cfg = co.getConfig().getValues();
+  if (cfg.noAutoPatron) return undefined;
+
   const q = co.getQuery();
   const s = Object.keys(q).sort().map(k => `${k}=${q[k]}`).join('&');
-  return Names[hashString(s) % Names.length];
+  return Names[hashString(s) % Names.length] + ' (DUMMY)';
 }
 
 
@@ -128,7 +135,7 @@ function translateCOtoRR(co) {
   // rr.informationSource has no corresponding OpenURL field
 
   // Administrative data about who is asking for what
-  rr.patronReference = _.get(a, 'req.id') || (generatePatronReference(co) + ' (DUMMY)');
+  rr.patronReference = generatePatronReference(co);
   // rr.patronSurname has no corresponding OpenURL field
   // rr.patronGivenName has no corresponding OpenURL field
   // rr.patronType has no corresponding OpenURL field
