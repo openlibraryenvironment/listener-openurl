@@ -39,14 +39,14 @@ From table 14 (for books)
 
 From table 16 (entity descriptors)
 
-            |	   _id       _val_fmt	   _ref_fmt       _ref       _dat
+	    |      _id       _val_fmt      _ref_fmt       _ref       _dat
 	----+------------------------------------------------------------
-	rft |	rft_id    rft_val_fmt	rft_ref_fmt    rft_ref    rft_dat
-	rfe |	rfe_id    rfe_val_fmt	rfe_ref_fmt    rfe_ref    rfe_dat
-	req |	req_id    req_val_fmt	req_ref_fmt    req_ref    req_dat
-	svc |	svc_id    svc_val_fmt	svc_ref_fmt    svc_ref    svc_dat
-	res |	res_id    res_val_fmt	res_ref_fmt    res_ref    res_dat
-	rfr |	rfr_id    rfr_val_fmt	rfr_ref_fmt    rfr_ref    rfr_dat
+	rft |   rft_id    rft_val_fmt   rft_ref_fmt    rft_ref    rft_dat
+	rfe |   rfe_id    rfe_val_fmt   rfe_ref_fmt    rfe_ref    rfe_dat
+	req |   req_id    req_val_fmt   req_ref_fmt    req_ref    req_dat
+	svc |   svc_id    svc_val_fmt   svc_ref_fmt    svc_ref    svc_dat
+	res |   res_id    res_val_fmt   res_ref_fmt    res_ref    res_dat
+	rfr |   rfr_id    rfr_val_fmt   rfr_ref_fmt    rfr_ref    rfr_dat
 
 From section 22.1 (OpenURL Keys in Inline OpenURL Transports)
 
