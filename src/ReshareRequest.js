@@ -74,12 +74,7 @@ function generatePatronReference(co) {
 //
 // We currently do not map the following OpenURL fields:
 //      auinit, auinit1, auinitm
-//      issn, eissn, coden, isbn, sici, bici
 //      stitle (The abbreviated title of a bundle)
-//      part (The part of a bundle, whatever that means)
-//      artnum (The number of an individual item, in cases where there are no pages available)
-//      ssn (The season of publication)
-//      quarter (The quarter of publication)
 //
 function translateCOtoRR(co) {
   const a = co.getAdmindata();
@@ -115,9 +110,30 @@ function translateCOtoRR(co) {
   rr.publicationDate = _.get(m, 'rft.date');
   // rr.publicationDateOfComponent has no corresponding OpenURL field
   // rr.edition has no corresponding OpenURL field
+  rr.issn = _.get(m, 'rft.issn');
+  rr.isbn = _.get(m, 'rft.isbn');
+  // rr.doi has no corresponding OpenURL field XXX but consider poking around in rft.id
+  rr.coden = _.get(m, 'rft.coden');
+  rr.sici = _.get(m, 'rft.sici');
+  rr.bici = _.get(m, 'rft.bici');
+  rr.eissn = _.get(m, 'rft.eissn');
+  // rr.stitle has no corresponding OpenURL field
+  rr.part = _.get(m, 'rft.part');
+  rr.artnum = _.get(m, 'rft.artnum');
+  rr.ssn = _.get(m, 'rft.ssn');
+  rr.quarter = _.get(m, 'rft.quarter');
+  // rr.titleOfComponent has no corresponding OpenURL field
+  // rr.authorOfComponent has no corresponding OpenURL field
+  // rr.sponsor has no corresponding OpenURL field
+  // rr.informationSource has no corresponding OpenURL field
 
   // Administrative data about who is asking for what
   rr.patronReference = _.get(a, 'req.id') || (generatePatronReference(co) + ' (DUMMY)');
+  // rr.patronSurname has no corresponding OpenURL field
+  // rr.patronGivenName has no corresponding OpenURL field
+  // rr.patronType has no corresponding OpenURL field
+  // rr.sendToPatron has no corresponding OpenURL field
+
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
 
   // All of the following are probably used only internally
