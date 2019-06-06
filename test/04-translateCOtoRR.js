@@ -6,7 +6,7 @@ const { ReshareRequest } = require('../src/ReshareRequest');
 const querystring = require('querystring');
 const isuuid = require('isuuid');
 
-const cfg = new Config();
+const cfg = new Config({ noAutoPatron: 1 });
 
 const tests = [
   {
