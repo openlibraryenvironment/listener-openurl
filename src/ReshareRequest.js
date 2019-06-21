@@ -142,9 +142,9 @@ function translateCOtoRR(co) {
   // rr.sendToPatron has no corresponding OpenURL field
 
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
+  rr.isRequester = true;
 
   // All of the following are probably used only internally
-  // rr.isRequester
   // rr.state;
   // rr.numberOfRetries
   // rr.delayPerformingActionUntil
