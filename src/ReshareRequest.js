@@ -68,7 +68,8 @@ function generatePatronReference(co) {
 
   const q = co.getQuery();
   const s = Object.keys(q).sort().map(k => `${k}=${q[k]}`).join('&');
-  return Names[hashString(s) % Names.length] + ' (DUMMY)';
+  const i = Math.abs(hashString(s)) % Names.length;
+  return Names[i] + ' (DUMMY)';
 }
 
 
