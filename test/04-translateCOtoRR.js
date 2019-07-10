@@ -146,6 +146,7 @@ describe('translate ContextObject to ReshareRequest', () => {
       const co = new ContextObject(cfg, query);
       const rr = new ReshareRequest(co);
       const output = rr.getRequest();
+      delete output.isRequester; // ignore randomly generated boolean
       if (isuuid(output.id)) delete output.id; // ignore auto-generated IDs
       assert.deepEqual(output, test.output, `output ${JSON.stringify(output, null, 2)} does not match expected ${JSON.stringify(test.output, null, 2)}`);
     });
