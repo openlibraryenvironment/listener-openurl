@@ -3,6 +3,8 @@
     "semi": [2, "always"],
     "no-multiple-empty-lines": "off",
     "space-before-function-paren": [2, "never"],
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "lines-between-class-members": "off",
+    "quote-props": "off"
   }
 }

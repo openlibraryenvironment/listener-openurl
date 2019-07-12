@@ -1,6 +1,6 @@
 class HTTPError extends Error {
   constructor(response, comment) {
-    let status, url, maybeFor;
+    let status, url;
     if (typeof response === 'number') {
       status = response;
       url = undefined;
@@ -9,7 +9,7 @@ class HTTPError extends Error {
       url = response.url;
     }
 
-    maybeFor = url ? ` for ${url}` : '';
+    const maybeFor = url ? ` for ${url}` : '';
     super(`${status}${maybeFor}: ${comment}`);
     this.response = response;
     this.name = 'HTTPError';

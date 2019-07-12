@@ -50,8 +50,7 @@ describe('substitute into templates', () => {
   });
 
   it('correctly loads a vacuous config from the current directory', () => {
-    let vacuousCfg;
-    vacuousCfg = new Config({ filename: 'package.json' });
+    const vacuousCfg = new Config({ filename: 'package.json' });
     // For extra credit: is it wrong to peek inside the Config structure in the next line?
     assert.equal(vacuousCfg.path, '.', 'config path is current directory');
   });
