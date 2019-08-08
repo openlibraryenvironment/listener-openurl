@@ -10,6 +10,7 @@
 * Use only the publicationTypes supported by mod-rs
 * The `OpenURLServer` class now recognises `svc_id=reshareRequest`, and responds by returning the JSON of the translated request object as the response body. Used in integration testing.
 * Add (a small amount of) integration-testing, invoked using `yarn integration`. Fixes PR-184.
+* POSTed request now includes `requestingInstitutionSymbol`, set from path of baseURL. Fixes PR-236.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
