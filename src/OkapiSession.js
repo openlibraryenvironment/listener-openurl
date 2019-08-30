@@ -18,7 +18,7 @@ class OkapiSession {
   login() {
     const { username, password } = this.cfg.getValues();
     this.cfg.log('okapi', `logging into Okapi as ${username}/${password}`);
-    return this.post('/bl-users/login', { username, password })
+    return this.post('/authn/login', { username, password })
       .then(res => {
         if (res.status !== 201) throw new HTTPError(res, 'cannot login to FOLIO');
         this.token = res.headers.get('x-okapi-token');
