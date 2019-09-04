@@ -137,6 +137,10 @@ const tests = [
       quarter: '2',
     }
   },
+  {
+    input: 'rft_id=12345&rft.btitle=fish&req_id=mike',
+    output: { title: 'fish', systemItemIdentifier: '12345', patronReference: 'mike' },
+  },
 ];
 
 describe('translate ContextObject to ReshareRequest', () => {
