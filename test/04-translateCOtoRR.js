@@ -139,7 +139,7 @@ const tests = [
   },
   {
     input: 'rft_id=12345&rft.btitle=fish&req_id=mike',
-    output: { title: 'fish', systemItemIdentifier: '12345', patronReference: 'mike' },
+    output: { title: 'fish', systemInstanceIdentifier: '12345', patronReference: 'mike' },
   },
 ];
 
