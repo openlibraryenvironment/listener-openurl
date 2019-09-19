@@ -93,7 +93,7 @@ function translateCOtoRR(co) {
   rr.id = _.get(a, 'ctx.id') || uuidv4();
   rr.publicationType = genreToPublicatonType(_.get(m, 'rft.genre'));
   rr.systemInstanceIdentifier = _.get(a, 'rft.id');
-     
+
   // This all seems to be metadata about the requested item
   rr.title = _.get(m, 'rft.title') || _.get(m, 'rft.btitle') || _.get(m, 'rft.atitle') || _.get(m, 'rft.jtitle');
   rr.author = _.get(m, 'rft.au') || _.get(m, 'rft.creator') || _.get(m, 'rft.aulast') || _.get(m, 'rft.aufirst');
