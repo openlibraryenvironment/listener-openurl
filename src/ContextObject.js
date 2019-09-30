@@ -41,7 +41,7 @@ function translateVersion0point1(v01query) {
     if (key === 'sid') {
       query.rfr_id = val;
     } else if (key === 'id') {
-      query.rft_id = val;
+      query['rft.id'] = val;
     } else if (key === 'pid') {
       query.rft_dat = val;
     } else if (key === 'title') {

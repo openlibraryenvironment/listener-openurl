@@ -19,7 +19,7 @@ const tests = [
   {
     input: 'id=123&issn=1234-5678&date=1998&volume=12&issue=2&spage=134',
     checks: [
-      ['admindata.rft.id', '123'],
+      ['metadata.rft.id', '123'],
       ['metadata.rft.issn', '1234-5678'],
       ['metadata.rft.date', '1998'],
       ['metadata.rft.volume', '12'],
@@ -30,8 +30,8 @@ const tests = [
   {
     input: 'id=doi:123/345678&id=pmid:202123',
     checks: [
-      ['admindata.rft.id.0', 'doi:123/345678'],
-      ['admindata.rft.id.1', 'pmid:202123'],
+      ['metadata.rft.id.0', 'doi:123/345678'],
+      ['metadata.rft.id.1', 'pmid:202123'],
     ],
   },
 ];

@@ -27,8 +27,8 @@ const tests = [
   },
   {
     input: 'id=1',
-    admindata: { rft: { id: '1' } },
-    metadata: {},
+    admindata: {},
+    metadata: { rft: { id: '1' } },
   },
   {
     input: 'author=smith&title=water',
