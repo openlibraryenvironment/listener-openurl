@@ -39,40 +39,6 @@ function genreToPublicatonType(genre) {
 }
 
 
-// Emultaion of Java's s.hashString(), from https://lowrey.me/implementing-javas-string-hashcode-in-javascript/
-//
-function hashString(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash += Math.pow(str.charCodeAt(i) * 31, str.length - i);
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash;
-}
-
-
-// Until we start getting real patron references, we want _something_
-// we can work with. For now, we will choose one from a short list of
-// possible patrons based on a repeatable hash of the context-object
-// contents.
-//
-const Names = ['Mike', 'Ian', 'Marc', 'Steve', 'Chas', 'Filip', 'Sebastian', 'Kristen', 'Allen'];
-//
-function generatePatronReference(co) {
-  const a = co.getAdmindata();
-  const id = _.get(a, 'req.id');
-  if (id) return id;
-
-  const cfg = co.getConfig().getValues();
-  if (cfg.noAutoPatron) return undefined;
-
-  const q = co.getQuery();
-  const s = Object.keys(q).sort().map(k => `${k}=${q[k]}`).join('&');
-  const i = Math.abs(hashString(s)) % Names.length;
-  return Names[i] + ' (DUMMY)';
-}
-
-
 // Complete set of OpenURL v0.1 fields, drawn from table on pages 6-7 of the specification:
 //      genre, aulast, aufirst, auinit, auinit1, auinitm, issn, eissn,
 //      coden, isbn, sici, bici, title, stitle, atitle, volume, part,
@@ -137,7 +103,7 @@ function translateCOtoRR(co) {
   // rr.informationSource has no corresponding OpenURL field
 
   // Administrative data about who is asking for what
-  rr.patronReference = generatePatronReference(co);
+  rr.patronReference = _.get(a, 'req.id');
   // rr.patronSurname has no corresponding OpenURL field
   // rr.patronGivenName has no corresponding OpenURL field
   // rr.patronType has no corresponding OpenURL field
