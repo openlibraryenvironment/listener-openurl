@@ -110,9 +110,7 @@ function translateCOtoRR(co) {
   // rr.sendToPatron has no corresponding OpenURL field
 
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
-
-  // XXX Just for now, we set this randomly. In real life, it will always be true
-  rr.isRequester = (Math.floor((Math.random() * 2)) === 0);
+  rr.isRequester = true;
 
   // All of the following are probably used only internally
   // rr.state;
