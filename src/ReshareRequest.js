@@ -10,7 +10,7 @@ const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
 
 
-// From OpenURL v0.1 specifcation, table in section 7, valid genres are:
+// From OpenURL v0.1 specification, table in section 7, valid genres are:
 //      journal, book, conference, article, preprint, proceeding, bookitem
 //
 // The OpenURL v1.0 specification is characteristically coy about
