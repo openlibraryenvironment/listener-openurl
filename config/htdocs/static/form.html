@@ -1,0 +1,98 @@
+<!-- A simple HTML search form that can be used to generate v1.0 OpenURLs -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>OpenURL 1.0 Generator</title>
+    <style type="text/css">
+      th { text-align: left; font-family: sans-serif; padding-top: 1em; }
+      td:first-child { padding-left: 2em; }
+    </style>
+  </head>
+  <body>
+    <form accept-charset="UTF-8" method="get" action="http://openurl.indexdata.com/DIKUA">
+      <input type="hidden" name="url_ver" value="Z39.88-2004">
+
+      <table>
+        <tr><th colspan="2">Tedious bureaucratic overhead</th></tr>
+        <tr>
+          <td>OpenURL timestamp</td>
+          <td><input type="text" name="url_tim" size="40" value="2019-10-02T15:42:12Z"></td>
+        </tr>
+        <tr>
+          <td>OpenURL context format</td>
+          <td><input type="text" name="url_ctx_fmt" size="40" value="info:ofi/fmt:kev:mtx:ctx"></td>
+        </tr>
+        <tr>
+          <td>Context-object timestamp</td>
+          <td><input type="text" name="ctx_tim" size="40" value="2019-10-02T15:42:12Z"></td>
+        </tr>
+        <tr>
+          <td>Context-object encoding</td>
+          <td><input type="text" name="ctx_enc" size="40" value="info:ofi/enc:UTF-8"></td>
+        </tr>
+
+        <tr><th colspan="2">Referent data</th></tr>
+        <tr>
+          <td>Value format (basically genre)</td>
+          <td><input type="text" name="rft_val_fmt" size="40" value="info:ofi/fmt:kev:mtx:book"></td>
+        </tr>
+        <tr>
+          <td>System identifier</td>
+          <td><input type="text" name="rft_id" size="40" value=""></td>
+        </tr>
+        <tr>
+          <td>Author last name</td>
+          <td><input type="text" name="rft.aulast" size="40" value="Garner"></td>
+        </tr>
+        <tr>
+          <td>Author initials</td>
+          <td><input type="text" name="rft.auinit" size="40" value="A"></td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td><input type="text" name="rft.date" size="40" value="1967"></td>
+        </tr>
+        <tr>
+          <td>Book title</td>
+          <td><input type="text" name="rft.btitle" size="40" value="The Owl Service"></td>
+        </tr>
+        <tr>
+          <td>Publisher</td>
+          <td><input type="text" name="rft.publisher" size="40" value="William Collins, Sons"></td>
+        </tr>
+        <tr>
+          <td>ISBN</td>
+          <td><input type="text" name="rft.isbn" size="40" value="0001846035"></td>
+        </tr>
+        <tr>
+          <td>Other identifier</td>
+          <td><input type="text" name="rft.id" size="40" value="OCLC:156462103"></td>
+        </tr>
+
+        <tr><th colspan="2">Additional administrative data</th></tr>
+        <tr>
+          <td>Requester identifier</td>
+          <td><input type="text" name="req_id" size="40" value="7287797b-b0f4-477e-b3c5-da0f6ee94ee4"></td>
+        </tr>
+        <tr>
+          <td>Service identifier</td>
+          <td><input type="text" name="svc_id" size="40" value=""> (e.g. "contextObject")</td>
+        </tr>
+        <tr>
+          <td>Referring entity identifier</td>
+          <td><input type="text" name="rfe_id" size="40" value=""></td>
+        </tr>
+        <tr>
+          <td>Referer identifier</td>
+          <td><input type="text" name="rfr_id" size="40" value=""></td>
+        </tr>
+
+        <tr><th colspan="2"></th></tr>
+        <tr>
+          <td></td>
+          <td><input type="submit" name="submit" value="Submit"></td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
