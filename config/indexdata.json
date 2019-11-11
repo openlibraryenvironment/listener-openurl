@@ -1,0 +1,13 @@
+{
+  "loggingCategories": "error,start,okapi,co,rr",
+  "listenPort": 3012,
+  "docRoot": "htdocs",
+
+  "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+  "tenant": "diku",
+  "username": "diku_admin",
+  "password": "admin",
+
+  "template.good": "templates/good.html",
+  "template.bad": "templates/bad.html"
+}
