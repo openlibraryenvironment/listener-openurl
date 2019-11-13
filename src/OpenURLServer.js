@@ -44,7 +44,9 @@ class OpenURLServer {
 
       const rr = new ReshareRequest(co);
       const req = rr.getRequest();
-      req.requestingInstitutionSymbol = `RESHARE:${ctx.path.replace(/^\//, '')}`;
+      let symbol = ctx.path.replace(/^\//, '');
+      if (!symbol.includes(':')) symbol = `RESHARE:${symbol}`;
+      req.requestingInstitutionSymbol = symbol;
       cfg.log('rr', JSON.stringify(req, null, 2));
       if (svcId === 'reshareRequest') {
         return new Promise((resolve) => {
