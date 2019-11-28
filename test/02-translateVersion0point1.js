@@ -40,6 +40,10 @@ const data = [
     input: 'genre=article&atitle=water',
     output: 'rft.genre=article&rft.atitle=water',
   },
+  {
+    input: 'req.emailAddress=mike@indexdata.com&svc.pickupLocation=ABC&svc.note=Urgent',
+    output: 'req.emailAddress=mike%40indexdata.com&svc.pickupLocation=ABC&svc.note=Urgent',
+  },
 ];
 
 describe('translate v0.1 OpenURL to v1.0', () => {
