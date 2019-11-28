@@ -7,7 +7,7 @@
 // it into a v1.0 OpenURL; then picks apart the various query elements
 // to build the ContextObject structure.
 
-const _ = require('lodash');
+const some = require('lodash/some');
 
 
 // The only formal requirement for a v1.0 OpenURLs is that it must
@@ -21,7 +21,7 @@ const _ = require('lodash');
 //
 function isVersion0point1(originalQuery) {
   const keys = Object.keys(originalQuery);
-  return !_.some(keys, key => key.match(/^rft[_.]/));
+  return !some(keys, key => key.match(/^rft[_.]/));
 }
 
 
