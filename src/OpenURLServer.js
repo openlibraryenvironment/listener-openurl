@@ -34,6 +34,14 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
+      if (!_.get(metadata, ['req', 'emailAddress']) ||
+          !_.get(metadata, ['svc', 'pickupLocation'])) {
+        return new Promise((resolve) => {
+          ctx.body = this.form(co);
+          resolve();
+        });
+      }
+
       const svcId = _.get(admindata, ['svc', 'id']);
       if (svcId === 'contextObject') {
         return new Promise((resolve) => {
@@ -95,6 +103,24 @@ class OpenURLServer {
     const ok = (status[0] === '2');
     const template = this.cfg.getTemplate(ok ? 'good' : 'bad');
     return template(vars);
+  }
+
+  form(co) {
+    const query = co.getQuery();
+    const formFields = ['req.emailAddress', 'svc.pickupLocation', 'svc.note'];
+    const allValues = Object.keys(_.omit(query, formFields))
+      .sort()
+      .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
+      .join('\n');
+
+    const data = Object.assign({}, query, {
+      allValues,
+      noEmailAddress: !query['req.emailAddress'],
+      noPickupLocation: !query['svc.pickupLocation'],
+    });
+
+    const template = this.cfg.getTemplate('form');
+    return template(data);
   }
 }
 
