@@ -36,6 +36,14 @@ const tests = [
       ['metadata.rft.id.1', 'pmid:202123'],
     ],
   },
+  {
+    input: 'id=doi:123/345678&id=pmid:202123',
+    messages: [
+      /Please complete your request/,
+      /Please supply an email address/,
+      /Please supply a pickup location/,
+    ],
+  },
 ];
 
 describe('send OpenURLs to server', () => {
@@ -51,7 +59,10 @@ describe('send OpenURLs to server', () => {
       try {
         data = JSON.parse(res.text);
       } catch (e) {
-        assert.fail(`non-JSON response (${e})`);
+        test.messages.forEach(regexp => {
+          assert.match(res.text, regexp);
+        });
+        return;
       }
       test.checks.forEach(([path, value]) => {
         assert.equal(_.get(data, path), value);
