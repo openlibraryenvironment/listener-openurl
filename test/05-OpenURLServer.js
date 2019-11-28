@@ -37,11 +37,25 @@ const tests = [
     ],
   },
   {
-    input: 'id=doi:123/345678&id=pmid:202123',
+    input: 'id=1',
     messages: [
-      /Please complete your request/,
-      /Please supply an email address/,
-      /Please supply a pickup location/,
+      [true, /Please complete your request/],
+      [true, /Please supply an email address/],
+      [true, /Please supply a pickup location/],
+    ],
+  },
+  {
+    input: 'id=1&req.emailAddress=x',
+    messages: [
+      [false, /Please supply an email address/],
+      [true, /Please supply a pickup location/],
+    ],
+  },
+  {
+    input: 'id=1&svc.pickupLocation=x',
+    messages: [
+      [true, /Please supply an email address/],
+      [false, /Please supply a pickup location/],
     ],
   },
 ];
@@ -59,8 +73,12 @@ describe('send OpenURLs to server', () => {
       try {
         data = JSON.parse(res.text);
       } catch (e) {
-        test.messages.forEach(regexp => {
-          assert.match(res.text, regexp);
+        test.messages.forEach(([shouldMatch, regexp]) => {
+          if (shouldMatch) {
+            assert.match(res.text, regexp);
+          } else {
+            assert.notMatch(res.text, regexp);
+          }
         });
         return;
       }
