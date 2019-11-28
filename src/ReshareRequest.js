@@ -108,6 +108,9 @@ function translateCOtoRR(co) {
   // rr.patronGivenName has no corresponding OpenURL field
   // rr.patronType has no corresponding OpenURL field
   // rr.sendToPatron has no corresponding OpenURL field
+  rr.patronEmail = _.get(m, 'req.emailAddress');
+  rr.patronNote = _.get(m, 'svc.note');
+  rr.pickupLocation = _.get(m, 'svc.pickupLocation');
 
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.isRequester = true;

@@ -141,6 +141,10 @@ const tests = [
     input: 'rft_id=12345&rft.btitle=fish&req_id=mike',
     output: { title: 'fish', systemInstanceIdentifier: '12345', patronReference: 'mike' },
   },
+  {
+    input: 'req.emailAddress=mike@indexdata.com&svc.pickupLocation=ABC&svc.note=Urgent',
+    output: { patronEmail: 'mike@indexdata.com', pickupLocation: 'ABC', patronNote: 'Urgent' },
+  },
 ];
 
 describe('translate ContextObject to ReshareRequest', () => {
