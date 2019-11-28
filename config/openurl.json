@@ -9,5 +9,6 @@
   "password": "swordfish",
 
   "template.good": "templates/good.html",
-  "template.bad": "templates/bad.html"
+  "template.bad": "templates/bad.html",
+  "template.form": "templates/form.html"
 }
