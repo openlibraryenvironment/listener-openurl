@@ -3,10 +3,10 @@
   "listenPort": 3012,
   "docRoot": "htdocs",
 
-  "okapiUrl": "https://okapi-reshare.apps.k-int.com",
+  "okapiUrl": "https://demo-okapi.reshare-dev.indexdata.com",
   "tenant": "reshare",
-  "username": "admin",
-  "password": "rE0gNx7m2o",
+  "username": "reshare_admin",
+  "password": "admin",
 
   "template.good": "templates/good.html",
   "template.bad": "templates/bad.html",

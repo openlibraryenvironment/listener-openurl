@@ -14,10 +14,11 @@
 * Authenticate at `/authn/login` rather than the more heavyweight `/bl-users/login`: no change to functionality.
 * Include `systemInstanceIdentifier` in ReshareRequest, derived from `rft_id`. Fixes PR-246.
 * Add form for generating OpenURLs by hand. Fixes PR-269. http://openurl.indexdata.com/static/form.html
+* Change `caliban.json` configuration to post requests to Index Data's ReShare node instead of K-Int's.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
-* When asked to fetch a URL with a path that begins `/static/`, the named file is returned from the directory nominated by the confoguration file's `staticPath` entry. Fixes PR-135.
+* When asked to fetch a URL with a path that begins `/static/`, the named file is returned from the directory nominated by the configuration file's `staticPath` entry. Fixes PR-135.
 
 ## [1.2.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.2.0) (2019-02-21)
 
