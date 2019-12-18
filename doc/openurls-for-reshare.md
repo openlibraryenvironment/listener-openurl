@@ -33,7 +33,11 @@ These are keys that have special meaning either to the resolver itself or to the
 * `svc_id` -- specifies what kind of service the resolver is being asked to provide. By default, it posts a patron request in a ReShare node, but certain values will change this:
   * `contextObject` -- returns a JSON representation of the parsed context-object: only useful for debugging.
   * `reshareRequest` -- returns a JSON representation of the constructed ReShare patron request: only useful for debugging.
-  * `json` -- returns a JSON document indicating the status of the posted request. **(Not yet implemented: see [PR-461](https://openlibraryenvironment.atlassian.net/browse/PR-461))**
+  * `json` -- returns a JSON document indicating the status of the posted request. It contains the elements:
+    * `status` -- the HTTP status of posting the patron request to ReShare (201 in the case of success).
+    * `message` -- a content of the HTTP response from posting the patron request: only really of interest when an error occurs.
+    * `contextObject` -- the parsed context-object.
+    * `reshareRequest` -- the ReShare patron-request object generated from the context-object.
 * `rft.genre` -- indicates the type of published resource the patron is seeking. Drawn from a small controlled vocabulary: `journal`, `article`, `book`, `bookitem`, `conference`, `preprint`, `proceeding`.
 
 **Note.**

@@ -70,6 +70,16 @@ class OpenURLServer {
           return res.text()
             .then(body => {
               cfg.log('posted', `sent request, status ${res.status}`);
+              if (svcId === 'json') {
+                ctx.set('Content-Type', 'text/json');
+                ctx.body = {
+                  status: res.status,
+                  message: body,
+                  contextObject: { admindata, metadata },
+                  reshareRequest: rr.getRequest(),
+                };
+                return;
+              }
               ctx.set('Content-Type', 'text/html');
               if (`${res.status}`[0] !== '2') {
                 cfg.log('error', `POST error ${res.status}:`, body);
