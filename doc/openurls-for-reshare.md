@@ -3,6 +3,8 @@
 <!-- md2toc -l 2 openurls-for-reshare.md -->
 * [Introduction](#introduction)
 * [Keys](#keys)
+    * [Special keys](#special-keys)
+    * [Item metadata](#item-metadata)
 * [Appendix: reading the source code](#appendix-reading-the-source-code)
 
 
@@ -15,39 +17,53 @@ Although [v0.1 OpenURLs ](../standards/openurl-01.pdf) (those with simple keys l
 
 ## Keys
 
-* `ctx_id` -- id
-* `rft.genre` -- publicationType (translated)
-* `rft_id` -- systemInstanceIdentifier
-* `rft.title` `rft.btitle`, `rft.atitle`, `rft.jtitle` -- title
-* `rft.au`, `rft.creator`, `rft.aulast`, `rft.aufirst` -- author
-* `rft.pub` -- publisher
-* `rft.place` -- placeOfPublication
-* `rft.volume` -- volume
-* `rft.issue` -- issue
-* `rft.spage` -- startPage
-* `rft.epage` -- (with spage) -> numberOfPages
-* `rft.pages` -- startPage and numberOfPages;
-* `rft.date` -- publicationDate
-* `rft.issn` -- issn
-* `rft.isbn` -- isbn
-* `rft.coden` -- coden
-* `rft.sici` -- sici
-* `rft.bici` -- bici
-* `rft.eissn` -- eissn
-* `rft.part` -- part
-* `rft.artnum` -- artnum
-* `rft.ssn` -- ssn
-* `rft.quarter` -- quarter
-* `req_id` -- patronReference
-* `req.emailAddress` -- patronEmail
-* `svc.note` -- patronNote
-* `svc.pickupLocation` -- pickupLocation
-* `svc_id` -- serviceType XXX and special uses
+### Special keys
+
+These are keys that have special meaning either to the resolver itself or to the underlying ReShare software:
+
+* `ctx_id` -- a UUID to use as the identifier for the patron-request object that will be posted to ReShare. There is no reason ever to set this.
+* `rft_id` -- The identifier of the sought work within the ReShare shared index, if known. This will be a UUID.
+* `req_id` -- A unique reference to the patron placing the request, most probably obtained via an SSO system. This can take any form (UUID, small integer, email address, username, etc.) provided that it can be looked up in the borrowing system's NCIP server to obtain the patron's name and other details.
+* `req.emailAddress` -- An email address that the patron can be contacted on to notify the availability of the borrowed item. See note below.
+* `svc.pickupLocation` -- An indication of which pickup location the patron would prefer to get the item from once it has been delivered. This should usually be the code of a location or service-point known to the borrowing library's ILS. This is a mandatory field at present.
+* `svc.note` -- A free-text note which the patron may elect to include along with the request.
+* `svc_id` -- specifies what kind of service the resolver is being asked to provide. By default, it posts a patron request in a ReShare node, but certain values will change this:
+  * `contextObject` -- returns a JSON representation of the parsed context-object: only useful for debugging.
+  * `json` -- returns a JSON document indicating the status of the posted request. **(Not yet implemented: see [PR-461](https://openlibraryenvironment.atlassian.net/browse/PR-461))**
+* `rft.genre` -- indicates the type of published resource the patron is seeking. Drawn from a small controlled vocabulary: `journal`, `article`, `book`, `bookitem`, `conference`, `preprint`, `proceeding`.
+
+**Note.**
+At present, `req.emailAddress` is a mandatory field, and no ReShare request will be posted without it. In some installations, it should be possible to discover this from the borrowing library's NCIP server given a valid `req_id`. In this case, the field should not be mandatory in the request. Some more thought may be needed here.
+
+### Item metadata
+
+The remaining keys simply describe the sought resource, and have their usual meanings as specified (admittedly very tersely) in the standards documents:
+
+* `rft.title` `rft.btitle`, `rft.atitle`, `rft.jtitle` -- title, book title, article title and journal title, all of which are treated simply as "title" by ReShare.
+* `rft.au`, `rft.creator`, `rft.aulast`, `rft.aufirst` -- author, creator, author last name and author first name, all of which are treated simply as "author" by ReShare.
+* `rft.pub` -- publisher.
+* `rft.place` -- place of publication.
+* `rft.volume` -- volume.
+* `rft.issue` -- issue.
+* `rft.spage` -- start-page, i.e. the first page of an article.
+* `rft.epage` -- end-page, i.e. the last page of an article. This is not directly used by ReShare, but the resolver uses it together with `page` to determine the _number_ of pages, which is.
+* `rft.pages` -- A hyphen-separated page range such as `361-386`, which the resolver uses to determine the start-page and page-count.
+* `rft.date` -- date of publication, usually just a year.
+* `rft.issn` -- ISSN.
+* `rft.isbn` -- ISBN.
+* `rft.coden` -- CODEN, but who knows what _that_ is?
+* `rft.sici` -- SICI. No, I have no idea, either.
+* `rft.bici` -- BICI. Presumably some kind of in-joke.
+* `rft.eissn` -- electronic ISSN.
+* `rft.part` -- part. The original OpenURL document contains useless descriptions such as (for this one) "The part of a bundle". I'm not even going to try to expand on that.
+* `rft.artnum` -- The number of an individual item, in cases where there are no pages available. 
+* `rft.ssn` -- The season of publication, constrained (when provided) to be `winter`, `spring`, `summer` or `fall`. (All you gotta do is call.)
+* `rft.quarter` -- Apparently there are publications out there which use neither issue numbers nor seasons of publication, but specify which quarter of the year an issue came out. For these, you will find `rft.quarter` is exactly what you are looking for. Let me know how that works out for you.
 
 
 ## Appendix: reading the source code
 
-It is not necessary read source code to know how to format OpenURLs for the ReShare OpenURL resolver; but for those who like to know The Real Truth:
+It is not necessary to read source code to know how to format OpenURLs for the ReShare OpenURL resolver; but for those who like to know The Real Truth:
 
 The set of v0.1 keys that are recognised can be determined from the `translateVersion0point1` function [`ContextObject.js`](../src/ContextObject.js). This function specifies how v0.1 keys are translated into their v1.0 equivalents (and how some of the corresponding values are massaged along the way.)
 
