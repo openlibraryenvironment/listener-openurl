@@ -17,6 +17,9 @@ Although [v0.1 OpenURLs ](../standards/openurl-01.pdf) (those with simple keys l
 
 ## Keys
 
+Here, we list only the v1.0 keys. Those who, for whatever reason, are keen to send v0.1 keys are encouraged to find the mapping in [the source code](#appendix-reading-the-source-code).
+
+
 ### Special keys
 
 These are keys that have special meaning either to the resolver itself or to the underlying ReShare software:
