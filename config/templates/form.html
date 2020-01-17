@@ -13,7 +13,8 @@
 	      Patron email:
 	    </th>
 	    <td>
-	      <input size="42" type="text" name="req.emailAddress" value="{{'req.emailAddress'}}" />
+	      <input size="40" type="text" name="req.emailAddress" value="{{'req.emailAddress'}}" />
+	      *
 	      {{#if noEmailAddress}}
 		<br />
 		<span class="error">Please supply an email address.</span>
@@ -25,7 +26,8 @@
 	      Preferred&nbsp;pickup&nbsp;location:
 	    </th>
 	    <td>
-	      <input size="42" type="text" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}" />
+	      <input size="40" type="text" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}" />
+	      *
 	      {{#if noPickupLocation}}
 		<br />
 		<span class="error">Please supply a pickup location.</span>
@@ -38,7 +40,7 @@
 	      Note:
 	    </th>
 	    <td>
-	      <input size="42" type="text" name="svc.note" value="{{'svc.note'}}" />
+	      <input size="40" type="text" name="svc.note" value="{{'svc.note'}}" />
 	      <br />
 	    </td>
 	  </tr>
