@@ -1,0 +1,32 @@
+body {
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color: #111;
+}
+
+h1 {
+  font-size: 120%;
+  color: white;
+  background-color: #595377;
+  padding: 0.5em 1em;
+}
+
+form {
+  background: #f9f9f9;
+  padding: 1em;
+  border-radius: 0.75em;
+}
+
+td, th {
+    padding-top: 0.25em;
+}
+
+th {
+  font-weight: normal;
+  vertical-align: top;
+  text-align: right;
+}
+
+.error {
+  color: #c00;
+  font-size: 80%;
+}
