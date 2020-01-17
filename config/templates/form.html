@@ -1,25 +1,58 @@
-<h1>Please complete your request</h1>
-<p>
-  <form>
-    Patron email:
-    <input type="text" name="req.emailAddress" value="{{'req.emailAddress'}}" />
-    {{#if noEmailAddress}}
-      <span style="color:red">Please supply an email address.</span>
-    {{/if}}
-    <br />
-
-    Preferred pickup location:
-    <input type="text" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}" />
-    {{#if noPickupLocation}}
-      <span style="color:red">Please supply a pickup location.</span>
-    {{/if}}
-    <br />
-
-    Note:
-    <input type="text" name="svc.note" value="{{'svc.note'}}" />
-    <br />
-
-    {{{allValues}}}
-    <input type="submit" />
-  </form>
-</p>
+<html>
+  <head>
+    <title>Please complete your request</title>
+    <link rel="stylesheet" type="text/css" href="/static/form.css"/>
+  </head>
+  <body>
+    <h1>Please complete your request</h1>
+    <p>
+      <form>
+	<table>
+	  <tr>
+	    <th>
+	      Patron email:
+	    </th>
+	    <td>
+	      <input size="50" type="text" name="req.emailAddress" value="{{'req.emailAddress'}}" />
+	      {{#if noEmailAddress}}
+		<br />
+		<span class="error">Please supply an email address.</span>
+	      {{/if}}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>
+	      Preferred pickup location:
+	    </th>
+	    <td>
+	      <input size="50" type="text" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}" />
+	      {{#if noPickupLocation}}
+		<br />
+		<span class="error">Please supply a pickup location.</span>
+	      {{/if}}
+	      <br />
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>
+	      Note:
+	    </th>
+	    <td>
+	      <input size="50" type="text" name="svc.note" value="{{'svc.note'}}" />
+	      <br />
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>
+	    </th>
+	    <td>
+	      {{{allValues}}}
+	      <input type="submit" value="Submit!" />
+	    </td>
+	  </tr>
+	  <tr>
+	<table>
+      </form>
+    </p>
+  </body>
+</html>
