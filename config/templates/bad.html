@@ -1,9 +1,18 @@
-<h1>Uh-oh!</h1>
-<p>
-  <img src="/static/X_mark.svg" alt="red cross" height="100" width"100" />
-  Something is wrong, and the HTTP status is {{status}}.
-</p>  
-<h2>Detail</h2>
-<pre>
-{{json .}}
-</pre>
+<html>
+  <head>
+    <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="/static/form.css"/>
+  </head>
+  <body>
+    <h1 class="center">Error</h1>
+    <p class="center">
+      <img src="/static/X_mark.svg" alt="red cross" height="100" width"100" />
+      <br />
+      Something is wrong, and the HTTP status is {{status}}.
+    </p>  
+    <h2>Detail</h2>
+    <pre>
+    {{json .}}
+    </pre>
+  </body>
+</html>
