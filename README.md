@@ -8,7 +8,7 @@ To run against your own local development node, start with
 
 	node src/listener-openurl.js
 
-To run against the public ReShare node, start with:
+To run against a set of public ReShare nodes, start with:
 
 	node src/listener-openurl.js config/caliban.json
 
@@ -19,4 +19,5 @@ Documentation:
 * [Analysis of OpenURL example 1](examples/example1-analysis.md)
 * [Notes on choice of software platform](doc/platform-notes.md)
 * [Building, configuring and running the ReShare OpenURL listener](doc/manual.md)
+* [Formatting OpenURLs for ReShare](doc/openurls-for-reshare.md)
 
