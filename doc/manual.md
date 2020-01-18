@@ -47,7 +47,7 @@ Install using NPM or Yarn, as for most Node projects:
 
 The functioning of the OpenURL listener is affected by the following environment variables:
 
-* `LOGGING_CATEGORIES` -- a comma-separated list of logging categories which controls what information the listener emits for logging. See [below](#logging) for details of supported logging categories.
+* `LOGGING_CATEGORIES` -- a comma-separated list of logging categories which controls what information the listener emits for logging, overriding whatever is specified by the `loggingCategories` entry in the configuration file. See [below](#logging) for details of supported logging categories.
 * `LOGCAT` -- Identical to `LOGGING_CATEGORIES`.
 * `NODE_OPTIONS` affects how Node runs in the usual way: for example, `NODE_OPTIONS=--max-old-space-size=6192` allows it to allocate more memory (not that it should be needed for this small, simple program).
 
@@ -67,6 +67,8 @@ For communication with the ReShare back-end:
 * `tenant` -- The name of the tenant on that ReShare node which the resolver serves, for example `diku`.
 * `username` -- The name of the user who resource-sharing requests should be posted as. This should be a user who has all the necessary permissions, but it is preferable to avoid using an administrator -- just as one does not usually run Unix services as root. A special user such as `openurl` might be created for this purpose.
 * `password` -- The password needed to authenticate the specified user.
+
+To specify several different back-ends, provide a directory under the `services` key ([example](https://github.com/openlibraryenvironment/listener-openurl/blob/a68a71b8d2feab37e3cc24ad5444396e53668c6b/config/caliban.json#L10-L36)). Within this sub-object, each key is the identifier of a service, and the corresponding value is a set of `okapiUrl`, `tenant`, `username` and `password` fields like this listed above. These are used when the OpenURL resolver is accessed via a baseURL whose last path component is equal to the identifier. When the resolver is accessed using a baseURL that does not match any of the configured service identifiers, it falls back to using the default service configurastion (`okapiURL` etc.) specified at the top level.
 
 For templating:
 
@@ -102,7 +104,7 @@ The following category names are currently used:
 
 ## Starting the service
 
-You can run the service using a preselected logging configuration using `yarn start`, or manually using:
+You can run the service using a preselected configuration using `yarn start`, or manually using:
 
 	node src/listener-openurl.js
 
