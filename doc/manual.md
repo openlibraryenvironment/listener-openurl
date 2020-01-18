@@ -63,7 +63,7 @@ For general functioning:
 
 For communication with the ReShare back-end:
 
-* `okapiUrl` -- The full HTTP URL of the Okapi instance that provides the gateway to the ReShare node that the listener serves, for example `http://localhost:9130`.
+* `okapiUrl` -- The full HTTP or HTTPS URL of the Okapi instance that provides the gateway to the ReShare node that the listener serves, for example `http://localhost:9130`.
 * `tenant` -- The name of the tenant on that ReShare node which the resolver serves, for example `diku`.
 * `username` -- The name of the user who resource-sharing requests should be posted as. This should be a user who has all the necessary permissions, but it is preferable to avoid using an administrator -- just as one does not usually run Unix services as root. A special user such as `openurl` might be created for this purpose.
 * `password` -- The password needed to authenticate the specified user.
