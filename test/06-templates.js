@@ -9,8 +9,8 @@ const tests = [
     name: 'good',
     values: { status: 201 },
     checks: [
-      /All is well/,
-      /status is 201/,
+      /has been submitted/,
+      /checkmark/,
     ]
   },
   {
