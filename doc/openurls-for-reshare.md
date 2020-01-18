@@ -27,6 +27,7 @@ These are keys that have special meaning either to the resolver itself or to the
 * `ctx_id` -- a UUID to use as the identifier for the patron-request object that will be posted to ReShare. There is no reason ever to set this.
 * `rft_id` -- The identifier of the sought work within the ReShare shared index, if known. This will be a UUID.
 * `req_id` -- A unique reference to the patron placing the request, most probably obtained via an SSO system. This can take any form (UUID, small integer, email address, username, etc.) provided that it can be looked up in the borrowing system's NCIP server to obtain the patron's name and other details.
+* `ctx.FAIL` -- If set to a true value, causes the POST of the patron request to fail. Only useful in development.
 * `req.emailAddress` -- An email address that the patron can be contacted on to notify the availability of the borrowed item. See note below.
 * `svc.pickupLocation` -- An indication of which pickup location the patron would prefer to get the item from once it has been delivered. This should usually be the code of a location or service-point known to the borrowing library's ILS. This is a mandatory field at present.
 * `svc.note` -- A free-text note which the patron may elect to include along with the request.
