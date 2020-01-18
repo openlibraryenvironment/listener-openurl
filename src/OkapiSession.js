@@ -4,18 +4,18 @@ const fetch = require('node-fetch');
 const HTTPError = require('./HTTPError');
 
 class OkapiSession {
-  constructor(cfg) {
+  constructor(cfg, label = 'main', values) {
     this.logger = cfg;
+    if (!values) values = cfg.getValues();
 
     const filename = cfg.getFilename();
-    const values = cfg.getValues();
     ['okapiUrl', 'tenant', 'username', 'password'].forEach(param => {
       const val = values[param];
-      if (!val) throw Error(`no ${param} defined in ${filename}`);
+      if (!val) throw Error(`no ${param} defined for '${label}' in ${filename}`);
       this[param] = val;
     });
 
-    cfg.log('okapi', `making Okapi session for ${this.okapiUrl}`);
+    cfg.log('okapi', `making Okapi session '${label}' for ${this.okapiUrl}`);
   }
 
   login() {
