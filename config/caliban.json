@@ -10,5 +10,26 @@
 
   "template.good": "templates/good.html",
   "template.bad": "templates/bad.html",
-  "template.form": "templates/form.html"
+  "template.form": "templates/form.html",
+
+  "services": {
+    "IDVUFIND": {
+      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+      "tenant": "reshare",
+      "username": "admin",
+      "password": "darkstar"
+    },
+    "MILL": {
+      "okapiUrl": "http://reshare-mu.reshare-dev.indexdata.com",
+      "tenant": "millersville",
+      "username": "millersville_admin",
+      "password": "admin1350"
+    },
+    "KNOWINT01": {
+      "okapiUrl": "https://okapi-reshare.apps.k-int.com",
+      "tenant": "reshare",
+      "username": "admin",
+      "password": "rE0gNx7m2o"
+    }
+  }
 }
