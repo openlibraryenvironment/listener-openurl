@@ -3,11 +3,6 @@
   "listenPort": 3012,
   "docRoot": "htdocs",
 
-  "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
-  "tenant": "millersville",
-  "username": "millersville_admin",
-  "password": "admin1350",
-
   "template.good": "templates/good.html",
   "template.bad": "templates/bad.html",
   "template.form": "templates/form.html",
@@ -31,5 +26,11 @@
       "username": "admin",
       "password": "rE0gNx7m2o"
     }
-  }
+  },
+
+  "--comment--": "These are the fallback settings when none of the services is matched",
+  "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+  "tenant": "millersville",
+  "username": "millersville_admin",
+  "password": "admin1350"
 }
