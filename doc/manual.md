@@ -86,7 +86,7 @@ The HTML pages that are returned in response to OpenURL requests are generated u
 
 ### Logging
 
-The ReShare OpenURL listener uses the [`categorical-logger`](https://github.com/openlibraryenvironment/categorical-logger) library for logging. This logs messages in named categories, and emits only those that it has been told to. You can configure the set of categories that get logged by setting the `LOGGING_CATEGORIES` or `LOGCAT` environment variable (they are equivalent), which is set to a comma-separated list of category names. For example:
+The ReShare OpenURL listener uses the [`categorical-logger`](https://github.com/openlibraryenvironment/categorical-logger) library for logging. This logs messages in named categories, and emits only those that it has been told to. You can configure the set of categories that get logged by setting the `LOGGING_CATEGORIES` or `LOGCAT` environment variable (they are equivalent), which is set to a comma-separated list of category names. When neither version of this environment variable is specified, the `loggingCategories` setting in the configuration file is used. For example:
 
 	LOGCAT=start,co,metadata node listener-openurl.js
 
@@ -125,9 +125,9 @@ and
 [1.0](../standards/z39_88_2004_r2010.pdf)
 of the OpenURL standard in fact describe very different specifications. The ReShare OpenURL listener supports both standards by internally transforming v0.1 OpenURLs into equivalent v1.0 OpenURLs, and directly interpreting the latter. So the v0.1 query `author=smith&title=water` is equivalent to the v1.0 query `rft.author=smith&rft.btitle=water`.
 
-There is no very good way of determining whether a given OpenURL implements v0.1 or v1.0: the latter _may_ contain an explicit `url_ver=Z39.88-2004` key, but there is no requirement that they do so. In fact, the only formal requirement for a v1.0 OpenURLs is that it must contain a referent: which means at least one of the `rft_*` keys must be present (see table 13 in section 12.3.1 of the standard). But in practice, we need to deal with malformed OpenURLs that include inline referent metadata as `rft.*` keys but lack the `rft_val_fmt` key that is mandatory for inline referent metadata. So to pick up on all v1.0 OpenURLs, we check whether there is any `rft_*` _or_ `rft.*` key.
+There is no very good way of determining whether a given OpenURL implements v0.1 or v1.0: the latter _may_ contain an explicit `url_ver=Z39.88-2004` key, but there is no requirement that it do so. In fact, the only formal requirement for a v1.0 OpenURLs is that it must contain a referent: which means at least one of the `rft_*` keys must be present (see table 13 in section 12.3.1 of the standard). But in practice, we need to deal with malformed OpenURLs that include inline referent metadata as `rft.*` keys but lack the `rft_val_fmt` key that is supposedly mandatory for inline referent metadata. So to pick up on all v1.0 OpenURLs, we check whether there is any `rft_*` _or_ `rft.*` key.
 
-The listener does not support by-reference metadata: that is, it supports the various `rft.*` keys and `rft_val_fmt`, but not `rft_req` and `rft_ref_fmt` (and likewise for the other five entities). It follows that it does not support XML-encoded context objects, since these can only be provided by reference. If you don't know what any of that means, there's no need to worry: it's doubtful whether anyone, anywhere has _ever_ provided an OpenURL v1.0 context object by reference or encoded as XML, except as a demo of their ability to do so.
+The listener does not support by-reference metadata: that is, it supports the various `rft.*` keys and `rft_val_fmt`, but not `rft_ref` and `rft_ref_fmt` (and likewise for the other five entities). It follows that it does not support XML-encoded context objects, since these can only be provided by reference. If you don't know what any of that means, there's no need to worry: it's doubtful whether anyone, anywhere has _ever_ provided an OpenURL v1.0 context object by reference or encoded as XML, except as a demo of their ability to do so.
 
 
 ### Service-types
@@ -135,10 +135,12 @@ The listener does not support by-reference metadata: that is, it supports the va
 The OpenURL listener defaults to providing the service of posting an ILL reqeust to Okapi, but it also supports the following alternative service-types, which can be specified using the `svc_id` key. (This is a standard key OpenURL 1.0; it is also supported here as a non-standard extension to OpenURL 0.1.)
 
 * `contextObject` -- the parsed contextObject, broken down into admindata and metadata, is returned to the user in the HTTP response with content-type `application/json`.
+* `reshareRequest` -- the contextObject is parsed and translated into a ReShare patron request, which is returned to the user in the HTTP response with content-type `application/json`.
+* `json` -- the contextObject is transformed and the resulting patron-request posted as normal, but instead of returning an HTML  page to user it returns [a JSON-format report](openurls-for-reshare.md#special-keys).
 
-So:
+So for example:
 
-	$ curl 'http://localhost:3000/?id=123&svc_id=contextObject'
+	$ curl 'http://localhost:3012/?id=123&svc_id=contextObject'
 	{"admindata":{"rft":{"id":"123"},"svc":{"id":"contextObject"}},"metadata":{}}
 
 This is useful mainly for testing.
