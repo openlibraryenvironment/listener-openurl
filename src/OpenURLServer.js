@@ -10,8 +10,16 @@ const HTTPError = require('./HTTPError');
 
 class OpenURLServer {
   constructor(cfg) {
-    this.okapi = new OkapiSession(cfg);
     this.cfg = cfg;
+    this.services = {};
+
+    const services = cfg.getValues().services || [];
+    Object.keys(services).forEach(label => {
+      this.services[label] = new OkapiSession(cfg, label, services[label]);
+    });
+
+    // Default service
+    if (cfg.getValues().okapiUrl) this.services[''] = new OkapiSession(cfg);
 
     const docRoot = this.cfg.getValues().docRoot;
     if (!docRoot) {
@@ -52,9 +60,16 @@ class OpenURLServer {
 
       const rr = new ReshareRequest(co);
       const req = rr.getRequest();
-      let symbol = ctx.path.replace(/^\//, '');
-      if (!symbol.includes(':')) symbol = `RESHARE:${symbol}`;
-      req.requestingInstitutionSymbol = symbol;
+      const symbol = ctx.path.replace(/^\//, '');
+      req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
+      const service = this.services[symbol] || this.services[''];
+      if (!service) {
+        return new Promise((resolve) => {
+          ctx.body = `unsupported service '${symbol}'`;
+          resolve();
+        });
+      }
+
       cfg.log('rr', JSON.stringify(req, null, 2));
       if (svcId === 'reshareRequest') {
         return new Promise((resolve) => {
@@ -65,7 +80,7 @@ class OpenURLServer {
 
       // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
       const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
-      return this.okapi.post(path, req)
+      return service.post(path, req)
         .then(res => {
           return res.text()
             .then(body => {
@@ -96,7 +111,10 @@ class OpenURLServer {
     this.app.use(KoaStatic(`${cfg.path}/${docRoot}`));
   }
 
-  okapiLogin() { return this.okapi.login(); }
+  okapiLogin() {
+    return Promise.all(Object.keys(this.services).map(label => this.services[label].login()));
+  }
+
   listen(...args) { return this.app.listen(...args); }
 
   htmlBody(res, text) {
