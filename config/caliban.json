@@ -10,12 +10,12 @@
   "services": {
     "IDVUFIND": {
       "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
-      "tenant": "diku_admin",
-      "username": "admin",
+      "tenant": "diku",
+      "username": "diku_admin",
       "password": "admin"
     },
     "DEMO": {
-      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+      "okapiUrl": "https://demo-okapi.reshare-dev.indexdata.com",
       "tenant": "reshare",
       "username": "reshare_admin",
       "password": "admin",
