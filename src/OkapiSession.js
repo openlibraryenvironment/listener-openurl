@@ -6,6 +6,7 @@ const HTTPError = require('./HTTPError');
 class OkapiSession {
   constructor(cfg, label = 'main', values) {
     this.logger = cfg;
+    this.label = label;
     if (!values) values = cfg.getValues();
 
     const filename = cfg.getFilename();
@@ -20,7 +21,7 @@ class OkapiSession {
 
   login() {
     const { username, password } = this;
-    this.logger.log('okapi', `logging into Okapi as ${username}/${password}`);
+    this.logger.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
     return this.post('/authn/login', { username, password })
       .then(res => {
         if (res.status !== 201) throw new HTTPError(res, 'cannot login to FOLIO');
@@ -35,7 +36,7 @@ class OkapiSession {
       'x-okapi-tenant': this.tenant,
     };
     if (this.token) headers['x-token-token'] = this.token;
-    this.logger.log('okapi', `POST to ${path}`);
+    this.logger.log('okapi', `POST for '${this.label}' to ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
       method: 'POST',
       body: JSON.stringify(payload),
