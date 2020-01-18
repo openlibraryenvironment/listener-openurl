@@ -37,7 +37,7 @@ const tests = [
     ],
   },
   {
-    input: 'id=1',
+    input: 'rft.id=1&svc.ntries=1',
     messages: [
       [true, /Please complete your request/],
       [true, /Please supply an email address/],
@@ -45,14 +45,14 @@ const tests = [
     ],
   },
   {
-    input: 'id=1&req.emailAddress=x',
+    input: 'rft.id=1&req.emailAddress=x&svc.ntries=1',
     messages: [
       [false, /Please supply an email address/],
       [true, /Please supply a pickup location/],
     ],
   },
   {
-    input: 'id=1&svc.pickupLocation=x',
+    input: 'rft.id=1&svc.pickupLocation=x&svc.ntries=1',
     messages: [
       [true, /Please supply an email address/],
       [false, /Please supply a pickup location/],
