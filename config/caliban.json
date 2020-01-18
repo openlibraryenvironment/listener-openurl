@@ -14,6 +14,13 @@
       "username": "admin",
       "password": "admin"
     },
+    "DEMO": {
+      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+      "tenant": "reshare",
+      "username": "reshare_admin",
+      "password": "admin",
+      "requestingInstitutionSymbol": "MILL"
+    },
     "MILL": {
       "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
       "tenant": "millersville",
