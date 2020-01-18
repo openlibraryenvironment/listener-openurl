@@ -24,7 +24,7 @@ class OkapiSession {
     this.logger.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
     return this.post('/authn/login', { username, password })
       .then(res => {
-        if (res.status !== 201) throw new HTTPError(res, 'cannot login to FOLIO');
+        if (res.status !== 201) throw new HTTPError(res, `cannot login to FOLIO session '${this.label}'`);
         this.token = res.headers.get('x-okapi-token');
       });
   }
