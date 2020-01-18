@@ -116,7 +116,9 @@ class OpenURLServer {
   }
 
   form(co) {
-    const query = co.getQuery();
+    const query = Object.assign({}, co.getQuery());
+    const ntries = query['svc.ntries'] || 0;
+    query['svc.ntries'] = ntries + 1;
     const formFields = ['req.emailAddress', 'svc.pickupLocation', 'svc.note'];
     const allValues = Object.keys(omit(query, formFields))
       .sort()
@@ -125,8 +127,8 @@ class OpenURLServer {
 
     const data = Object.assign({}, query, {
       allValues,
-      noEmailAddress: !query['req.emailAddress'],
-      noPickupLocation: !query['svc.pickupLocation'],
+      noEmailAddress: ntries > 0 && !query['req.emailAddress'],
+      noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
     });
 
     const template = this.cfg.getTemplate('form');
