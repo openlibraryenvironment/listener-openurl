@@ -11,8 +11,8 @@
     "IDVUFIND": {
       "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
       "tenant": "reshare",
-      "username": "admin",
-      "password": "darkstar"
+      "username": "reshare_admin",
+      "password": "admin"
     },
     "MILL": {
       "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
