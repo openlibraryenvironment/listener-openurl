@@ -2,7 +2,7 @@
 
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
-const _ = require('lodash');
+const { get, omit } = require('lodash');
 const { ContextObject } = require('./ContextObject');
 const { ReshareRequest } = require('./ReshareRequest');
 const { OkapiSession } = require('./OkapiSession');
@@ -34,15 +34,15 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
-      if (!_.get(metadata, ['req', 'emailAddress']) ||
-          !_.get(metadata, ['svc', 'pickupLocation'])) {
+      if (!get(metadata, ['req', 'emailAddress']) ||
+          !get(metadata, ['svc', 'pickupLocation'])) {
         return new Promise((resolve) => {
           ctx.body = this.form(co);
           resolve();
         });
       }
 
-      const svcId = _.get(admindata, ['svc', 'id']);
+      const svcId = get(admindata, ['svc', 'id']);
       if (svcId === 'contextObject') {
         return new Promise((resolve) => {
           ctx.body = { admindata, metadata };
@@ -64,7 +64,7 @@ class OpenURLServer {
       }
 
       // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
-      const path = _.get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
+      const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
       return this.okapi.post(path, req)
         .then(res => {
           return res.text()
@@ -118,7 +118,7 @@ class OpenURLServer {
   form(co) {
     const query = co.getQuery();
     const formFields = ['req.emailAddress', 'svc.pickupLocation', 'svc.note'];
-    const allValues = Object.keys(_.omit(query, formFields))
+    const allValues = Object.keys(omit(query, formFields))
       .sort()
       .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
       .join('\n');
