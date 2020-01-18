@@ -15,7 +15,7 @@
       "password": "darkstar"
     },
     "MILL": {
-      "okapiUrl": "http://reshare-mu.reshare-dev.indexdata.com",
+      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
       "tenant": "millersville",
       "username": "millersville_admin",
       "password": "admin1350"
