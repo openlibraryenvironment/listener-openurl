@@ -103,7 +103,7 @@ function translateCOtoRR(co) {
   // rr.informationSource has no corresponding OpenURL field
 
   // Administrative data about who is asking for what
-  rr.patronReference = _.get(a, 'req.id');
+  rr.patronIdentifier = _.get(a, 'req.id');
   // rr.patronSurname has no corresponding OpenURL field
   // rr.patronGivenName has no corresponding OpenURL field
   // rr.patronType has no corresponding OpenURL field

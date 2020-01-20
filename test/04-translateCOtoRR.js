@@ -61,7 +61,7 @@ const tests = [
     output: {
       author: 'Taylor',
       id: '123',
-      patronReference: '@SomeGuy',
+      patronIdentifier: '@SomeGuy',
       title: 'Xenoposeidon',
       serviceType: 'fulltext',
     },
@@ -139,7 +139,7 @@ const tests = [
   },
   {
     input: 'rft_id=12345&rft.btitle=fish&req_id=mike',
-    output: { title: 'fish', systemInstanceIdentifier: '12345', patronReference: 'mike' },
+    output: { title: 'fish', systemInstanceIdentifier: '12345', patronIdentifier: 'mike' },
   },
   {
     input: 'req.emailAddress=mike@indexdata.com&svc.pickupLocation=ABC&svc.note=Urgent',
