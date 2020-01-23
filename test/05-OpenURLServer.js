@@ -60,7 +60,7 @@ const tests = [
   },
 ];
 
-describe('send OpenURLs to server', () => {
+describe('05. send OpenURLs to server', () => {
   const server = app.listen({ port: 0, host: 'localhost' });
   const requester = chai.request(server).keepOpen();
 

@@ -147,7 +147,7 @@ const tests = [
   },
 ];
 
-describe('translate ContextObject to ReshareRequest', () => {
+describe('04. translate ContextObject to ReshareRequest', () => {
   tests.forEach((test, i) => {
     it(`correctly translates ContextObject '${test.input}'`, () => {
       const query = querystring.parse(test.input);

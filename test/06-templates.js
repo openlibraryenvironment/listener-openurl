@@ -38,7 +38,7 @@ const tests = [
   }
 ];
 
-describe('substitute into templates', () => {
+describe('06. substitute into templates', () => {
   it('correctly fails on a non-existent config', () => {
     let undefinedCfg;
     try {

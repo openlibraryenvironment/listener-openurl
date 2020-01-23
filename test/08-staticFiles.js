@@ -53,7 +53,7 @@ const tests = [
   },
 ];
 
-describe('retrieve static files from server', () => {
+describe('08. retrieve static files from server', () => {
   const server = app.listen({ port: 0, host: 'localhost' });
   const requester = chai.request(server).keepOpen();
 

@@ -14,7 +14,7 @@ const v10urls = [
   'rft.author=smith&rft.title=water',
 ];
 
-describe('detect v0.1 OpenURL', () => {
+describe('01. detect v0.1 OpenURL', () => {
   it('does recognise version 0.1 OpenURLs', () => {
     v01urls.forEach(val => {
       const parsed = querystring.parse(val);

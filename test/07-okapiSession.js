@@ -4,7 +4,7 @@ const { Config } = require('../src/Config');
 const { OkapiSession } = require('../src/OkapiSession');
 const HTTPError = require('../src/HTTPError');
 
-describe('run an Okapi session', () => {
+describe('07. run an Okapi session', () => {
   function rejectConfig(key) {
     it(`rejects a config with no ${key}`, () => {
       let okapi, e;

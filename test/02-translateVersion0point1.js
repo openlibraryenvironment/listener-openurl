@@ -46,7 +46,7 @@ const data = [
   },
 ];
 
-describe('translate v0.1 OpenURL to v1.0', () => {
+describe('02. translate v0.1 OpenURL to v1.0', () => {
   it('translates version 0.1 OpenURLs', () => {
     data.forEach(val => {
       const { input, output } = val;

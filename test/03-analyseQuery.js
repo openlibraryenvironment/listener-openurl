@@ -37,7 +37,7 @@ const tests = [
   },
 ];
 
-describe('analyse OpenURL', () => {
+describe('03. analyse OpenURL', () => {
   tests.forEach(test => {
     it(`correctly analyses OpenURL '${test.input}'`, () => {
       const query = querystring.parse(test.input);
