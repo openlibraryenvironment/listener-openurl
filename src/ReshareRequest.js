@@ -111,6 +111,7 @@ function translateCOtoRR(co) {
   rr.patronEmail = _.get(m, 'req.emailAddress');
   rr.patronNote = _.get(m, 'svc.note');
   rr.pickupLocation = _.get(m, 'svc.pickupLocation');
+  rr.neededBy = _.get(m, 'svc.neededBy');
 
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.isRequester = true;

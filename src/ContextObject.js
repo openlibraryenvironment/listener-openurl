@@ -53,7 +53,7 @@ function translateVersion0point1(v01query) {
       }
     } else if (key === 'svc_id') {
       query.svc_id = val;
-    } else if (key === 'req.emailAddress' || key === 'svc.pickupLocation' || key === 'svc.note') {
+    } else if (key === 'req.emailAddress' || key === 'svc.pickupLocation' || key === 'svc.neededBy' || key === 'svc.note') {
       query[key] = val;
     } else {
       query[`rft.${key}`] = val;

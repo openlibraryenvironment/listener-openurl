@@ -42,8 +42,7 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
-      if (!get(metadata, ['req', 'emailAddress']) ||
-          !get(metadata, ['svc', 'pickupLocation'])) {
+      if (!get(metadata, ['svc', 'pickupLocation'])) {
         return new Promise((resolve) => {
           ctx.body = this.form(co);
           resolve();
@@ -137,7 +136,7 @@ class OpenURLServer {
     const query = Object.assign({}, co.getQuery());
     const ntries = query['svc.ntries'] || 0;
     query['svc.ntries'] = ntries + 1;
-    const formFields = ['req.emailAddress', 'svc.pickupLocation', 'svc.note'];
+    const formFields = ['svc.pickupLocation', 'svc.neededBy', 'svc.note'];
     const allValues = Object.keys(omit(query, formFields))
       .sort()
       .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
@@ -145,7 +144,6 @@ class OpenURLServer {
 
     const data = Object.assign({}, query, {
       allValues,
-      noEmailAddress: ntries > 0 && !query['req.emailAddress'],
       noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
     });
 

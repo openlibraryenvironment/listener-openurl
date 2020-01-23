@@ -28,8 +28,8 @@ These are keys that have special meaning either to the resolver itself or to the
 * `rft_id` -- The identifier of the sought work within the ReShare shared index, if known. This will be a UUID.
 * `req_id` -- A unique reference to the patron placing the request, most probably obtained via an SSO system. This can take any form (UUID, small integer, email address, username, etc.) provided that it can be looked up in the borrowing system's NCIP server to obtain the patron's name and other details.
 * `ctx.FAIL` -- If set to a true value, causes the POST of the patron request to fail. Only useful in development.
-* `req.emailAddress` -- An email address that the patron can be contacted on to notify the availability of the borrowed item. See note below.
 * `svc.pickupLocation` -- An indication of which pickup location the patron would prefer to get the item from once it has been delivered. This should usually be the code of a location or service-point known to the borrowing library's ILS. This is a mandatory field at present.
+* `svc.neededBy` -- The date by which the patron needs the requested item, expressed in [ISO 8601 format](https://xkcd.com/1179/).
 * `svc.note` -- A free-text note which the patron may elect to include along with the request.
 * `svc_id` -- specifies what kind of service the resolver is being asked to provide. By default, it posts a patron request in a ReShare node, but certain values will change this:
   * `contextObject` -- returns a JSON representation of the parsed context-object: only useful for debugging.
@@ -40,9 +40,6 @@ These are keys that have special meaning either to the resolver itself or to the
     * `contextObject` -- the parsed context-object.
     * `reshareRequest` -- the ReShare patron-request object generated from the context-object.
 * `rft.genre` -- indicates the type of published resource the patron is seeking. Drawn from a small controlled vocabulary: `journal`, `article`, `book`, `bookitem`, `conference`, `preprint`, `proceeding`.
-
-**Note.**
-At present, `req.emailAddress` is a mandatory field, and no ReShare request will be posted without it. In some installations, it should be possible to discover this from the borrowing library's NCIP server given a valid `req_id`. In this case, the field should not be mandatory in the request. Some more thought may be needed here.
 
 ### Item metadata
 

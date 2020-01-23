@@ -40,7 +40,7 @@ const tests = [
     input: 'rft.id=1&svc.ntries=1',
     messages: [
       [true, /Please complete your request/],
-      [true, /Please supply an email address/],
+      [false, /Please supply an email address/],
       [true, /Please supply a pickup location/],
     ],
   },
@@ -54,7 +54,7 @@ const tests = [
   {
     input: 'rft.id=1&svc.pickupLocation=x&svc.ntries=1',
     messages: [
-      [true, /Please supply an email address/],
+      [false, /Please supply an email address/],
       [false, /Please supply a pickup location/],
     ],
   },
@@ -82,7 +82,7 @@ describe('05. send OpenURLs to server', () => {
         });
         return;
       }
-      test.checks.forEach(([path, value]) => {
+      (test.checks || []).forEach(([path, value]) => {
         assert.equal(_.get(data, path), value);
       });
     });

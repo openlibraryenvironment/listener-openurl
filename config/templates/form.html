@@ -10,19 +10,6 @@
 	<table>
 	  <tr>
 	    <th>
-	      Patron email:
-	    </th>
-	    <td>
-	      <input size="39" type="text" name="req.emailAddress" value="{{'req.emailAddress'}}" />
-	      *
-	      {{#if noEmailAddress}}
-		<br />
-		<span class="error">Please supply an email address.</span>
-	      {{/if}}
-	    </td>
-	  </tr>
-	  <tr>
-	    <th>
 	      Preferred&nbsp;pickup&nbsp;location:
 	    </th>
 	    <td>
@@ -32,6 +19,15 @@
 		<br />
 		<span class="error">Please supply a pickup location.</span>
 	      {{/if}}
+	      <br />
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>
+	      Date needed by:
+	    </th>
+	    <td>
+	      <input size="39" type="text" name="svc.neededBy" value="{{'svc.neededBy'}}" />
 	      <br />
 	    </td>
 	  </tr>
