@@ -42,9 +42,18 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
+      const symbol = ctx.path.replace(/^\//, '');
+      const service = this.services[symbol] || this.services[''];
+      if (!service) {
+        return new Promise((resolve) => {
+          ctx.body = `unsupported service '${symbol}'`;
+          resolve();
+        });
+      }
+
       if (!get(metadata, ['svc', 'pickupLocation'])) {
         return new Promise((resolve) => {
-          ctx.body = this.form(co);
+          ctx.body = this.form(service, co);
           resolve();
         });
       }
@@ -59,15 +68,7 @@ class OpenURLServer {
 
       const rr = new ReshareRequest(co);
       const req = rr.getRequest();
-      const symbol = ctx.path.replace(/^\//, '');
       req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
-      const service = this.services[symbol] || this.services[''];
-      if (!service) {
-        return new Promise((resolve) => {
-          ctx.body = `unsupported service '${symbol}'`;
-          resolve();
-        });
-      }
 
       cfg.log('rr', JSON.stringify(req, null, 2));
       if (svcId === 'reshareRequest') {
@@ -110,8 +111,13 @@ class OpenURLServer {
     this.app.use(KoaStatic(`${cfg.path}/${docRoot}`));
   }
 
-  okapiLogin() {
-    return Promise.all(Object.keys(this.services).map(label => this.services[label].login()));
+  initializeOkapiSessions() {
+    return Promise.all(
+      Object.keys(this.services).map(label => {
+        this.services[label].login()
+          .then(res => this.services[label].getPickupLocations());
+      })
+    );
   }
 
   listen(...args) { return this.app.listen(...args); }
@@ -132,7 +138,7 @@ class OpenURLServer {
     return template(vars);
   }
 
-  form(co) {
+  form(service, co) {
     const query = Object.assign({}, co.getQuery());
     const ntries = query['svc.ntries'] || 0;
     query['svc.ntries'] = ntries + 1;
@@ -145,6 +151,7 @@ class OpenURLServer {
     const data = Object.assign({}, query, {
       allValues,
       noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
+      pickupLocations: service.pickupLocations,
     });
 
     const template = this.cfg.getTemplate('form');

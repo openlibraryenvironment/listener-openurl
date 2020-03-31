@@ -29,6 +29,23 @@ class OkapiSession {
       });
   }
 
+  getPickupLocations() {
+    const headers = {
+      'Accept': 'application/json',
+      'x-okapi-tenant': this.tenant,
+      'x-token-token': this.token,
+    };
+    const path = `/directory/entry?filters=tags.value%3D%3DPickup&perPage=100&stats=true`;
+    this.logger.log('okapi', `GET for ${this.label} from ${path}`);
+    return fetch(`${this.okapiUrl}${path}`, { headers })
+      .then(res => {
+        if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
+        return res.json().then((json) => {
+          this.pickupLocations = json.results.map(r => ({ id: r.id, code: r.lmsLocationCode, name: r.name }));
+        });
+      });
+  }
+
   post(path, payload) {
     const headers = {
       'Content-Type': 'application/json',

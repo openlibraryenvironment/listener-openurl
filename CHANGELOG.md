@@ -16,6 +16,7 @@
 * Add form for generating OpenURLs by hand. Fixes PR-269. http://openurl.indexdata.com/static/form.html
 * Change `caliban.json` configuration to post requests to Index Data's ReShare node instead of K-Int's.
 * When `svc_id` is `json`, post the patron request as usual but return a JSON summary instead of an HTML page. Fixes PR-461.
+* When prompting for pickup location, offer a dropdown of valid values obtained from ReShare. Fixes PR-572. Available from v1.3.1.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 

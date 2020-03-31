@@ -15,7 +15,7 @@ const cfg = new Config(args);
 const server = new OpenURLServer(cfg);
 const port = cfg.getValues().listenPort || 3012;
 
-server.okapiLogin().then(res => {
+server.initializeOkapiSessions().then(res => {
   server.listen(port);
   cfg.log('start', `starting up on port ${port}`);
 });
