@@ -53,8 +53,10 @@ class OpenURLServer {
 
       if (!get(metadata, ['svc', 'pickupLocation'])) {
         return new Promise((resolve) => {
-          ctx.body = this.form(service, co);
-          resolve();
+          service.getPickupLocations().then(() => {
+            ctx.body = this.form(service, co);
+            resolve();
+          });
         });
       }
 
@@ -114,8 +116,7 @@ class OpenURLServer {
   initializeOkapiSessions() {
     return Promise.all(
       Object.keys(this.services).map(label => {
-        this.services[label].login()
-          .then(res => this.services[label].getPickupLocations());
+        this.services[label].login();
       })
     );
   }
