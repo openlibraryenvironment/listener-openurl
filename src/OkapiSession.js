@@ -39,7 +39,7 @@ class OkapiSession {
       'x-okapi-tenant': this.tenant,
       'x-token-token': this.token,
     };
-    const path = `/directory/entry?filters=tags.value%3D%3DPickup&perPage=100&stats=true`;
+    const path = '/directory/entry?filters=tags.value%3D%3DPickup&perPage=100&stats=true';
     this.logger.log('okapi', `GET for ${this.label} from ${path}`);
     return fetch(`${this.okapiUrl}${path}`, { headers })
       .then(res => {
