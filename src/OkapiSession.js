@@ -41,6 +41,7 @@ class OkapiSession {
       .then(res => {
         if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
         return res.json().then((json) => {
+          this.logger.log('json', this.label, json);
           this.pickupLocations = json.results.map(r => ({ id: r.id, code: r.lmsLocationCode, name: r.name }));
         });
       });

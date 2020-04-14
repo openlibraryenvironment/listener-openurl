@@ -94,6 +94,7 @@ The following category names are currently used:
 
 * `start` -- logs a message when starting up, stating what port the listener is listening on
 * `okapi` -- logs Okapi-specific operations such as authenticating a new session
+* `json` -- logs the JSON returned from Okapi GET requests
 * `badkey` -- logs any bad keys found during analysis of OpenURLs
 * `co` -- logs the complete ContextObject created by analysis of OpenURLs
 * `admindata` -- logs the admin-data section of the analysed ContextObject
