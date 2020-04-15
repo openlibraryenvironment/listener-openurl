@@ -26,10 +26,6 @@ class OkapiSession {
       .then(res => {
         if (res.status !== 201) throw new HTTPError(res, `cannot login to FOLIO session '${this.label}'`);
         this.token = res.headers.get('x-okapi-token');
-      })
-      .catch(e => {
-        console.log(`can not login to ${this.label}:`, e);
-        // Do not set this.token
       });
   }
 
