@@ -53,10 +53,14 @@ class OpenURLServer {
 
       if (!get(metadata, ['svc', 'pickupLocation'])) {
         return new Promise((resolve) => {
-          service.getPickupLocations().then(() => {
+          if (get(metadata, ['svc', 'noPickupLocation'])) {
             ctx.body = this.form(service, co);
-            resolve();
-          });
+          } else {
+            service.getPickupLocations().then(() => {
+              ctx.body = this.form(service, co);
+            });
+          }
+          resolve();
         });
       }
 
