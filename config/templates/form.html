@@ -1,61 +1,72 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Please complete your request</title>
+    <title>Confirm request — PALCI E-ZBorrow</title>
     <link rel="stylesheet" type="text/css" href="/static/form.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <h1>Please complete your request</h1>
-    <p>
-      <form>
-	<table>
-	  <tr>
-	    <th>
-	      Preferred&nbsp;pickup&nbsp;location:
-	    </th>
-	    <td>
-	      <select name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
-		<option value="">(None selected)</option>
-	        {{#each pickupLocations}}
-		  <option value="{{this.id}}">{{this.name}}</option>
-	        {{/each}}
-	      </select>
-	      *
-	      {{#if noPickupLocation}}
-		<br />
-		<span class="error">Please supply a pickup location.</span>
-	      {{/if}}
-	      <br />
-	    </td>
-	  </tr>
-	  <tr>
-	    <th>
-	      Date needed by:
-	    </th>
-	    <td>
-	      <input size="39" type="text" name="svc.neededBy" value="{{'svc.neededBy'}}" />
-	      <br />
-	    </td>
-	  </tr>
-	  <tr>
-	    <th>
-	      Note:
-	    </th>
-	    <td>
-	      <input size="39" type="text" name="svc.note" value="{{'svc.note'}}" />
-	      <br />
-	    </td>
-	  </tr>
-	  <tr>
-	    <th>
-	    </th>
-	    <td>
-	      {{{allValues}}}
-	      <input type="submit" value="Submit!" />
-	    </td>
-	  </tr>
-	  <tr>
-	<table>
-      </form>
-    </p>
+    <div class="positioner">
+      <div class="site" lang="en" dir="ltr">
+        <div class="site__header"></div>
+        <div class="site__body">
+          <form class="page">
+            <div class="page__header">
+              <h1>Confirm request</h1>
+              <div class="logo"><a href="http://www.palci.org/overview/" target="_blank" aria-label="PALCI E-ZBorrow"><img src="/static/logo.png" aria-hidden="true"></a></div>
+            </div>
+            <div class="page__body">
+              <div class="summary">
+                <h2>{{'rft.title'}} <span class="no-break">({{'rft.genre'}})</span></h2>
+                <p>By {{'rft.au'}}. <span class="no-break">Published {{'rft.date'}}.</span> <span class="no-break">ISBN {{'rft.isbn'}}.</span></p>
+              </div>
+              <label class="key-value-pair" for="input-pick-up-location">
+                <div class="key">Pick up location</div>
+                <div class="value">
+                  <select class="select" id="input-pick-up-location" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
+                    <option value="">(None selected)</option>
+                    {{#each pickupLocations}}
+                      <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                  *
+                  {{#if noPickupLocation}}
+                    <br />
+                    <span class="error">Please supply a pickup location.</span>
+                  {{/if}}
+                </div>
+              </label>
+              <label class="key-value-pair" for="date-needed">
+                <div class="key">Date needed by</div>
+                <div class="value">
+                  <input id="date-needed" type="text" name="svc.neededBy" value="{{'svc.neededBy'}}" />
+                </div>
+              </label>
+              <label class="key-value-pair" for="volume">
+                <div class="key">Volume(s) needed</div>
+                <div class="value">
+                  <input id="volume" type="text" name="rft.volume" value="{{'rft.volume'}}" />
+                </div>
+              </label>
+              <label class="key-value-pair" for="note">
+                <div class="key">Note</div>
+                <div class="value">
+                  <input id="note" type="text" name="svc.note" value="{{'svc.note'}}" />
+                </div>
+              </label>
+            </div>
+            <div class="page__footer">
+              <div class="button-group">
+                <button class="button--primary" id="submit" type="submit">Confirm request</button>
+                <!--button.button--secondary.flex-order-minus-one Cancel-->
+              </div>
+            </div>
+            {{{allValues}}}
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="js/jquery-minified.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>

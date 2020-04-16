@@ -148,7 +148,7 @@ class OpenURLServer {
     const query = Object.assign({}, co.getQuery());
     const ntries = query['svc.ntries'] || 0;
     query['svc.ntries'] = ntries + 1;
-    const formFields = ['svc.pickupLocation', 'svc.neededBy', 'svc.note'];
+    const formFields = ['svc.pickupLocation', 'svc.neededBy', 'rft.volume', 'svc.note'];
     const allValues = Object.keys(omit(query, formFields))
       .sort()
       .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
