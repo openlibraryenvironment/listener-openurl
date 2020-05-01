@@ -32,6 +32,18 @@
       "tenant": "reshare",
       "username": "admin",
       "password": "rE0gNx7m2o"
+    },
+    "EAST": {
+      "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",
+      "tenant": "reshare_east",
+      "username": "east_admin",
+      "password": "east5231"
+    },
+    "WEST": {
+      "okapiUrl": "https://west-okapi.folio-dev.indexdata.com",
+      "tenant": "reshare_west",
+      "username": "west_admin",
+      "password": "west5231"
     }
   },
 
