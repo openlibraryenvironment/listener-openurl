@@ -8,9 +8,9 @@ To run against your own local development node, start with
 
 	node src/listener-openurl.js
 
-To run against a set of public ReShare nodes, start with:
+To run against a different configuration file, start with:
 
-	node src/listener-openurl.js config/caliban.json
+	node src/listener-openurl.js config/SOMEFILE.json
 
 Documentation:
 

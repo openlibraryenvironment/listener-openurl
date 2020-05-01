@@ -1,14 +1,43 @@
 {
-  "loggingCategories": "start,okapi,co,rr",
+  "loggingCategories": "error,start,okapi,co,rr",
   "listenPort": 3012,
   "docRoot": "htdocs",
 
-  "okapiUrl": "http://localhost:9130",
-  "tenant": "diku",
-  "username": "openurl",
-  "password": "swordfish",
-
   "template.good": "templates/good.html",
   "template.bad": "templates/bad.html",
-  "template.form": "templates/form.html"
+  "template.form": "templates/form.html",
+
+  "services": {
+    "IDVUFIND": {
+      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+      "tenant": "diku",
+      "username": "diku_admin",
+      "password": "admin"
+    },
+    "DEMO": {
+      "okapiUrl": "https://demo-okapi.reshare-dev.indexdata.com",
+      "tenant": "reshare",
+      "username": "reshare_admin",
+      "password": "admin",
+      "requestingInstitutionSymbol": "MILL"
+    },
+    "MILL": {
+      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+      "tenant": "millersville",
+      "username": "millersville_admin",
+      "password": "admin1350"
+    },
+    "KNOWINT01": {
+      "okapiUrl": "https://okapi-reshare.apps.k-int.com",
+      "tenant": "reshare",
+      "username": "admin",
+      "password": "rE0gNx7m2o"
+    }
+  },
+
+  "--comment--": "These are the fallback settings when none of the services is matched",
+  "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
+  "tenant": "millersville",
+  "username": "millersville_admin",
+  "password": "admin1350"
 }

@@ -10,12 +10,12 @@
 Description=OpenURL listener for ReShare
 Documentation=https://github.com/openlibraryenvironment/listener-openurl/blob/master/doc/manual.md
 After=network.target
-ConditionPathExists=/home/mike/listener-openurl/config/caliban.json
+ConditionPathExists=/home/mike/listener-openurl/config/openurl.json
 
 [Service]
 Type=simple
 WorkingDirectory=/home/mike/listener-openurl
-ExecStart=/usr/bin/node src/listener-openurl.js config/caliban.json
+ExecStart=/usr/bin/node src/listener-openurl.js
 StandardOutput=syslog
 SyslogIdentifier=listener-openurl
 # And add this to /etc/rsyslog.conf:
