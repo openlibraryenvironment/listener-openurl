@@ -160,7 +160,7 @@ class OpenURLServer {
       pickupLocations: service.pickupLocations,
     });
 
-    const template = this.cfg.getTemplate('form');
+    const template = this.cfg.getTemplate('form2');
     return template(data);
   }
 }
