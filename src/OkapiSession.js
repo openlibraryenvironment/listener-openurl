@@ -36,7 +36,7 @@ class OkapiSession {
       'x-token-token': this.token,
     };
     const path = '/directory/entry?filters=tags.value%3D%3DPickup&perPage=100&stats=true';
-    this.logger.log('okapi', `GET for ${this.label} from ${path}`);
+    this.logger.log('okapi', `GET for session '${this.label}' from ${path}`);
     return fetch(`${this.okapiUrl}${path}`, { headers })
       .then(res => {
         if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
@@ -54,7 +54,7 @@ class OkapiSession {
       'x-okapi-tenant': this.tenant,
     };
     if (this.token) headers['x-token-token'] = this.token;
-    this.logger.log('okapi', `POST for '${this.label}' to ${path}`);
+    this.logger.log('okapi', `POST for session '${this.label}' to ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
       method: 'POST',
       body: JSON.stringify(payload),
