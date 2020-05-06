@@ -84,7 +84,7 @@ function translateCOtoRR(co) {
   }
   rr.publicationDate = _.get(m, 'rft.date');
   // rr.publicationDateOfComponent has no corresponding OpenURL field
-  // rr.edition has no corresponding OpenURL field
+  rr.edition = _.get(m, 'rft.edition');
   rr.issn = _.get(m, 'rft.issn');
   rr.isbn = _.get(m, 'rft.isbn');
   // rr.doi has no corresponding OpenURL field XXX but consider poking around in rft.id

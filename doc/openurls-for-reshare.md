@@ -49,6 +49,7 @@ The remaining keys simply describe the sought resource, and have their usual mea
 * `rft.au`, `rft.creator`, `rft.aulast`, `rft.aufirst` -- author, creator, author last name and author first name, all of which are treated simply as "author" by ReShare.
 * `rft.pub` -- publisher.
 * `rft.place` -- place of publication.
+* `rft.edition` -- edition (not mentioned in the standard but appearing in some examples).
 * `rft.volume` -- volume.
 * `rft.issue` -- issue.
 * `rft.spage` -- start-page, i.e. the first page of an article.
