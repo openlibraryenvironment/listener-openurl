@@ -11,6 +11,16 @@ const app = (new OpenURLServer(new Config({ loggingCategories: '' })));
 
 const tests = [
   {
+    input: 'rft_id=123&rft.title=Sauroposeidon&rft.au=Wedel&rft.date=1999&svc.pickupLocation=loc123',
+    checks: [
+      ['admindata.rft.id', '123'],
+      ['metadata.rft.title', 'Sauroposeidon'],
+      ['metadata.rft.au', 'Wedel'],
+      ['metadata.rft.date', '1999'],
+      ['metadata.svc.pickupLocation', 'loc123'],
+    ],
+  },
+  {
     input: 'rft_id=123&req.emailAddress=mike@indexdata.com&svc.pickupLocation=loc123',
     checks: [
       ['admindata.rft.id', '123'],
@@ -19,7 +29,7 @@ const tests = [
     ],
   },
   {
-    input: 'id=123&issn=1234-5678&date=1998&volume=12&issue=2&spage=134&req.emailAddress=x&svc.pickupLocation=y',
+    input: 'id=123&issn=1234-5678&date=1998&volume=12&issue=2&spage=134&title=water&au=smith&svc.pickupLocation=y',
     checks: [
       ['metadata.rft.id', '123'],
       ['metadata.rft.issn', '1234-5678'],
@@ -27,17 +37,19 @@ const tests = [
       ['metadata.rft.volume', '12'],
       ['metadata.rft.issue', '2'],
       ['metadata.rft.spage', '134'],
+      ['metadata.rft.title', 'water'],
+      ['metadata.rft.au', 'smith'],
     ],
   },
   {
-    input: 'id=doi:123/345678&id=pmid:202123&req.emailAddress=x&svc.pickupLocation=y',
+    input: 'id=doi:123/345678&id=pmid:202123&title=t&au=a&date=d&req.emailAddress=x&svc.pickupLocation=y',
     checks: [
       ['metadata.rft.id.0', 'doi:123/345678'],
       ['metadata.rft.id.1', 'pmid:202123'],
     ],
   },
   {
-    input: 'rft.id=1&svc.ntries=1&svc.noPickupLocation=1',
+    input: 'rft_id=1&svc.ntries=1',
     messages: [
       [true, /Confirm request/],
       [false, /Please supply an email address/],
@@ -73,6 +85,7 @@ describe('05. send OpenURLs to server', () => {
       try {
         data = JSON.parse(res.text);
       } catch (e) {
+        if (!test.messages) throw e;
         test.messages.forEach(([shouldMatch, regexp]) => {
           if (shouldMatch) {
             assert.match(res.text, regexp);
