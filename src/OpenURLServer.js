@@ -159,6 +159,13 @@ class OpenURLServer {
       formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc');
     }
 
+    if (!query['rft.title']) {
+      query['rft.title'] = query['rft.btitle'] || query['rft.atitle'] || query['rft.jtitle'];
+    }
+    if (!query['rft.au']) {
+      query['rft.au'] = query['rft.creator'] || query['rft.aulast'] || query['rft.aufirst'];
+    }
+
     const allValues = Object.keys(omit(query, formFields))
       .sort()
       .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
