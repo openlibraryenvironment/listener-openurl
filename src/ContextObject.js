@@ -45,6 +45,7 @@ function translateVersion0point1(v01query) {
     } else if (key === 'pid') {
       query.rft_dat = val;
     } else if (key === 'title') {
+      query['rft.title'] = val;
       const genre = v01query.genre;
       if (genre === 'article' || genre === 'proceeding') {
         query['rft.jtitle'] = val;
