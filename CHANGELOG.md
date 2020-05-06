@@ -19,6 +19,7 @@
 * When prompting for pickup location, offer a dropdown of valid values obtained from ReShare. Fixes PR-572. Available from v1.3.1.
 * Consolidate OpenURL resolver configuration files. Fixes PR-681.
 * Add service entries for EAST and WEST unviersities to the configuration file. Fixes PR-677.
+* When a baseURL is invoked with no parameters (or insufficient to attempt a resolution), the enter-metadata form is presented. Fixes PR-651.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 

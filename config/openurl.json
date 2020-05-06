@@ -5,6 +5,7 @@
 
   "template.good": "templates/good.html",
   "template.bad": "templates/bad.html",
+  "template.form1": "templates/form1.html",
   "template.form2": "templates/form2.html",
 
   "services": {

@@ -51,7 +51,7 @@ class OpenURLServer {
         });
       }
 
-      if (!get(metadata, ['svc', 'pickupLocation'])) {
+      if (!co.hasBasicData() || !get(metadata, ['svc', 'pickupLocation'])) {
         return new Promise((resolve) => {
           if (get(metadata, ['svc', 'noPickupLocation'])) {
             ctx.body = this.form(service, co);
@@ -148,7 +148,17 @@ class OpenURLServer {
     const query = Object.assign({}, co.getQuery());
     const ntries = query['svc.ntries'] || 0;
     query['svc.ntries'] = ntries + 1;
-    const formFields = ['svc.pickupLocation', 'svc.neededBy', 'rft.volume', 'svc.note'];
+
+    let formName;
+    const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note'];
+    if (co.hasBasicData()) {
+      formName = 'form2';
+      formFields.push('svc.neededBy'); // XXX Should this also be in form1?
+    } else {
+      formName = 'form1';
+      formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc');
+    }
+
     const allValues = Object.keys(omit(query, formFields))
       .sort()
       .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
@@ -157,10 +167,14 @@ class OpenURLServer {
     const data = Object.assign({}, query, {
       allValues,
       noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
-      pickupLocations: service.pickupLocations,
+      pickupLocations: service.pickupLocations.map(x => ({
+        id: x.id,
+        name: x.name,
+        selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
+      })),
     });
 
-    const template = this.cfg.getTemplate('form2');
+    const template = this.cfg.getTemplate(formName);
     return template(data);
   }
 }

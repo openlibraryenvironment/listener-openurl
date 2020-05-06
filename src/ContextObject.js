@@ -113,6 +113,22 @@ class ContextObject {
   getQuery() { return this.query; }
   getAdmindata() { return this.admindata; }
   getMetadata() { return this.metadata; }
+
+  // Returns a boolean indicating whether or not the context object is
+  // considered to contain "basic data" sufficient to attempt a
+  // resoltion. Depending on whether this returns true of false, the
+  // resolver will invoke respective a simple form that prompts for a
+  // pickup location, or a bigger form that invites the user to fill
+  // in all the details.
+  //
+  // For now, our criteria are simple: a context object is considered
+  // capable of attempting resolution if it has EITHER an rft_id or
+  // all three of rft.title, rft.au and rft.date.
+  //
+  hasBasicData() {
+    const rft = (this.metadata || {}).rft || {};
+    return !!(this.admindata.id || (rft.title && rft.au && rft.date));
+  }
 }
 
 
