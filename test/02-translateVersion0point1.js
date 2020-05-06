@@ -14,7 +14,7 @@ const data = [
   },
   {
     input: 'author=smith&title=water',
-    output: 'rft.author=smith&rft.btitle=water',
+    output: 'rft.author=smith&rft.title=water&rft.btitle=water',
   },
   {
     input: 'issn=1234-5678&date=1998&volume=12&issue=2&spage=134',
@@ -30,11 +30,11 @@ const data = [
   },
   {
     input: 'genre=book&title=water',
-    output: 'rft.genre=book&rft.btitle=water',
+    output: 'rft.genre=book&rft.title=water&rft.btitle=water',
   },
   {
     input: 'genre=article&title=water',
-    output: 'rft.genre=article&rft.jtitle=water',
+    output: 'rft.genre=article&rft.title=water&rft.jtitle=water',
   },
   {
     input: 'genre=article&atitle=water',

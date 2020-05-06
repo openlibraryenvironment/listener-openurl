@@ -33,7 +33,7 @@ const tests = [
   {
     input: 'author=smith&title=water',
     admindata: {},
-    metadata: { rft: { author: 'smith', btitle: 'water' } },
+    metadata: { rft: { author: 'smith', title: 'water', btitle: 'water' } },
   },
 ];
 
