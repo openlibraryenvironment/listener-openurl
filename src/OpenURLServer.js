@@ -51,9 +51,10 @@ class OpenURLServer {
         });
       }
 
-      if (!co.hasBasicData() || !get(metadata, ['svc', 'pickupLocation'])) {
+      const npl = get(metadata, ['svc', 'noPickupLocation']);
+      if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
         return new Promise((resolve) => {
-          if (get(metadata, ['svc', 'noPickupLocation'])) {
+          if (npl) {
             ctx.body = this.form(service, co);
             resolve();
           } else {
@@ -174,7 +175,7 @@ class OpenURLServer {
     const data = Object.assign({}, query, {
       allValues,
       noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
-      pickupLocations: service.pickupLocations.map(x => ({
+      pickupLocations: (service.pickupLocations || []).map(x => ({
         id: x.id,
         name: x.name,
         selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
