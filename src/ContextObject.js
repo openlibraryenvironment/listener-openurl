@@ -127,7 +127,7 @@ class ContextObject {
   //
   hasBasicData() {
     const rft = (this.metadata || {}).rft || {};
-    return !!(this.admindata.id || (rft.title && rft.au && rft.date));
+    return !!((this.admindata.rft || {}).id || (rft.title && rft.au && rft.date));
   }
 }
 
