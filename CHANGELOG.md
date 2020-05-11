@@ -21,6 +21,7 @@
 * Add service entries for EAST and WEST unviersities to the configuration file. Fixes PR-677.
 * When a baseURL is invoked with no parameters (or insufficient to attempt a resolution), the enter-metadata form is presented. Fixes PR-651.
 * Support the `rft.edition` key. This is not mentioned in the standards, but appears in some example v1.0 OpenURLs.
+* Apply styles to the Request Accepted page. Fixes PR-686.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
