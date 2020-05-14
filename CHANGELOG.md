@@ -22,6 +22,7 @@
 * When a baseURL is invoked with no parameters (or insufficient to attempt a resolution), the enter-metadata form is presented. Fixes PR-651.
 * Support the `rft.edition` key. This is not mentioned in the standards, but appears in some example v1.0 OpenURLs.
 * Apply styles to the Request Accepted page. Fixes PR-686.
+* Directory search for "pickup" is now case-insensistive, so that it works both with Millersville (which uses "Pickup") and East (which uses "pickup"). Part of PR-677.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
