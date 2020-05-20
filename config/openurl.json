@@ -34,13 +34,13 @@
       "username": "admin",
       "password": "rE0gNx7m2o"
     },
-    "EAST": {
+    "US-EAST": {
       "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",
       "tenant": "reshare_east",
       "username": "east_admin",
       "password": "east5231"
     },
-    "WEST": {
+    "US-WEST": {
       "okapiUrl": "https://west-okapi.folio-dev.indexdata.com",
       "tenant": "reshare_west",
       "username": "west_admin",
