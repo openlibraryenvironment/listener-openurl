@@ -147,7 +147,7 @@ class OpenURLServer {
     };
 
     if (pickupLocations) {
-      const location = find(pickupLocations, x => x.id === vars.json.pickupLocation);
+      const location = find(pickupLocations, x => x.code === vars.json.pickupLocationCode);
       if (location) vars.pickupLocationName = location.name;
     }
 
@@ -188,6 +188,7 @@ class OpenURLServer {
       noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
       pickupLocations: (service.pickupLocations || []).map(x => ({
         id: x.id,
+        code: x.code,
         name: x.name,
         selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
       })),
