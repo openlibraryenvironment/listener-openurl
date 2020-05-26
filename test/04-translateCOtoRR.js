@@ -143,7 +143,7 @@ const tests = [
   },
   {
     input: 'req.emailAddress=mike@indexdata.com&svc.pickupLocation=ABC&svc.note=Urgent',
-    output: { patronEmail: 'mike@indexdata.com', pickupLocation: 'ABC', patronNote: 'Urgent' },
+    output: { patronEmail: 'mike@indexdata.com', pickupLocationCode: 'ABC', patronNote: 'Urgent' },
   },
 ];
 
