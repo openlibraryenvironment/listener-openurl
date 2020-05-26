@@ -28,12 +28,6 @@
       "username": "millersville_admin",
       "password": "admin1350"
     },
-    "KNOWINT01": {
-      "okapiUrl": "https://okapi-reshare.apps.k-int.com",
-      "tenant": "reshare",
-      "username": "admin",
-      "password": "rE0gNx7m2o"
-    },
     "US-EAST": {
       "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",
       "tenant": "reshare_east",
