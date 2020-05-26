@@ -76,7 +76,7 @@ body {
 .site {
   position: relative;
   width: 100%;
-  max-width: 34em;
+  max-width: 28em;
   background: #fff;
   border-radius: 0.75em;
   -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 2em 3em 0 rgba(0,0,0,0.25);
@@ -113,7 +113,8 @@ body {
 }
 .page__header {
   border-bottom: 1px solid #8f8f8f;
-  padding: 1.5em 2em;
+  padding: 0.5em 2em;
+  min-height: 3.2em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -130,6 +131,7 @@ body {
 }
 @media (max-width: 800px) {
   .page__header {
+    min-height: 2.2em;
     padding: 1em;
   }
 }
@@ -162,16 +164,27 @@ h1 {
   font-size: 1.25em;
   font-weight: 700;
   color: rgba(0,0,0,0.8);
-  margin: 0 -0.6em;
-}
-h1 svg {
-  height: 1.8em;
-  margin: 0 0.6em;
-  fill: #66a61c;
 }
 @media (max-width: 360px) {
   h1 {
     font-size: 1em;
+  }
+}
+h1 svg {
+  height: 1.7em;
+  margin: 0 0.6em 0 -0.4em;
+}
+@media (max-width: 800px) {
+  h1 svg {
+    margin: 0 0.6em 0 -0.1em;
+  }
+}
+[dir="rtl"] h1 svg {
+  margin: 0 -0.4em 0 0.6em;
+}
+@media (max-width: 800px) {
+  [dir="rtl"] h1 svg {
+    margin: 0 -0.4em 0 0.6em;
   }
 }
 .logo {
@@ -255,7 +268,6 @@ h1 svg {
 }
 .summary h2 {
   color: #404040;
-  font-size: 1.25em;
   line-height: 1.2em;
   margin-bottom: 0.3em;
   font-weight: 700;
@@ -267,7 +279,7 @@ h1 svg {
 .summary .no-break {
   white-space: nowrap;
 }
-label.key-value-pair {
+.key-value-pair {
   width: 100%;
   -webkit-tap-highlight-color: transparent;
   display: -webkit-box;
@@ -280,9 +292,12 @@ label.key-value-pair {
   margin-bottom: 0.5em;
 }
 @media (max-width: 800px) {
-  label.key-value-pair {
+  .key-value-pair {
     margin-bottom: 1em;
   }
+}
+.key-value-pair:last-child {
+  margin-bottom: 0;
 }
 .key {
   display: -webkit-box;
@@ -315,11 +330,25 @@ label.key-value-pair {
 .value {
   font-weight: 600;
   font-size: 1em;
-  margin-top: 0.35em;
   margin-bottom: 1.2em;
 }
 .value:last-child {
   margin-bottom: 0;
+}
+dd.value {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 0.8em;
+  min-height: calc(1.5em + 2px);
+}
+@media (max-width: 800px) {
+  dd.value {
+    min-height: calc(1em + 2px);
+  }
 }
 .required {
   color: #b30021;
