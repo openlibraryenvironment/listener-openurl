@@ -2,7 +2,7 @@
 
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
-const { get, omit } = require('lodash');
+const { get, omit, find } = require('lodash');
 const { ContextObject } = require('./ContextObject');
 const { ReshareRequest } = require('./ReshareRequest');
 const { OkapiSession } = require('./OkapiSession');
@@ -108,7 +108,13 @@ class OpenURLServer {
                 cfg.log('error', `POST error ${res.status}:`, body);
               }
               try {
-                ctx.body = this.htmlBody(res, body);
+                if (npl) {
+                  ctx.body = this.htmlBody(res, body);
+                } else {
+                  return service.getPickupLocations().then(() => {
+                    ctx.body = this.htmlBody(res, body, service.pickupLocations);
+                  });
+                }
               } catch (e) {
                 ctx.response.status = 500;
                 ctx.body = e.message;
@@ -129,7 +135,7 @@ class OpenURLServer {
 
   listen(...args) { return this.app.listen(...args); }
 
-  htmlBody(res, text) {
+  htmlBody(res, text, pickupLocations) {
     const status = `${res.status}`;
 
     const vars = { status };
@@ -139,6 +145,11 @@ class OpenURLServer {
     } catch (e) {
       vars.text = text;
     };
+
+    if (pickupLocations) {
+      const location = find(pickupLocations, x => x.id === vars.json.pickupLocation);
+      vars.pickupLocationName = location.name;
+    }
 
     const ok = (status[0] === '2');
     const template = this.cfg.getTemplate(ok ? 'good' : 'bad');
