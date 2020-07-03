@@ -39,6 +39,18 @@
       "tenant": "reshare_west",
       "username": "west_admin",
       "password": "west5231"
+    },
+    "US-pmils": {
+      "okapiUrl": "https://millersville-okapi.folio-dev.indexdata.com",
+      "tenant": "millersville",
+      "username": "millserville_admin",
+      "password": "ZW3vEB8zI3aRV616BMtXcChi"
+    },
+    "US-ppt": {
+      "okapiUrl": "https://temple-okapi.folio-dev.indexdata.com",
+      "tenant": "temple",
+      "username": "temple_admin",
+      "password": "OfkmvLUk2hspqSXi8n61ospP"
     }
   },
 
