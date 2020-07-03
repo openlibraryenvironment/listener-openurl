@@ -44,7 +44,7 @@
       "okapiUrl": "https://millersville-okapi.folio-dev.indexdata.com",
       "tenant": "millersville",
       "username": "millersville_admin",
-      "Password": "ZW3vEB8zI3aRV616BMtXcChi"
+      "password": "ZW3vEB8zI3aRV616BMtXcChi"
     },
     "US-ppt": {
       "okapiUrl": "https://temple-okapi.folio-dev.indexdata.com",
