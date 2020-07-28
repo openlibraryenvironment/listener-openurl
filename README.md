@@ -12,6 +12,11 @@ To run against a different configuration file, start with:
 
 	node src/listener-openurl.js config/SOMEFILE.json
 
+To build the Docker container
+
+	yarn install
+    docker build -t listener-openurl:latest .
+
 Documentation:
 
 * [Change-log](CHANGELOG.md)
