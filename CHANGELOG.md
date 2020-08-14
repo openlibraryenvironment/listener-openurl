@@ -25,6 +25,7 @@
 * Directory search for "pickup" is now case-insensistive, so that it works both with Millersville (which uses "Pickup") and East (which uses "pickup"). Part of PR-677.
 * Request Accepted page changes. Fixes PR-688.
 * Set `pickupLocationCode` rather than `pickupLocation`. Part of PR-624.
+* Send `x-okapi-token` header instead of `x-token-token`. Fixes PR-781.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
