@@ -33,7 +33,7 @@ class OkapiSession {
     const headers = {
       'Accept': 'application/json',
       'x-okapi-tenant': this.tenant,
-      'x-token-token': this.token,
+      'x-okapi-token': this.token,
     };
     const path = '/directory/entry?filters=tags.value%3Di%3Dpickup&perPage=100&stats=true';
     this.logger.log('okapi', `GET for session '${this.label}' from ${path}`);
@@ -53,7 +53,7 @@ class OkapiSession {
       'Accept': 'application/json',
       'x-okapi-tenant': this.tenant,
     };
-    if (this.token) headers['x-token-token'] = this.token;
+    if (this.token) headers['x-okapi-token'] = this.token;
     this.logger.log('okapi', `POST for session '${this.label}' to ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
       method: 'POST',
