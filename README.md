@@ -15,7 +15,7 @@ To run against a different configuration file, start with:
 To build the Docker container
 
 	yarn install
-    docker build -t listener-openurl:latest .
+	docker build -t listener-openurl:latest .
 
 Documentation:
 
