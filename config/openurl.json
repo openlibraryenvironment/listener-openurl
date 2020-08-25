@@ -9,18 +9,6 @@
   "template.form2": "templates/form2.html",
 
   "services": {
-    "IDVUFIND": {
-      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
-      "tenant": "diku",
-      "username": "diku_admin",
-      "password": "admin"
-    },
-    "MILL": {
-      "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
-      "tenant": "millersville",
-      "username": "millersville_admin",
-      "password": "admin1350"
-    },
     "US-EAST": {
       "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",
       "tenant": "reshare_east",
@@ -32,24 +20,6 @@
       "tenant": "reshare_west",
       "username": "west_admin",
       "password": "west5231"
-    },
-    "US-pmils": {
-      "okapiUrl": "https://millersville-okapi.folio-dev.indexdata.com",
-      "tenant": "millersville",
-      "username": "millersville_admin",
-      "password": "ZW3vEB8zI3aRV616BMtXcChi"
-    },
-    "US-ppt": {
-      "okapiUrl": "https://temple-okapi.folio-dev.indexdata.com",
-      "tenant": "temple",
-      "username": "temple_admin",
-      "password": "OfkmvLUk2hspqSXi8n61ospP"
     }
-  },
-
-  "--comment--": "These are the fallback settings when none of the services is matched",
-  "okapiUrl": "http://reshare.reshare-dev.indexdata.com:9130",
-  "tenant": "millersville",
-  "username": "millersville_admin",
-  "password": "admin1350"
+  }
 }
