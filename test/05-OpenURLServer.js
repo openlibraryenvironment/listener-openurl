@@ -49,7 +49,7 @@ const tests = [
     ],
   },
   {
-    input: 'rft_id=1&svc.ntries=1',
+    input: 'rft_id=1&svc.ntries=1&svc.noPickupLocation=1&',
     messages: [
       [true, /Confirm request/],
       [false, /Please supply an email address/],
@@ -64,10 +64,10 @@ const tests = [
     ],
   },
   {
-    input: 'rft.id=1&svc.pickupLocation=x&svc.ntries=1',
+    input: 'rft.id=1&svc.pickupLocation=x&svc.ntries=1&svc.noPickupLocation=1',
     messages: [
       [false, /Please supply an email address/],
-      [false, /Please supply a pickup location/],
+      [false, /Please supply a pickup location/], // Because of the noPickupLocation element
     ],
   },
 ];
@@ -78,7 +78,7 @@ describe('05. send OpenURLs to server', () => {
 
   tests.forEach(test => {
     it(`correctly returns parsed OpenURL '${test.input}'`, async() => {
-      const res = await requester.get(`/?${test.input}&svc_id=contextObject`);
+      const res = await requester.get(`/US-EAST?${test.input}&svc_id=contextObject`);
       assert.equal(res.status, 200);
 
       let data;
