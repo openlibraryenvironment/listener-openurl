@@ -5,14 +5,20 @@ const { OkapiSession } = require('../src/OkapiSession');
 const HTTPError = require('../src/HTTPError');
 
 describe('07. run an Okapi session', () => {
+  function newOkapiSessionForService(label, overrides) {
+    const cfg = new Config({ loggingCategories: '' });
+    const values = cfg.getValues().services[label];
+    Object.keys(overrides).forEach(key => {
+      values[key] = overrides[key];
+    });
+    return new OkapiSession(cfg, label, values);
+  }
+
   function rejectConfig(key) {
     it(`rejects a config with no ${key}`, () => {
       let okapi, e;
       try {
-        const vars = { loggingCategories: '' };
-        vars[key] = '';
-        const cfg = new Config(vars);
-        okapi = new OkapiSession(cfg);
+        okapi = newOkapiSessionForService('US-EAST', { [key]: '' });
       } catch (e1) {
         e = e1;
       }
@@ -26,8 +32,7 @@ describe('07. run an Okapi session', () => {
   rejectConfig('tenant');
 
   it('correctly authenticates with good credentials', (done) => {
-    const cfg = new Config({ loggingCategories: '' });
-    const okapi = new OkapiSession(cfg);
+    const okapi = new newOkapiSessionForService('US-EAST', {});
     const p = okapi.login();
     p.then(() => {
       assert.match(okapi.token, /^[a-zA-Z0-9_.-]*$/);
@@ -61,8 +66,7 @@ describe('07. run an Okapi session', () => {
   });
 
   it('correctly fails to authenticate with bad credentials', (done) => {
-    const cfg = new Config({ loggingCategories: '', password: 'somethingWrong' });
-    const okapi = new OkapiSession(cfg);
+    const okapi = new newOkapiSessionForService('US-EAST', { password: 'somethingWrong' });
     const p = okapi.login();
     p.then(() => {
       done(new Error('logged in successfully but did not expect to'));
