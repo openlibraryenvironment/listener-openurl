@@ -32,7 +32,7 @@ describe('07. run an Okapi session', () => {
   rejectConfig('tenant');
 
   it('correctly authenticates with good credentials', (done) => {
-    const okapi = new newOkapiSessionForService('US-EAST', {});
+    const okapi = newOkapiSessionForService('US-EAST', {});
     const p = okapi.login();
     p.then(() => {
       assert.match(okapi.token, /^[a-zA-Z0-9_.-]*$/);
@@ -66,7 +66,7 @@ describe('07. run an Okapi session', () => {
   });
 
   it('correctly fails to authenticate with bad credentials', (done) => {
-    const okapi = new newOkapiSessionForService('US-EAST', { password: 'somethingWrong' });
+    const okapi = newOkapiSessionForService('US-EAST', { password: 'somethingWrong' });
     const p = okapi.login();
     p.then(() => {
       done(new Error('logged in successfully but did not expect to'));
