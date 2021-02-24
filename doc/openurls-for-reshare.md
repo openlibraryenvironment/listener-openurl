@@ -24,6 +24,7 @@ Here, we list only the v1.0 keys. Those who, for whatever reason, are keen to se
 
 These are keys that have special meaning either to the resolver itself or to the underlying ReShare software:
 
+* `res.org` -- If supplied, the value overrides the oranization identifier in the baseURL. Can be used to allow a single resolver configuration stanza to be used for multiple organizations.
 * `ctx_id` -- a UUID to use as the identifier for the patron-request object that will be posted to ReShare. There is no reason ever to set this.
 * `rft_id` -- The identifier of the sought work within the ReShare shared index, if known. This will be a UUID.
 * `req_id` -- A unique reference to the patron placing the request, most probably obtained via an SSO system. This can take any form (UUID, small integer, email address, username, etc.) provided that it can be looked up in the borrowing system's NCIP server to obtain the patron's name and other details.

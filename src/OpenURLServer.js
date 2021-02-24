@@ -42,7 +42,7 @@ class OpenURLServer {
       cfg.log('admindata', JSON.stringify(admindata, null, 2));
       cfg.log('metadata', JSON.stringify(metadata, null, 2));
 
-      const symbol = ctx.path.replace(/^\//, '');
+      const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
       const service = this.services[symbol] || this.services[''];
       if (!service) {
         return new Promise((resolve) => {

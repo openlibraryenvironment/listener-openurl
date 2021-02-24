@@ -26,6 +26,7 @@
 * Request Accepted page changes. Fixes PR-688.
 * Set `pickupLocationCode` rather than `pickupLocation`. Part of PR-624.
 * Send `x-okapi-token` header instead of `x-token-token`. Fixes PR-781.
+* Support optional `res.org` key: if supplied, the value overrides the oranization identifier in the baseURL. Fixes PR-932.
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
