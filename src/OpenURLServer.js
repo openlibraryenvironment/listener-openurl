@@ -9,6 +9,104 @@ const { OkapiSession } = require('./OkapiSession');
 const HTTPError = require('./HTTPError');
 
 class OpenURLServer {
+  async handle(cfg, ctx, next) {
+    // const cfg = this.cfg;
+
+    if (ctx.path.startsWith('/static/') ||
+        ctx.path === '/favicon.ico' ||
+        (ctx.path === '/' && ctx.search === '')) {
+      await next();
+      return;
+    }
+
+    const co = new ContextObject(cfg, ctx.query);
+    cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery(), null, 2));
+    const admindata = co.getAdmindata();
+    const metadata = co.getMetadata();
+    cfg.log('admindata', JSON.stringify(admindata, null, 2));
+    cfg.log('metadata', JSON.stringify(metadata, null, 2));
+
+    const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
+    const service = this.services[symbol] || this.services[''];
+    if (!service) {
+      return new Promise((resolve) => {
+        ctx.body = `unsupported service '${symbol}'`;
+        resolve();
+      });
+    }
+
+    const npl = get(metadata, ['svc', 'noPickupLocation']);
+    if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
+      return new Promise((resolve) => {
+        if (npl) {
+          ctx.body = this.form(service, co);
+          resolve();
+        } else {
+          service.getPickupLocations().then(() => {
+            ctx.body = this.form(service, co);
+            resolve();
+          });
+        }
+      });
+    }
+
+    const svcId = get(admindata, ['svc', 'id']);
+    if (svcId === 'contextObject') {
+      return new Promise((resolve) => {
+        ctx.body = { admindata, metadata };
+        resolve();
+      });
+    }
+
+    const rr = new ReshareRequest(co);
+    const req = rr.getRequest();
+    req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
+
+    cfg.log('rr', JSON.stringify(req, null, 2));
+    if (svcId === 'reshareRequest') {
+      return new Promise((resolve) => {
+        ctx.body = req;
+        resolve();
+      });
+    }
+
+    // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
+    const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
+    return service.post(path, req)
+      .then(res => {
+        return res.text()
+          .then(body => {
+            cfg.log('posted', `sent request, status ${res.status}`);
+            if (svcId === 'json') {
+              ctx.set('Content-Type', 'text/json');
+              ctx.body = {
+                status: res.status,
+                message: body,
+                contextObject: { admindata, metadata },
+                reshareRequest: rr.getRequest(),
+              };
+              return;
+            }
+            ctx.set('Content-Type', 'text/html');
+            if (`${res.status}`[0] !== '2') {
+              cfg.log('error', `POST error ${res.status}:`, body);
+            }
+            try {
+              if (npl) {
+                ctx.body = this.htmlBody(res, body);
+              } else {
+                return service.getPickupLocations().then(() => {
+                  ctx.body = this.htmlBody(res, body, service.pickupLocations);
+                });
+              }
+            } catch (e) {
+              ctx.response.status = 500;
+              ctx.body = e.message;
+            }
+          });
+      });
+  }
+
   constructor(cfg) {
     this.cfg = cfg;
     this.services = {};
@@ -27,101 +125,7 @@ class OpenURLServer {
     }
 
     this.app = new Koa();
-    this.app.use(async(ctx, next) => {
-      if (ctx.path.startsWith('/static/') ||
-          ctx.path === '/favicon.ico' ||
-          (ctx.path === '/' && ctx.search === '')) {
-        await next();
-        return;
-      }
-
-      const co = new ContextObject(cfg, ctx.query);
-      cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery(), null, 2));
-      const admindata = co.getAdmindata();
-      const metadata = co.getMetadata();
-      cfg.log('admindata', JSON.stringify(admindata, null, 2));
-      cfg.log('metadata', JSON.stringify(metadata, null, 2));
-
-      const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
-      const service = this.services[symbol] || this.services[''];
-      if (!service) {
-        return new Promise((resolve) => {
-          ctx.body = `unsupported service '${symbol}'`;
-          resolve();
-        });
-      }
-
-      const npl = get(metadata, ['svc', 'noPickupLocation']);
-      if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
-        return new Promise((resolve) => {
-          if (npl) {
-            ctx.body = this.form(service, co);
-            resolve();
-          } else {
-            service.getPickupLocations().then(() => {
-              ctx.body = this.form(service, co);
-              resolve();
-            });
-          }
-        });
-      }
-
-      const svcId = get(admindata, ['svc', 'id']);
-      if (svcId === 'contextObject') {
-        return new Promise((resolve) => {
-          ctx.body = { admindata, metadata };
-          resolve();
-        });
-      }
-
-      const rr = new ReshareRequest(co);
-      const req = rr.getRequest();
-      req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
-
-      cfg.log('rr', JSON.stringify(req, null, 2));
-      if (svcId === 'reshareRequest') {
-        return new Promise((resolve) => {
-          ctx.body = req;
-          resolve();
-        });
-      }
-
-      // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
-      const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
-      return service.post(path, req)
-        .then(res => {
-          return res.text()
-            .then(body => {
-              cfg.log('posted', `sent request, status ${res.status}`);
-              if (svcId === 'json') {
-                ctx.set('Content-Type', 'text/json');
-                ctx.body = {
-                  status: res.status,
-                  message: body,
-                  contextObject: { admindata, metadata },
-                  reshareRequest: rr.getRequest(),
-                };
-                return;
-              }
-              ctx.set('Content-Type', 'text/html');
-              if (`${res.status}`[0] !== '2') {
-                cfg.log('error', `POST error ${res.status}:`, body);
-              }
-              try {
-                if (npl) {
-                  ctx.body = this.htmlBody(res, body);
-                } else {
-                  return service.getPickupLocations().then(() => {
-                    ctx.body = this.htmlBody(res, body, service.pickupLocations);
-                  });
-                }
-              } catch (e) {
-                ctx.response.status = 500;
-                ctx.body = e.message;
-              }
-            });
-        });
-    });
+    this.app.use((ctx, next) => this.handle(cfg, ctx, next));
     this.app.use(KoaStatic(`${cfg.path}/${docRoot}`));
   }
 
