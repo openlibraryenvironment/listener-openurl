@@ -137,7 +137,9 @@ class OpenURLServer {
     );
   }
 
-  listen(...args) { return this.app.listen(...args); }
+  listen(...args) {
+    return this.app.listen(...args);
+  }
 
   htmlBody(res, text, pickupLocations) {
     const status = `${res.status}`;
