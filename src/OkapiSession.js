@@ -22,7 +22,7 @@ class OkapiSession {
   login() {
     const { username, password } = this;
     this.logger.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
-    return this.post('/authn/login', { username, password })
+    return this.okapiFetch('POST', '/authn/login', { username, password }, true)
       .then(res => {
         if (res.status !== 201) throw new HTTPError(res, `cannot login to FOLIO session '${this.label}'`);
         this.token = res.headers.get('x-okapi-token');
@@ -30,14 +30,9 @@ class OkapiSession {
   }
 
   getPickupLocations() {
-    const headers = {
-      'Accept': 'application/json',
-      'x-okapi-tenant': this.tenant,
-      'x-okapi-token': this.token,
-    };
+    const method = 'GET';
     const path = '/directory/entry?filters=tags.value%3Di%3Dpickup&filters=status.value%3Di%3Dmanaged&perPage=100&stats=true';
-    this.logger.log('okapi', `GET for session '${this.label}' from ${path}`);
-    return fetch(`${this.okapiUrl}${path}`, { headers })
+    return this.okapiFetch(method, path, undefined)
       .then(res => {
         if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
         return res.json().then((json) => {
@@ -48,18 +43,26 @@ class OkapiSession {
   }
 
   post(path, payload) {
+    return this.okapiFetch('POST', path, payload);
+  }
+
+  okapiFetch(method, path, payload, doNotRetry) {
     const headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'x-okapi-tenant': this.tenant,
     };
     if (this.token) headers['x-okapi-token'] = this.token;
-    this.logger.log('okapi', `POST for session '${this.label}' to ${path}`);
+    this.logger.log('okapi', `okapiFetch ${method} for session '${this.label}' at ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
-      method: 'POST',
-      body: JSON.stringify(payload),
+      method,
+      body: payload ? JSON.stringify(payload) : undefined,
       headers
-    });
+    }).then(res => (
+      (res.status === 403 && !doNotRetry)
+        ? this.login().then(res => this.okapiFetch(method, path, payload, true))
+        : res)
+    );
   }
 }
 
