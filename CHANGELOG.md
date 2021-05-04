@@ -1,6 +1,6 @@
 # Change history for listener-openurl
 
-## 1.4.0 (IN PROGRESS)
+## [1.4.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.4.0) (2021-05-04)
 
 * Add support for a home-page, retrieved when the baseURL is invoked with no arguments. Fixes last part of PR-135.
 * Add example configuration for running as a service on a Debian GNU/Linux host: [`config/caliban.json`](config/caliban.json) is a listener configuration file tweaked or the server caliban, and [`config/listener-openurl.service`](config/listener-openurl.service) is a sample systemd unit file suitable for running on caliban.
@@ -29,6 +29,7 @@
 * Support optional `res.org` key: if supplied, the value overrides the oranization identifier in the baseURL. Fixes PR-932.
 * Support optional `svc.logout` key: if supplied and true, the current authentication token is discarded. Useful only for testing.
 * When an Okapi request fails with status 403 Forbidden, assume the token has expired, login again and retry the operation. Does not apply to login itself, obviously, and will only retry once. Fixes PR-918.
+* May the fourth be with you!
 
 ## [1.3.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.3.0) (2019-02-26)
 
