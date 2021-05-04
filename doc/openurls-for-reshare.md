@@ -40,6 +40,7 @@ These are keys that have special meaning either to the resolver itself or to the
     * `message` -- a content of the HTTP response from posting the patron request: only really of interest when an error occurs.
     * `contextObject` -- the parsed context-object.
     * `reshareRequest` -- the ReShare patron-request object generated from the context-object.
+* `svc.logout` -- if set to a true value such as `1`, the current Okapi session is forced to forget its authentication token, so that a re-login is required. This was added for testing only, and may well have no other use.
 * `rft.genre` -- indicates the type of published resource the patron is seeking. Drawn from a small controlled vocabulary: `journal`, `article`, `book`, `bookitem`, `conference`, `preprint`, `proceeding`.
 
 ### Item metadata

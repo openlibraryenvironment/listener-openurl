@@ -35,6 +35,12 @@ class OpenURLServer {
       });
     }
 
+    const logout = get(metadata, ['svc', 'logout']);
+    if (logout) {
+      // Allows us to force a re-login
+      service.token = undefined;
+    }
+
     const npl = get(metadata, ['svc', 'noPickupLocation']);
     if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
       return new Promise((resolve) => {
