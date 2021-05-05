@@ -22,6 +22,7 @@ class OkapiSession {
   login() {
     const { username, password } = this;
     this.logger.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
+    this.token = undefined;
     return this.okapiFetch('POST', '/authn/login', { username, password }, true)
       .then(res => {
         if (res.status !== 201) throw new HTTPError(res, `cannot login to FOLIO session '${this.label}'`);
@@ -59,7 +60,7 @@ class OkapiSession {
       body: payload ? JSON.stringify(payload) : undefined,
       headers
     }).then(res => (
-      (res.status === 403 && !doNotRetry)
+      ((res.status === 401 || res.status === 403) && !doNotRetry)
         ? this.login().then(res => this.okapiFetch(method, path, payload, true))
         : res)
     );
