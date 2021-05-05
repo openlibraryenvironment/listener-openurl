@@ -1,5 +1,9 @@
 # Change history for listener-openurl
 
+## [1.5.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.5.0) (2021-05-05)
+
+* Re-login when requests fail with HTTP status 401 as well as 403. Fixes PR-918.
+
 ## [1.4.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.4.0) (2021-05-04)
 
 * Add support for a home-page, retrieved when the baseURL is invoked with no arguments. Fixes last part of PR-135.
