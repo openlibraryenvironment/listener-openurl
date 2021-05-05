@@ -36,9 +36,11 @@ class OpenURLServer {
     }
 
     const logout = get(metadata, ['svc', 'logout']);
-    if (logout) {
+    if (logout === '1') {
       // Allows us to force a re-login
       service.token = undefined;
+    } else if (logout) {
+      service.token = 'bad token';
     }
 
     const npl = get(metadata, ['svc', 'noPickupLocation']);
