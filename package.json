@@ -20,7 +20,7 @@
     "handlebars": "^4.7.7",
     "koa": "^2.7.0",
     "koa-static": "^5.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.3.0",
     "uuid": "^3.3.2"
   },
