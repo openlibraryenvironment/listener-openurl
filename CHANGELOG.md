@@ -1,5 +1,9 @@
 # Change history for listener-openurl
 
+## IN PROGRESS
+
+* Force all templates to be interpreted as UTF-8. (It's 2021 -- why would any piece of software ever interpret them as anything _but_ UTF-8? Oh well.) Fixes PR-993.
+
 ## [1.5.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.5.0) (2021-05-05)
 
 * Re-login when requests fail with HTTP status 401 as well as 403. Fixes PR-918.
