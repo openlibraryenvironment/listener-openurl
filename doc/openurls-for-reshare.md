@@ -5,6 +5,7 @@
 * [Keys](#keys)
     * [Special keys](#special-keys)
     * [Item metadata](#item-metadata)
+    * [What constitutes a complete request?](#what-constitutes-a-complete-request)
 * [Appendix: reading the source code](#appendix-reading-the-source-code)
 
 
@@ -68,6 +69,11 @@ The remaining keys simply describe the sought resource, and have their usual mea
 * `rft.artnum` -- The number of an individual item, in cases where there are no pages available. 
 * `rft.ssn` -- The season of publication, constrained (when provided) to be `winter`, `spring`, `summer` or `fall`. (All you gotta do is call.)
 * `rft.quarter` -- Apparently there are publications out there which use neither issue numbers nor seasons of publication, but specify which quarter of the year an issue came out. For these, you will find `rft.quarter` is exactly what you are looking for. Let me know how that works out for you.
+
+
+### What constitutes a complete request?
+
+The criteria for whether a request is considered complete enough to be actionable are defined by the `hasBasicData` method in [the ContextObject class](../src/ContextObject.js). At present, the rule is that the the request must include _either_ `rft_id` (which identifies the requested item directly) _or_ all three of `rft.title`, `rft.au` and `rft.date`.
 
 
 ## Appendix: reading the source code
