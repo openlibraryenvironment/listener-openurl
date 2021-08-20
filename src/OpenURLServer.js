@@ -161,7 +161,7 @@ class OpenURLServer {
     };
 
     if (pickupLocations) {
-      const location = find(pickupLocations, x => x.code === vars.json.pickupLocationCode);
+      const location = find(pickupLocations, x => x.code === vars.json.pickupLocationSlug);
       if (location) vars.pickupLocationName = location.name;
     }
 
