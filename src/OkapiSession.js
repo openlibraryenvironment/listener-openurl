@@ -38,7 +38,16 @@ class OkapiSession {
         if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
         return res.json().then((json) => {
           this.logger.log('json', this.label, json);
-          this.pickupLocations = json.results.map(r => ({ id: r.id, code: r.slug, name: r.name }));
+          this.pickupLocations = json.results
+            .map(r => ({ id: r.id, code: r.slug, name: r.name }))
+            .sort((a, b) => {
+              if (typeof a.name !== 'string') {
+                if (typeof b.name !== 'string') return 0;
+                return 1;
+              }
+              if (typeof b.name !== 'string') return -1;
+              return a.name.localeCompare(b.name);
+            });
         });
       });
   }
