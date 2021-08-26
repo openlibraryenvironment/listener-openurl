@@ -81,7 +81,7 @@ function analyseQuery(cfg, query) {
       if (!area[realm]) area[realm] = {};
       area[realm][name] = value;
     } else {
-      cfg.log('badkey', `ignoring bad OpenURL 1.0 key '${key}'`);
+      cfg.log('listener-openurl: badkey', `ignoring bad OpenURL 1.0 key '${key}'`);
     }
   });
 

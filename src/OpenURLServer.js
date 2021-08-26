@@ -20,11 +20,11 @@ class OpenURLServer {
     }
 
     const co = new ContextObject(cfg, ctx.query);
-    cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery(), null, 2));
+    cfg.log('listener-openurl:', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery()));
     const admindata = co.getAdmindata();
     const metadata = co.getMetadata();
-    cfg.log('admindata', JSON.stringify(admindata, null, 2));
-    cfg.log('metadata', JSON.stringify(metadata, null, 2));
+    cfg.log('listener-openurl: admindata', JSON.stringify(admindata));
+    cfg.log('listener-openurl: metadata', JSON.stringify(metadata));
 
     const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
     const service = this.services[symbol] || this.services[''];
@@ -70,7 +70,7 @@ class OpenURLServer {
     const req = rr.getRequest();
     req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
 
-    cfg.log('rr', JSON.stringify(req, null, 2));
+    cfg.log('listener-openurl: rr', JSON.stringify(req));
     if (svcId === 'reshareRequest') {
       return new Promise((resolve) => {
         ctx.body = req;
@@ -84,7 +84,7 @@ class OpenURLServer {
       .then(res => {
         return res.text()
           .then(body => {
-            cfg.log('posted', `sent request, status ${res.status}`);
+            cfg.log('listener-openurl: posted', `sent request, status ${res.status}`);
             if (svcId === 'json') {
               ctx.set('Content-Type', 'text/json');
               ctx.body = {
@@ -97,7 +97,7 @@ class OpenURLServer {
             }
             ctx.set('Content-Type', 'text/html');
             if (`${res.status}`[0] !== '2') {
-              cfg.log('error', `POST error ${res.status}:`, body);
+              cfg.log('listener-openurl: error', `POST error ${res.status}:`, body);
             }
             try {
               if (npl) {

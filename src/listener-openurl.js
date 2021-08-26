@@ -17,5 +17,5 @@ const port = cfg.getValues().listenPort || 3012;
 
 server.initializeOkapiSessions().then(res => {
   server.listen(port);
-  cfg.log('start', `starting up on port ${port}`);
+  cfg.log('listener-openurl: start', `starting up on port ${port}`);
 });

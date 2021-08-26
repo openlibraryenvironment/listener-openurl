@@ -21,7 +21,7 @@ class OkapiSession {
 
   login() {
     const { username, password } = this;
-    this.logger.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
+    this.logger.log('listener-openurl: okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
     this.token = undefined;
     return this.okapiFetch('POST', '/authn/login', { username, password }, true)
       .then(res => {
@@ -37,7 +37,7 @@ class OkapiSession {
       .then(res => {
         if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
         return res.json().then((json) => {
-          this.logger.log('json', this.label, json);
+          this.logger.log('listener-openurl: json', this.label, json);
           this.pickupLocations = json.results
             .map(r => ({ id: r.id, code: r.slug, name: r.name }))
             .sort((a, b) => {
@@ -63,7 +63,7 @@ class OkapiSession {
       'x-okapi-tenant': this.tenant,
     };
     if (this.token) headers['x-okapi-token'] = this.token;
-    this.logger.log('okapi', `okapiFetch ${method} for session '${this.label}' at ${path}`);
+    this.logger.log('listener-openurl: okapi', `okapiFetch ${method} for session '${this.label}' at ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
       method,
       body: payload ? JSON.stringify(payload) : undefined,
