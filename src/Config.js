@@ -17,7 +17,7 @@ class Config {
       this.values[key] = args[key];
     });
 
-    this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.values.loggingCategories);
+    this.logger = new Logger(process.env.LOGGING_CATEGORIES || process.env.LOGCAT || this.values.loggingCategories, process.env.LOGGING_PREFIX);
     this.cachedTemplates = {};
   }
 

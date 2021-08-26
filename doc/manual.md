@@ -49,6 +49,7 @@ The functioning of the OpenURL listener is affected by the following environment
 
 * `LOGGING_CATEGORIES` -- a comma-separated list of logging categories which controls what information the listener emits for logging, overriding whatever is specified by the `loggingCategories` entry in the configuration file. See [below](#logging) for details of supported logging categories.
 * `LOGCAT` -- Identical to `LOGGING_CATEGORIES`.
+* `LOGGING_PREFIX` -- an optional string which, if defined and non-empty, is emitted at the start of each logging line.
 * `NODE_OPTIONS` affects how Node runs in the usual way: for example, `NODE_OPTIONS=--max-old-space-size=6192` allows it to allocate more memory (not that it should be needed for this small, simple program).
 
 ### Configuration file
