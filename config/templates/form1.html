@@ -92,7 +92,9 @@
                 <div class="key">Pick up location</div>
                 <div class="value">
                   <select class="select" id="input-11" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
+                    {{#unless onePickupLocation}}
                     <option value="">(None selected)</option>
+                    {{/unless}}
                     {{#each pickupLocations}}
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}

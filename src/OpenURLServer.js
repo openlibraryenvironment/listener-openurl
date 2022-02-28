@@ -200,6 +200,7 @@ class OpenURLServer {
     const data = Object.assign({}, query, {
       allValues,
       noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
+      onePickupLocation: (service.pickupLocations.length == 1),
       pickupLocations: (service.pickupLocations || []).map(x => ({
         id: x.id,
         code: x.code,
