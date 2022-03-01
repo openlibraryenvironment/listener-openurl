@@ -2,6 +2,7 @@
 
 ## IN PROGRESS
 
+* When only one pickup location is available, make that the default selection on the request and confirmation forms. Fixes PR-927.
 * Force all templates to be interpreted as UTF-8. (It's 2021 -- why would any piece of software ever interpret them as anything _but_ UTF-8? Oh well.) Fixes PR-993.
 * If the `LOGGING_PREFIX` environment variable is set, its value is used as the logging prefix in `categorial-logger`. Fixes part of PR-1060.
 * Logging of JSON structures (categories `co`, `metadata`, `admindata` and `rr`) is no longer pretty-printed, so that the structures appear all in a single line of logging. Fixes the rest of PR-1060.
