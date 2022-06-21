@@ -126,6 +126,13 @@ function translateCOtoRR(co) {
   // rr.awaitingProtocolResponse;
   // rr.rotaPosition;
 
+  // Initial empty list of request identifiers
+  rr.requestIdentifiers =[]
+
+  const illiad_identifier = _.get(m,'rft.identifier.illiad');
+  if ( illiad_identifier != null )
+    rr.requestIdentifiers.append( { "identifierType": "illiad","identifier":  illiad_identifier } );
+
   rr.tags = undefined;
   rr.customProperties = undefined;
 
