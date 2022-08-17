@@ -19,12 +19,18 @@ class OpenURLServer {
       return;
     }
 
+    cfg.log('flow', 'Enter handle flow');
+
     const co = new ContextObject(cfg, ctx.query);
     cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery()));
+
     const admindata = co.getAdmindata();
-    const metadata = co.getMetadata();
     cfg.log('admindata', JSON.stringify(admindata));
+
+    const metadata = co.getMetadata();
     cfg.log('metadata', JSON.stringify(metadata));
+
+    cfg.log('flow', 'Check service');
 
     const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
     const service = this.services[symbol] || this.services[''];
@@ -42,6 +48,8 @@ class OpenURLServer {
     } else if (logout) {
       service.token = 'bad token';
     }
+
+    cfg.log('flow', 'Check metadata');
 
     const npl = get(metadata, ['svc', 'noPickupLocation']);
     if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
@@ -66,6 +74,7 @@ class OpenURLServer {
       });
     }
 
+    cfg.log('flow', 'Construct reshare request');
     const rr = new ReshareRequest(co);
     const req = rr.getRequest();
     req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
@@ -78,6 +87,7 @@ class OpenURLServer {
       });
     }
 
+    cfg.log('flow', 'Post mod-rs request');
     // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
     const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
     return service.post(path, req)
