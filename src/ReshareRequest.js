@@ -129,7 +129,7 @@ function translateCOtoRR(co) {
   // Initial empty list of request identifiers
   rr.requestIdentifiers =[]
 
-  const illiad_identifier = _.get(m,'rft.identifier.illiad');
+  const illiad_identifier = _.get(m,'rft.identifier_illiad');
   if ( illiad_identifier != null )
     rr.requestIdentifiers.append( { "identifierType": "illiad","identifier":  illiad_identifier } );
 
