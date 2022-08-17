@@ -131,7 +131,7 @@ function translateCOtoRR(co) {
 
   const illiad_identifier = _.get(m,'rft.identifier_illiad');
   if ( illiad_identifier != null )
-    rr.requestIdentifiers.append( { "identifierType": "illiad","identifier":  illiad_identifier } );
+    rr.requestIdentifiers.push( { "identifierType": "illiad","identifier":  illiad_identifier } );
 
   rr.tags = undefined;
   rr.customProperties = undefined;
