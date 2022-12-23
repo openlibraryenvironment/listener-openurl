@@ -142,6 +142,20 @@ const tests = [
     output: { title: 'fish', systemInstanceIdentifier: '12345', patronIdentifier: 'mike' },
   },
   {
+    input: 'rft_id=12345&rft.btitle=fish&req_id=mike&rft.identifier_illiad=123',
+    output: {
+      title: 'fish',
+      systemInstanceIdentifier: '12345',
+      patronIdentifier: 'mike',
+      requestIdentifiers: [
+        {
+          'identifierType': 'illiad',
+          'identifier': '123'
+        }
+      ]
+    },
+  },
+  {
     input: 'req.emailAddress=mike@indexdata.com&svc.pickupLocation=ABC&svc.note=Urgent',
     output: { patronEmail: 'mike@indexdata.com', pickupLocationSlug: 'ABC', patronNote: 'Urgent' },
   },
