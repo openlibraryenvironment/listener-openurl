@@ -126,12 +126,11 @@ function translateCOtoRR(co) {
   // rr.awaitingProtocolResponse;
   // rr.rotaPosition;
 
-  // Initial empty list of request identifiers
-  rr.requestIdentifiers =[]
-
-  const illiad_identifier = _.get(m,'rft.identifier_illiad');
-  if ( illiad_identifier != null )
-    rr.requestIdentifiers.push( { "identifierType": "illiad","identifier":  illiad_identifier } );
+  const illiadIdentifier = _.get(m, 'rft.identifier_illiad');
+  if (illiadIdentifier != null) {
+    rr.requestIdentifiers = [];
+    rr.requestIdentifiers.push({ 'identifierType': 'illiad', 'identifier': illiadIdentifier });
+  }
 
   rr.tags = undefined;
   rr.customProperties = undefined;
