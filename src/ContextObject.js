@@ -90,17 +90,17 @@ function analyseQuery(cfg, query) {
 
 
 class ContextObject {
-  constructor(cfg, originalQuery) {
+  constructor(cfg, ctx) {
     this.cfg = cfg;
-    this.originalQuery = originalQuery;
+    this.originalQuery = ctx.query;
 
     let query;
-    if (isVersion0point1(originalQuery)) {
+    if (isVersion0point1(this.originalQuery)) {
       this.type = '0.1';
-      query = translateVersion0point1(originalQuery);
+      query = translateVersion0point1(this.originalQuery);
     } else {
       this.type = '1.0';
-      query = originalQuery;
+      query = this.originalQuery;
     }
 
     this.query = query;
@@ -108,6 +108,8 @@ class ContextObject {
     const parts = analyseQuery(cfg, query);
     this.admindata = parts.admindata;
     this.metadata = parts.metadata;
+
+    // here we can look at ctx.headers if cfg says we should eg. overwrite the metadata for reqid...
   }
 
   getType() { return this.type; }

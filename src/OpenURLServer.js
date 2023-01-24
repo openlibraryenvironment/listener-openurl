@@ -21,7 +21,7 @@ class OpenURLServer {
 
     cfg.log('flow', 'Enter handle flow');
 
-    const co = new ContextObject(cfg, ctx.query);
+    const co = new ContextObject(cfg, ctx);
     cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery()));
 
     const admindata = co.getAdmindata();

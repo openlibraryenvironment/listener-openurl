@@ -165,7 +165,7 @@ describe('04. translate ContextObject to ReshareRequest', () => {
   tests.forEach((test, i) => {
     it(`correctly translates ContextObject '${test.input}'`, () => {
       const query = querystring.parse(test.input);
-      const co = new ContextObject(cfg, query);
+      const co = new ContextObject(cfg, { query });
       const rr = new ReshareRequest(co);
       const output = rr.getRequest();
       delete output.isRequester; // ignore randomly generated boolean
