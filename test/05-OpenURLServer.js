@@ -12,6 +12,7 @@ const app = (new OpenURLServer(new Config({
   loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   services: {
     'US-EAST': {
+      isDummy: true,
       patronIdHeader: 'x-remote-user'
     }
   }

@@ -8,6 +8,7 @@ class OkapiSession {
     this.logger = cfg;
     this.label = label;
     if (!values) values = cfg.getValues();
+    if (values.isDummy) return;
 
     const filename = cfg.getFilename();
     ['okapiUrl', 'tenant', 'username', 'password'].forEach(param => {
