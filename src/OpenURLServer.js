@@ -24,9 +24,6 @@ class OpenURLServer {
     const co = new ContextObject(cfg, ctx.query);
     cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery()));
 
-    const admindata = co.getAdmindata();
-    cfg.log('admindata', JSON.stringify(admindata));
-
     const metadata = co.getMetadata();
     cfg.log('metadata', JSON.stringify(metadata));
 
@@ -40,6 +37,24 @@ class OpenURLServer {
         resolve();
       });
     }
+
+    const svcCfg = cfg.getValues()?.services?.[symbol] ?? cfg.getValues();
+    if (svcCfg?.reqIdHeader) {
+      let fromHeader = ctx.req.headers?.[svcCfg?.reqIdHeader];
+      if (typeof fromHeader === 'string') {
+        if (svcCfg?.reqIdToUpper) fromHeader = fromHeader.toUpperCase();
+        if (svcCfg?.reqIdToLower) fromHeader = fromHeader.toLowerCase();
+        if (svcCfg?.reqIdRegex && svcCfg?.reqIdReplacement) {
+          fromHeader = fromHeader.replace(RegExp(svcCfg.reqIdRegex), svcCfg.reqIdReplacement);
+        }
+        cfg.log('flow', `Override requester id with ${fromHeader}`);
+        co.setAdmindata('req', 'id', fromHeader);
+      }
+    }
+
+    const admindata = co.getAdmindata();
+    cfg.log('admindata', JSON.stringify(admindata));
+
 
     const logout = get(metadata, ['svc', 'logout']);
     if (logout === '1') {
