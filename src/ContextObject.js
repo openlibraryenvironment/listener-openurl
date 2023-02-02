@@ -115,6 +115,11 @@ class ContextObject {
   getAdmindata() { return this.admindata; }
   getMetadata() { return this.metadata; }
 
+  setAdmindata(realm, name, value) {
+    if (!this.admindata[realm]) this.admindata[realm] = {};
+    this.admindata[realm][name] = value;
+  }
+
   // Returns a boolean indicating whether or not the context object is
   // considered to contain "basic data" sufficient to attempt a
   // resoltion. Depending on whether this returns true of false, the

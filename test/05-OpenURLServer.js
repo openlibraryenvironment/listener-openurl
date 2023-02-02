@@ -7,7 +7,19 @@ const { Config } = require('../src/Config');
 const { OpenURLServer } = require('../src/OpenURLServer');
 
 chai.use(chaiHttp);
-const app = (new OpenURLServer(new Config({ loggingCategories: '' })));
+const app = (new OpenURLServer(new Config({
+  // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
+  loggingCategories: '',
+  services: {
+    'US-EAST': {
+      withoutOkapi: true,
+      reqIdToLower: true,
+      reqIdRegex: 'abc-(.*)',
+      reqIdReplacement: '$1-b',
+      reqIdHeader: 'x-remote-user'
+    }
+  }
+})));
 
 const tests = [
   {
@@ -25,6 +37,15 @@ const tests = [
     checks: [
       ['admindata.rft.id', '123'],
       ['metadata.req.emailAddress', 'mike@indexdata.com'],
+      ['metadata.svc.pickupLocation', 'loc123'],
+    ],
+  },
+  {
+    input: 'rft_id=123&req_id=456&svc.pickupLocation=loc123',
+    headers: { 'X-Remote-User': 'Abc-Xyz-789' },
+    checks: [
+      ['admindata.rft.id', '123'],
+      ['admindata.req.id', 'xyz-789-b'],
       ['metadata.svc.pickupLocation', 'loc123'],
     ],
   },
@@ -74,11 +95,13 @@ const tests = [
 
 describe('05. send OpenURLs to server', () => {
   const server = app.listen({ port: 0, host: 'localhost' });
-  const requester = chai.request(server).keepOpen();
 
   tests.forEach(test => {
+    const requester = chai.request(server).keepOpen();
     it(`correctly returns parsed OpenURL '${test.input}'`, async() => {
-      const res = await requester.get(`/US-EAST?${test.input}&svc_id=contextObject`);
+      const res = await requester
+        .get(`/US-EAST?${test.input}&svc_id=contextObject`)
+        .set(test.headers || {});
       assert.equal(res.status, 200);
 
       let data;
@@ -99,10 +122,10 @@ describe('05. send OpenURLs to server', () => {
         assert.equal(_.get(data, path), value);
       });
     });
+    requester.close();
   });
 
   after(() => {
-    requester.close();
     server.close();
   });
 });

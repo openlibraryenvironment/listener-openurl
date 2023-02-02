@@ -69,6 +69,12 @@ For communication with the ReShare back-end:
 * `username` -- The name of the user who resource-sharing requests should be posted as. This should be a user who has all the necessary permissions, but it is preferable to avoid using an administrator -- just as one does not usually run Unix services as root. A special user such as `openurl` might be created for this purpose.
 * `password` -- The password needed to authenticate the specified user.
 
+For preferentially sourcing the patron id from a header (eg. provided by SSO):
+
+* `reqIdHeader` -- The HTTP header providing the patron id. Typically this will be explicitly populated by a proxy that will strip any pre-existing value.
+* `reqIdToLower`, `reqIdToUpper` -- Boolean options that transform the case of the incoming id from a header.
+* `reqIdRegex`, `reqIdReplacement` -- Strings to facilitate transform of the incoming id from a header, syntax following the the [Javascript replace function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) that implements them. Example: `{ reqIdRegex: 'abc-(.*)', reqIdReplacement: '$1-b' }`
+
 To specify several different back-ends, provide a directory under the `services` key ([example](https://github.com/openlibraryenvironment/listener-openurl/blob/a68a71b8d2feab37e3cc24ad5444396e53668c6b/config/caliban.json#L10-L36)). Within this sub-object, each key is the identifier of a service, and the corresponding value is a set of `okapiUrl`, `tenant`, `username` and `password` fields like this listed above. These are used when the OpenURL resolver is accessed via a baseURL whose last path component is equal to the identifier. When the resolver is accessed using a baseURL that does not match any of the configured service identifiers, it falls back to using the default service configurastion (`okapiURL` etc.) specified at the top level.
 
 For templating:
