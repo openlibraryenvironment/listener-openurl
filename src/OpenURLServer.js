@@ -39,12 +39,12 @@ class OpenURLServer {
     }
 
     const svcCfg = cfg.getValues()?.services?.[symbol] ?? cfg.getValues();
-    if (svcCfg?.reqIdHeader) {
+    if (svcCfg.reqIdHeader) {
       let fromHeader = ctx.req.headers?.[svcCfg?.reqIdHeader];
       if (typeof fromHeader === 'string') {
-        if (svcCfg?.reqIdToUpper) fromHeader = fromHeader.toUpperCase();
-        if (svcCfg?.reqIdToLower) fromHeader = fromHeader.toLowerCase();
-        if (svcCfg?.reqIdRegex && svcCfg?.reqIdReplacement) {
+        if (svcCfg.reqIdToUpper) fromHeader = fromHeader.toUpperCase();
+        if (svcCfg.reqIdToLower) fromHeader = fromHeader.toLowerCase();
+        if (svcCfg.reqIdRegex && svcCfg.reqIdReplacement) {
           fromHeader = fromHeader.replace(RegExp(svcCfg.reqIdRegex), svcCfg.reqIdReplacement);
         }
         cfg.log('flow', `Override requester id with ${fromHeader}`);
