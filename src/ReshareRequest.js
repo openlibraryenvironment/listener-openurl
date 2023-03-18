@@ -87,6 +87,7 @@ function translateCOtoRR(co) {
   rr.edition = _.get(m, 'rft.edition');
   rr.issn = _.get(m, 'rft.issn');
   rr.isbn = _.get(m, 'rft.isbn');
+  rr.oclcNumber = _.get(m, 'rft.oclc');
   // rr.doi has no corresponding OpenURL field XXX but consider poking around in rft.id
   rr.coden = _.get(m, 'rft.coden');
   rr.sici = _.get(m, 'rft.sici');
