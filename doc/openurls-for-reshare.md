@@ -43,6 +43,7 @@ These are keys that have special meaning either to the resolver itself or to the
     * `reshareRequest` -- the ReShare patron-request object generated from the context-object.
 * `svc.logout` -- if set to `1`, the current Okapi session is forced to forget its authentication token; if it is set to any other true value, such as `2`, the token is set to an invalid value. In both cases, a re-login is required. This was added for testing only, and may well have no other use.
 * `rft.genre` -- indicates the type of published resource the patron is seeking. Drawn from a small controlled vocabulary: `journal`, `article`, `book`, `bookitem`, `conference`, `preprint`, `proceeding`.
+* `rft.oclc` -- If supplied will pass an OCLC number through to the ReShare request upon creation.
 * `rft.identifier.illiad` -- If supplied creates a namespaced identifier that can be used to correlate iliiad requests inside reshare.
 
 ### Item metadata
