@@ -61,7 +61,7 @@ For general functioning:
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
 * `docRoot` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
-* `digitalOnly` -- indicates that pickup location should not be solicited and `deliveryMethod` passed to ReShare as `URL`
+* `digitalOnly` -- boolean indicating that pickup location should not be solicited and `deliveryMethod` should be passed to ReShare as `URL`
 
 For communication with the ReShare back-end:
 
