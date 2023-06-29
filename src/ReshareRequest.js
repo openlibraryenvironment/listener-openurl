@@ -7,7 +7,7 @@
 //      .../mod-rs/grails-app/domain/org/olf/rs/PatronRequest.groovy
 
 const _ = require('lodash');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 
 // From OpenURL v0.1 specification, table in section 7, valid genres are:
