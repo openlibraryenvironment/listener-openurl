@@ -7,6 +7,8 @@
 * If the `LOGGING_PREFIX` environment variable is set, its value is used as the logging prefix in `categorial-logger`. Fixes part of PR-1060.
 * Logging of JSON structures (categories `co`, `metadata`, `admindata` and `rr`) is no longer pretty-printed, so that the structures appear all in a single line of logging. Fixes the rest of PR-1060.
 * Add parameter 'rft.oclc' to pass OCLC numbers through to ReShare reqeusts.
+* Upgraded to Node 18, updated dependencies
+* Added digitalOnly option to support CDL
 
 ## [1.5.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.5.0) (2021-05-05)
 
