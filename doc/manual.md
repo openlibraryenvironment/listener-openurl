@@ -61,6 +61,7 @@ For general functioning:
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
 * `docRoot` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
+* `digitalOnly` -- indicates that pickup location should not be solicited and `deliveryMethod` passed to ReShare as `URL`
 
 For communication with the ReShare back-end:
 
@@ -75,7 +76,7 @@ For preferentially sourcing the patron id from a header (eg. provided by SSO):
 * `reqIdToLower`, `reqIdToUpper` -- Boolean options that transform the case of the incoming id from a header.
 * `reqIdRegex`, `reqIdReplacement` -- Strings to facilitate transform of the incoming id from a header, syntax following the the [Javascript replace function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) that implements them. Example: `{ reqIdRegex: 'abc-(.*)', reqIdReplacement: '$1-b' }`
 
-To specify several different back-ends, provide a directory under the `services` key ([example](https://github.com/openlibraryenvironment/listener-openurl/blob/a68a71b8d2feab37e3cc24ad5444396e53668c6b/config/caliban.json#L10-L36)). Within this sub-object, each key is the identifier of a service, and the corresponding value is a set of `okapiUrl`, `tenant`, `username` and `password` fields like this listed above. These are used when the OpenURL resolver is accessed via a baseURL whose last path component is equal to the identifier. When the resolver is accessed using a baseURL that does not match any of the configured service identifiers, it falls back to using the default service configurastion (`okapiURL` etc.) specified at the top level.
+To specify several different back-ends, provide a directory under the `services` key ([example](https://github.com/openlibraryenvironment/listener-openurl/blob/a68a71b8d2feab37e3cc24ad5444396e53668c6b/config/caliban.json#L10-L36)). Within this sub-object, each key is the identifier of a service, and the corresponding value is an object with most configuration listed above. These are used when the OpenURL resolver is accessed via a baseURL whose last path component is equal to the identifier. When the resolver is accessed using a baseURL that does not match any of the configured service identifiers, it falls back to using the default service configuration (`okapiURL` etc.) specified at the top level. `loggingCategories`, `listenPort` and `docRoot` are only valid at the top-level.
 
 For templating:
 

@@ -38,7 +38,9 @@ class OpenURLServer {
       });
     }
 
-    const svcCfg = cfg.getValues()?.services?.[symbol] ?? cfg.getValues();
+    const cfgValues = cfg.getValues();
+    this.svcCfg = Object.assign({}, cfgValues, cfgValues.services?.[symbol] ?? {});
+    const svcCfg = this.svcCfg;
     if (svcCfg.reqIdHeader) {
       let fromHeader = ctx.req.headers?.[svcCfg?.reqIdHeader];
       if (typeof fromHeader === 'string') {
@@ -66,7 +68,7 @@ class OpenURLServer {
 
     cfg.log('flow', 'Check metadata');
 
-    const npl = get(metadata, ['svc', 'noPickupLocation']);
+    const npl = svcCfg.digitalOnly || get(metadata, ['svc', 'noPickupLocation']);
     if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
       return new Promise((resolve) => {
         if (npl) {
@@ -93,6 +95,8 @@ class OpenURLServer {
     const rr = new ReshareRequest(co);
     const req = rr.getRequest();
     req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
+
+    if (svcCfg.digitalOnly) req.deliveryMethod = 'URL';
 
     cfg.log('rr', JSON.stringify(req));
     if (svcId === 'reshareRequest') {
@@ -222,7 +226,8 @@ class OpenURLServer {
 
     const data = Object.assign({}, query, {
       allValues,
-      noPickupLocation: ntries > 0 && !query['svc.pickupLocation'],
+      digitalOnly: this.svcCfg?.digitalOnly,
+      noPickupLocation: ntries > 0 && !query['svc.pickupLocation'] && !this.svcCfg?.digitalOnly,
       onePickupLocation: (service?.pickupLocations?.length === 1),
       pickupLocations: (service.pickupLocations || []).map(x => ({
         id: x.id,

@@ -33,10 +33,12 @@
 		</p>
               </div>
               <dl>
-                <div class="key-value-pair">
-                  <dt class="key">Pick up location</dt>
-                  <dd class="value">{{pickupLocationName}}</dd>
-                </div>
+                {{#if pickupLocationName}}
+                  <div class="key-value-pair">
+                    <dt class="key">Pick up location</dt>
+                    <dd class="value">{{pickupLocationName}}</dd>
+                  </div>
+                {{/if}}
 		{{#if json.volume}}
                   <div class="key-value-pair">
 		    <dt class="key">Volume(s) needed</dt>
