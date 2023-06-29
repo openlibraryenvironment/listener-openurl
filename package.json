@@ -30,7 +30,7 @@
     "isuuid": "^0.1.0",
     "mocha": "^6.0.0",
     "nyc": "^15.0.0",
-    "standardx": "^5.0.0"
+    "standardx": "^7.0.0"
   },
   "resolutions": {
     "thenify": "^3.3.1"
