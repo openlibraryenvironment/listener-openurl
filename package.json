@@ -5,9 +5,6 @@
   "repository": "openlibraryenvironment/listener-openurl",
   "main": "listener-openurl.js",
   "license": "Apache-2.0",
-  "engines": {
-    "node": ">=18"
-  },
   "bin": {
     "listener-openurl": "src/listener-openurl.js"
   },
@@ -25,6 +22,7 @@
     "koa": "^2.7.0",
     "koa-static": "^5.0.0",
     "lodash": "^4.17.21",
+    "node-fetch": "^2.6.0",
     "query-string": "^8.1.0",
     "uuid": "^9.0.0"
   },
@@ -33,9 +31,9 @@
     "chai-http": "^4.2.1",
     "isuuid": "^0.1.0",
     "mocha": "^10.0.0",
+    "nock": "^13.3.2",
     "nyc": "^15.0.0",
-    "standardx": "^7.0.0",
-    "undici": "^5.22.1"
+    "standardx": "^7.0.0"
   },
   "resolutions": {
     "thenify": "^3.3.1"

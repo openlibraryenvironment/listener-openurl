@@ -1,46 +1,31 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { MockAgent, setGlobalDispatcher, } from 'undici';
+import nock from 'nock';
 import { Config } from '../src/Config.js';
 import patronAPIServer from '../src/patronAPIServer.mjs';
 
 const { assert, expect } = chai;
 chai.use(chaiHttp);
+const mockedRoot = 'http://mocked.local';
 
-const mockAgent = new MockAgent();
-mockAgent.disableNetConnect();
-setGlobalDispatcher(mockAgent);
-const mockPool = mockAgent.get('http://mocked.local');
-mockPool.intercept({
-  path: '/authn/login',
-  method: 'POST',
-}).reply(201, { someBody: 'text' }, {
-  headers: { 'x-okapi-token': 'token' }
-});
+nock(mockedRoot)
+  .post('/authn/login')
+  .reply(201, { someBody: 'text' }, {'x-okapi-token': 'token' });
 
-mockPool.intercept({
-  path: '/rs/patronrequests?filters=patronIdentifier%3D%3Dbob',
-  method: 'GET',
-}).reply(200, 'nofilter', {
-  headers: { 'content-type': 'text/plain' }
-});
+nock(mockedRoot)
+  .get('/rs/patronrequests?filters=patronIdentifier%3D%3Dbob')
+  .reply(200, 'nofilter', {'content-type': 'text/plain' });
 
-mockPool.intercept({
-  path: '/rs/patronrequests?filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3Dbob',
-  method: 'GET',
-}).reply(200, { success: 'withfilter' }, {
-  headers: { 'content-type': 'application/json' }
-});
-// }).reply(200, 'nofilter', {
-//   headers: { 'content-type': 'text/plain' }
-// });
+nock(mockedRoot)
+  .get('/rs/patronrequests?filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3Dbob')
+  .reply(200, { success: 'withfilter' }, {'content-type': 'application/json' });
 
 const app = await (patronAPIServer(new Config({
   loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   // loggingCategories: '',
   services: {
     'US-EAST': {
-      okapiUrl: 'http://mocked.local',
+      okapiUrl: mockedRoot,
       tenant: 'reshare-east',
       username: 'complete',
       password: 'mockery',

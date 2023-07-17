@@ -35,9 +35,10 @@ router.get('/:service/patronrequests', async(ctx, next) => {
 
   ctx.response.status = fromOkapi.status;
   // The fetch() API returns a ReadableStream but Koa's response object expects a Node Readable
-  // NB. something with node-fetch is not happy passing a stream here, luckily there is now a
-  // native implementation.
-  ctx.response.body = Readable.fromWeb(fromOkapi.body);
+  // ...conveniently node-fetch deviates from the standard to return that. If using native fetch
+  // you'd convert via:
+  // ctx.response.body = Readable.fromWeb(fromOkapi.body);
+  ctx.response.body = fromOkapi.body;
   await next();
 });
 
