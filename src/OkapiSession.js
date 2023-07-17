@@ -1,6 +1,5 @@
 // Represents an open, authenticated session to an Okapi service.
 
-const fetch = require('node-fetch');
 const HTTPError = require('./HTTPError');
 
 class OkapiSession {
