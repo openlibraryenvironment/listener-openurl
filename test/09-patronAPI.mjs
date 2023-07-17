@@ -21,8 +21,8 @@ nock(mockedRoot)
   .reply(200, { success: 'withfilter' }, {'content-type': 'application/json' });
 
 const app = await (patronAPIServer(new Config({
-  loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
-  // loggingCategories: '',
+  // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
+  loggingCategories: '',
   services: {
     'US-EAST': {
       okapiUrl: mockedRoot,
