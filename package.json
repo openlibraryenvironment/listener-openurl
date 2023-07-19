@@ -20,6 +20,7 @@
     "categorical-logger": "^1.0.0",
     "handlebars": "^4.7.7",
     "koa": "^2.7.0",
+    "koa-compose": "^4.1.0",
     "koa-static": "^5.0.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.0",

@@ -1,203 +1,67 @@
 // Creates an OpenURL server that contains a configured Koa app.
-
+const compose = require('koa-compose');
 const Koa = require('koa');
 const KoaStatic = require('koa-static');
 const { get, omit, find } = require('lodash');
 const { ContextObject } = require('./ContextObject');
 const { ReshareRequest } = require('./ReshareRequest');
 const { OkapiSession } = require('./OkapiSession');
-const HTTPError = require('./HTTPError');
 
-class OpenURLServer {
-  async handle(cfg, ctx, next) {
-    // const cfg = this.cfg;
+async function parseRequest(ctx, next) {
+  ctx.cfg.log('flow', 'Parse request');
 
-    if (ctx.path.startsWith('/static/') ||
-        ctx.path === '/favicon.ico' ||
-        (ctx.path === '/' && ctx.search === '')) {
-      await next();
-      return;
-    }
+  const co = new ContextObject(ctx.cfg, ctx.query);
+  ctx.cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery()));
 
-    cfg.log('flow', 'Enter handle flow');
+  const metadata = co.getMetadata();
+  ctx.cfg.log('metadata', JSON.stringify(metadata));
 
-    const co = new ContextObject(cfg, ctx.query);
-    cfg.log('co', `got ContextObject ${co.getType()} query`, JSON.stringify(co.getQuery()));
+  ctx.cfg.log('flow', 'Check service');
+  // service can come from path OR parameter
+  const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
+  const service = ctx.services[symbol] || ctx.services[''];
+  if (!service) ctx.throw(404, `unsupported service '${symbol}'`);
 
-    const metadata = co.getMetadata();
-    cfg.log('metadata', JSON.stringify(metadata));
-
-    cfg.log('flow', 'Check service');
-
-    const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
-    const service = this.services[symbol] || this.services[''];
-    if (!service) {
-      return new Promise((resolve) => {
-        ctx.body = `unsupported service '${symbol}'`;
-        resolve();
-      });
-    }
-
-    const cfgValues = cfg.getValues();
-    this.svcCfg = Object.assign({}, cfgValues, cfgValues.services?.[symbol] ?? {});
-    const svcCfg = this.svcCfg;
-    if (svcCfg.reqIdHeader) {
-      let fromHeader = ctx.req.headers?.[svcCfg?.reqIdHeader];
-      if (typeof fromHeader === 'string') {
-        if (svcCfg.reqIdToUpper) fromHeader = fromHeader.toUpperCase();
-        if (svcCfg.reqIdToLower) fromHeader = fromHeader.toLowerCase();
-        if (svcCfg.reqIdRegex && svcCfg.reqIdReplacement) {
-          fromHeader = fromHeader.replace(RegExp(svcCfg.reqIdRegex), svcCfg.reqIdReplacement);
-        }
-        cfg.log('flow', `Override requester id with ${fromHeader}`);
-        co.setAdmindata('req', 'id', fromHeader);
+  const cfgValues = ctx.cfg.getValues();
+  const svcCfg = Object.assign({}, cfgValues, cfgValues.services?.[symbol] ?? {});
+  if (svcCfg.reqIdHeader) {
+    let fromHeader = ctx.req.headers?.[svcCfg?.reqIdHeader];
+    if (typeof fromHeader === 'string') {
+      if (svcCfg.reqIdToUpper) fromHeader = fromHeader.toUpperCase();
+      if (svcCfg.reqIdToLower) fromHeader = fromHeader.toLowerCase();
+      if (svcCfg.reqIdRegex && svcCfg.reqIdReplacement) {
+        fromHeader = fromHeader.replace(RegExp(svcCfg.reqIdRegex), svcCfg.reqIdReplacement);
       }
+      ctx.cfg.log('flow', `Override requester id with ${fromHeader}`);
+      co.setAdmindata('req', 'id', fromHeader);
     }
-
-    const admindata = co.getAdmindata();
-    cfg.log('admindata', JSON.stringify(admindata));
-
-
-    const logout = get(metadata, ['svc', 'logout']);
-    if (logout === '1') {
-      // Allows us to force a re-login
-      service.token = undefined;
-    } else if (logout) {
-      service.token = 'bad token';
-    }
-
-    cfg.log('flow', 'Check metadata');
-
-    const npl = svcCfg.digitalOnly || get(metadata, ['svc', 'noPickupLocation']);
-    if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
-      return new Promise((resolve) => {
-        if (npl) {
-          ctx.body = this.form(service, co);
-          resolve();
-        } else {
-          service.getPickupLocations().then(() => {
-            ctx.body = this.form(service, co);
-            resolve();
-          });
-        }
-      });
-    }
-
-    const svcId = get(admindata, ['svc', 'id']);
-    if (svcId === 'contextObject') {
-      return new Promise((resolve) => {
-        ctx.body = { admindata, metadata };
-        resolve();
-      });
-    }
-
-    cfg.log('flow', 'Construct reshare request');
-    const rr = new ReshareRequest(co);
-    const req = rr.getRequest();
-    req.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
-
-    if (svcCfg.digitalOnly) req.deliveryMethod = 'URL';
-
-    cfg.log('rr', JSON.stringify(req));
-    if (svcId === 'reshareRequest') {
-      return new Promise((resolve) => {
-        ctx.body = req;
-        resolve();
-      });
-    }
-
-    cfg.log('flow', 'Post mod-rs request');
-    // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
-    const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
-    return service.post(path, req)
-      .then(res => {
-        return res.text()
-          .then(body => {
-            cfg.log('posted', `sent request, status ${res.status}`);
-            if (svcId === 'json') {
-              ctx.set('Content-Type', 'text/json');
-              ctx.body = {
-                status: res.status,
-                message: body,
-                contextObject: { admindata, metadata },
-                reshareRequest: rr.getRequest(),
-              };
-              return;
-            }
-            ctx.set('Content-Type', 'text/html');
-            if (`${res.status}`[0] !== '2') {
-              cfg.log('error', `POST error ${res.status}:`, body);
-            }
-            try {
-              if (npl) {
-                ctx.body = this.htmlBody(res, body);
-              } else {
-                return service.getPickupLocations().then(() => {
-                  ctx.body = this.htmlBody(res, body, service.pickupLocations);
-                });
-              }
-            } catch (e) {
-              ctx.response.status = 500;
-              ctx.body = e.message;
-            }
-          });
-      });
   }
 
-  constructor(cfg) {
-    this.cfg = cfg;
-    this.services = {};
+  const admindata = co.getAdmindata();
+  ctx.cfg.log('admindata', JSON.stringify(admindata));
 
-    const services = cfg.getValues().services || [];
-    Object.keys(services).forEach(label => {
-      this.services[label] = new OkapiSession(cfg, label, services[label]);
-    });
-
-    // Default service
-    if (cfg.getValues().okapiUrl) this.services[''] = new OkapiSession(cfg);
-
-    const docRoot = this.cfg.getValues().docRoot;
-    if (!docRoot) {
-      throw new HTTPError(500, 'no docRoot defined in configuration');
-    }
-
-    this.app = new Koa();
-    this.app.use((ctx, next) => this.handle(cfg, ctx, next));
-    this.app.use(KoaStatic(`${cfg.path}/${docRoot}`));
+  const logout = get(metadata, ['svc', 'logout']);
+  if (logout === '1') {
+    // Allows us to force a re-login
+    service.token = undefined;
+  } else if (logout) {
+    service.token = 'bad token';
   }
 
-  initializeOkapiSessions() {
-    return Promise.all(
-      Object.keys(this.services).map(label => this.services[label].login())
-    );
-  }
+  const npl = svcCfg.digitalOnly || get(metadata, ['svc', 'noPickupLocation']);
 
-  listen(...args) {
-    return this.app.listen(...args);
-  }
+  Object.assign(ctx.state, { admindata, co, metadata, npl, service, svcCfg, symbol });
+  await next();
+}
 
-  htmlBody(res, text, pickupLocations) {
-    const status = `${res.status}`;
+async function maybeRenderForm(ctx, next) {
+  const { co, metadata, service, npl } = ctx.state;
 
-    const vars = { status };
-    try {
-      const json = JSON.parse(text);
-      vars.json = json;
-    } catch (e) {
-      vars.text = text;
-    };
+  ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
+  if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
+    ctx.cfg.log('flow', 'Rendering form');
+    if (!npl) await service.getPickupLocations();
 
-    if (pickupLocations) {
-      const location = find(pickupLocations, x => x.code === vars.json.pickupLocationSlug);
-      if (location) vars.pickupLocationName = location.name;
-    }
-
-    const ok = (status[0] === '2');
-    const template = this.cfg.getTemplate(ok ? 'good' : 'bad');
-    return template(vars);
-  }
-
-  form(service, co) {
     const query = Object.assign({}, co.getQuery());
     const ntries = query['svc.ntries'] || 0;
     query['svc.ntries'] = ntries + 1;
@@ -226,8 +90,8 @@ class OpenURLServer {
 
     const data = Object.assign({}, query, {
       allValues,
-      digitalOnly: this.svcCfg?.digitalOnly,
-      noPickupLocation: ntries > 0 && !query['svc.pickupLocation'] && !this.svcCfg?.digitalOnly,
+      digitalOnly: ctx.state?.svcCfg?.digitalOnly,
+      noPickupLocation: ntries > 0 && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
       onePickupLocation: (service?.pickupLocations?.length === 1),
       pickupLocations: (service.pickupLocations || []).map(x => ({
         id: x.id,
@@ -237,8 +101,142 @@ class OpenURLServer {
       })),
     });
 
-    const template = this.cfg.getTemplate(formName);
-    return template(data);
+    const template = ctx.cfg.getTemplate(formName);
+    ctx.body = template(data);
+  } else {
+    await next();
+  }
+}
+
+async function maybeReturnAdminData(ctx, next) {
+  const { admindata, metadata } = ctx.state;
+  if (admindata.svc?.id === 'contextObject') {
+    ctx.body = { admindata, metadata };
+  } else {
+    await next();
+  }
+}
+
+async function constructAndMaybeReturnReshareRequest(ctx, next) {
+  const { admindata, co, svcCfg, symbol } = ctx.state;
+  ctx.cfg.log('flow', 'Construct reshare request');
+  const rr = new ReshareRequest(co);
+  const rreq = rr.getRequest();
+  rreq.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
+
+  if (svcCfg.digitalOnly) rreq.deliveryMethod = 'URL';
+
+  ctx.cfg.log('rr', JSON.stringify(rreq));
+  if (admindata.svc?.id === 'reshareRequest') {
+    ctx.body = rreq;
+  } else {
+    ctx.state.rreq = rreq;
+    await next();
+  }
+}
+
+async function postReshareRequest(ctx, next) {
+  const { admindata, metadata, npl, rreq, service } = ctx.state;
+
+  ctx.cfg.log('flow', 'Post mod-rs request');
+  // Provide a way to provoke a failure (for testing): include ctx_FAIL in the OpenURL
+  const path = get(admindata, 'ctx.FAIL') ? '/not-there' : '/rs/patronrequests';
+  const res = await service.post(path, rreq);
+  const body = await res.text();
+  ctx.cfg.log('posted', `sent request, status ${res.status}`);
+
+  if (`${res.status}`[0] !== '2') {
+    ctx.cfg.log('error', `POST error ${res.status}:`, body);
+    ctx.throw(500, 'Error encountered submitting request to mod-rs', { expose: true });
+  }
+
+  if (admindata.svc?.id === 'json') {
+    ctx.set('Content-Type', 'text/json');
+    ctx.body = {
+      status: res.status,
+      message: body,
+      contextObject: { admindata, metadata },
+      reshareRequest: rreq,
+    };
+  } else {
+    ctx.set('Content-Type', 'text/html');
+    const status = `${res.status}`;
+    const vars = { status };
+    try {
+      vars.json = JSON.parse(body);
+    } catch (e) {
+      vars.text = body;
+    };
+
+    if (!npl) {
+      await service.getPickupLocations();
+      const location = find(service.pickupLocations, x => x.code === vars.json.pickupLocationSlug);
+      if (location) vars.pickupLocationName = location.name;
+    }
+
+    const ok = (status[0] === '2');
+    const template = ctx.cfg.getTemplate(ok ? 'good' : 'bad');
+    ctx.body = template(vars);
+  }
+};
+
+class OpenURLServer {
+  constructor(cfg) {
+    this.services = {};
+
+    const serviceConfigs = cfg.getValues().services || [];
+    Object.keys(serviceConfigs).forEach(label => {
+      this.services[label] = new OkapiSession(cfg, label, serviceConfigs[label]);
+    });
+
+    // Default service
+    if (cfg.getValues().okapiUrl) this.services[''] = new OkapiSession(cfg);
+
+    const docRoot = cfg.getValues().docRoot;
+    if (!docRoot) {
+      throw new Error('No docRoot defined in configuration');
+    }
+    const koaStatic = KoaStatic(`${cfg.path}/${docRoot}`);
+
+    const app = new Koa();
+    app.context.cfg = cfg;
+    app.context.services = this.services;
+
+    // koa-static doesn't call next() if it matches so we could almost have just used it except for
+    // the fact we want to only conditionally return index.html at root
+    //
+    // We could almost use koa-router at the top level here but we have services combined with /static
+    // and potentially other fixed endpoints so it'd need some awkward regexen.
+    //
+    // Instead, this top level middleware is essentially a router. koa-compose can bring together the
+    // OpenURL pieces and we can potentially use koa-router for other parts if we end up adding
+    // functionality
+    app.use(async function(ctx, next) {
+      if (ctx.path.startsWith('/static/') ||
+          ctx.path === '/favicon.ico' ||
+          (ctx.path === '/' && ctx.search === '')) {
+        return koaStatic(ctx, next);
+      }
+      return compose([
+        parseRequest,
+        maybeRenderForm,
+        maybeReturnAdminData,
+        constructAndMaybeReturnReshareRequest,
+        postReshareRequest,
+      ])(ctx, next);
+    });
+
+    this.app = app;
+  }
+
+  initializeOkapiSessions() {
+    return Promise.all(
+      Object.keys(this.services).map(label => this.services[label].login())
+    );
+  }
+
+  listen(...args) {
+    return this.app.listen(...args);
   }
 }
 
