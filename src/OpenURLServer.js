@@ -58,11 +58,12 @@ async function maybeRenderForm(ctx, next) {
   const { co, metadata, service, npl } = ctx.state;
 
   ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
-  if (!co.hasBasicData() || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
+  if (!co.hasBasicData() || typeof ctx.query?.confirm !== 'undefined' || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
     ctx.cfg.log('flow', 'Rendering form');
     if (!npl) await service.getPickupLocations();
 
     const query = Object.assign({}, co.getQuery());
+    delete query.confirm;
     const ntries = query['svc.ntries'] || 0;
     query['svc.ntries'] = ntries + 1;
 

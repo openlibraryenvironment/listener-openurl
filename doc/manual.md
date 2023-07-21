@@ -173,3 +173,7 @@ Therefore, a typical document-root directory will contain:
   * Anything else that the administrator wants to be able to serve
 
 
+### Confirmation
+
+By default a sufficiently populated request will be directly submitted to ReShare but if a GET parameter of `confirm` is present it will always offer a confirmation form.
+
