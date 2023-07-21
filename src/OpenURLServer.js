@@ -6,6 +6,8 @@ const { get, omit, find } = require('lodash');
 const { ContextObject } = require('./ContextObject');
 const { ReshareRequest } = require('./ReshareRequest');
 const { OkapiSession } = require('./OkapiSession');
+const idTransform = require('./idTransform');
+
 
 async function parseRequest(ctx, next) {
   ctx.cfg.log('flow', 'Parse request');
@@ -22,16 +24,11 @@ async function parseRequest(ctx, next) {
   const service = ctx.services[symbol] || ctx.services[''];
   if (!service) ctx.throw(404, `unsupported service '${symbol}'`);
 
-  const cfgValues = ctx.cfg.getValues();
-  const svcCfg = Object.assign({}, cfgValues, cfgValues.services?.[symbol] ?? {});
+  const svcCfg = ctx.cfg.getServiceValues(symbol);
   if (svcCfg.reqIdHeader) {
     let fromHeader = ctx.req.headers?.[svcCfg?.reqIdHeader];
     if (typeof fromHeader === 'string') {
-      if (svcCfg.reqIdToUpper) fromHeader = fromHeader.toUpperCase();
-      if (svcCfg.reqIdToLower) fromHeader = fromHeader.toLowerCase();
-      if (svcCfg.reqIdRegex && svcCfg.reqIdReplacement) {
-        fromHeader = fromHeader.replace(RegExp(svcCfg.reqIdRegex), svcCfg.reqIdReplacement);
-      }
+      fromHeader = idTransform(fromHeader, svcCfg);
       ctx.cfg.log('flow', `Override requester id with ${fromHeader}`);
       co.setAdmindata('req', 'id', fromHeader);
     }

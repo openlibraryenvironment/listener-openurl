@@ -2,6 +2,7 @@ import Koa from 'koa';
 import queryString from 'query-string';
 import Router from '@koa/router';
 import { OkapiSession } from './OkapiSession.js';
+import idTransform from './idTransform.js';
 
 const router = new Router();
 
@@ -9,10 +10,10 @@ router.get('/:service/patronrequests', async (ctx, next) => {
   const service = ctx.params?.service;
   const sess = ctx.services?.[service];
   if (!sess) ctx.throw(404, `Unrecognized service ${service}`);
-  const idHeader = ctx.cfg?.getValues()?.services?.[service]?.reqIdHeader;
-  if (!idHeader) ctx.throw(400, 'Service config does not specify header for patron id');
+  const svcCfg = ctx.cfg.getServiceValues(service);
+  if (!svcCfg.reqIdHeader) ctx.throw(400, 'Service config does not specify header for patron id');
 
-  const patronId = ctx.request?.headers?.[idHeader];
+  const patronId = idTransform(ctx.request?.headers?.[svcCfg.reqIdHeader], svcCfg);
   if (typeof patronId !== 'string' || patronId.length < 1) ctx.throw(400, 'Configured patron id header missing value');
 
   // Constrain query to patron id

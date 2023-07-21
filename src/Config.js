@@ -22,7 +22,13 @@ class Config {
   }
 
   getValues() { return this.values; }
+
+  getServiceValues(symbol) {
+    return Object.assign({}, this.values, this.values?.services?.[symbol] ?? {});
+  }
+
   getFilename() { return this.filename; }
+
   log(...args) { this.logger.log(...args); }
 
   readFile(filename) {
