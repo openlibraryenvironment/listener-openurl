@@ -58,7 +58,7 @@ describe('08. retrieve static files from server', () => {
   const requester = chai.request(server).keepOpen();
 
   tests.forEach(test => {
-    it(`gets expected result for path '${test.path}'`, async() => {
+    it(`gets expected result for path '${test.path}'`, async () => {
       const res = await requester.get(test.path);
       assert.equal(res.status, test.status);
       if (test.status === 200) {

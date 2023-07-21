@@ -1,4 +1,3 @@
-import { Readable } from 'stream';
 import Koa from 'koa';
 import queryString from 'query-string';
 import Router from '@koa/router';
@@ -6,7 +5,7 @@ import { OkapiSession } from './OkapiSession.js';
 
 const router = new Router();
 
-router.get('/:service/patronrequests', async(ctx, next) => {
+router.get('/:service/patronrequests', async (ctx, next) => {
   const service = ctx.params?.service;
   const sess = ctx.services?.[service];
   if (!sess) ctx.throw(404, `Unrecognized service ${service}`);

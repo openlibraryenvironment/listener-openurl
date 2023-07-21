@@ -98,7 +98,7 @@ describe('send OpenURLs to server', () => {
   const requester = chai.request(server).keepOpen();
 
   tests.forEach(test => {
-    it(`correctly translates OpenURL for ${test.title}`, async() => {
+    it(`correctly translates OpenURL for ${test.title}`, async () => {
       const res = await requester.get(`/?${test.input}&svc_id=reshareRequest`);
       assert.equal(res.status, 200);
       const data = JSON.parse(res.text);

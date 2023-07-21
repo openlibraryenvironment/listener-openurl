@@ -9,7 +9,7 @@
     "listener-openurl": "src/listener-openurl.js"
   },
   "scripts": {
-    "lint": "standardx -v",
+    "lint": "eslint --ext .js,.mjs src test",
     "test": "mocha",
     "integration": "mocha test/integration",
     "coverage": "nyc mocha",
@@ -30,11 +30,16 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "eslint": "^8.45.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-mocha": "^10.1.0",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
     "isuuid": "^0.1.0",
     "mocha": "^10.0.0",
     "nock": "^13.3.2",
-    "nyc": "^15.0.0",
-    "standardx": "^7.0.0"
+    "nyc": "^15.0.0"
   },
   "resolutions": {
     "thenify": "^3.3.1"

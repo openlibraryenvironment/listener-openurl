@@ -1,10 +1,18 @@
 {
+  "extends": ["standard", "plugin:mocha/recommended"],
   "rules": {
     "semi": [2, "always"],
     "no-multiple-empty-lines": "off",
-    "space-before-function-paren": [2, "never"],
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
     "comma-dangle": "off",
     "lines-between-class-members": "off",
-    "quote-props": "off"
+    "quote-props": "off",
+
+    "mocha/no-setup-in-describe": "off",
+    "mocha/no-nested-tests": "off"
   }
 }

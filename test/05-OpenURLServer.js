@@ -98,7 +98,7 @@ describe('05. send OpenURLs to server', () => {
 
   tests.forEach(test => {
     const requester = chai.request(server).keepOpen();
-    it(`correctly returns parsed OpenURL '${test.input}'`, async() => {
+    it(`correctly returns parsed OpenURL '${test.input}'`, async () => {
       const res = await requester
         .get(`/US-EAST?${test.input}&svc_id=contextObject`)
         .set(test.headers || {});
