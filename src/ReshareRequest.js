@@ -110,7 +110,7 @@ function translateCOtoRR(co) {
   // rr.patronType has no corresponding OpenURL field
   // rr.sendToPatron has no corresponding OpenURL field
   rr.patronEmail = _.get(m, 'req.emailAddress');
-  rr.patronNote = _.get(m, 'svc.note');
+  rr.patronNote = _.get(m, 'svc.note').substring(0, 255);
   rr.pickupLocationSlug = _.get(m, 'svc.pickupLocation');
   rr.neededBy = _.get(m, 'svc.neededBy');
 
