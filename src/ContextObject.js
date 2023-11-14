@@ -29,7 +29,9 @@ function isVersion0point1(originalQuery) {
 // special. It seems -- the OpenURL 1.0 standard is not really
 // explicit about this -- that it becomes "jtitle" in the context of
 // an article (and maybe some other genres) but "btitle" in the
-// context of a book. So beware: some heuristics here.
+// context of a book. So beware: some heuristics here. Skip prefixing
+// for req_id, if it is passed in as it is not required for
+// the username.
 //
 // Note that values may be arrays (for repeated fields)
 //
@@ -42,6 +44,8 @@ function translateVersion0point1(v01query) {
       query.rfr_id = val;
     } else if (key === 'id') {
       query['rft.id'] = val;
+    } else if (key === 'req_id') {
+      query['req_id'] = val;
     } else if (key === 'pid') {
       query.rft_dat = val;
     } else if (key === 'title') {
