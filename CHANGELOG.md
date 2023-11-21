@@ -9,6 +9,7 @@
 * Add parameter 'rft.oclc' to pass OCLC numbers through to ReShare reqeusts.
 * Upgraded to Node 18, updated dependencies
 * Added digitalOnly option to support CDL
+* bugfix to make svc.note optional
 
 ## [1.5.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.5.0) (2021-05-05)
 
