@@ -21,6 +21,10 @@ nock(mockedRoot)
   .get('/rs/patronrequests?filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3Dbob')
   .reply(200, { success: 'withfilter' }, { 'content-type': 'application/json' });
 
+nock(mockedRoot)
+  .post('/rs/patron/validate', { barcode: '123', pin: '456' })
+  .reply(200, { userid: 'bob' }, { 'content-type': 'application/json' });
+
 const app = await (patronAPIServer(new Config({
   // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   loggingCategories: '',
@@ -84,6 +88,15 @@ describe('09. patron API server', function() {
     const res = await requester
       .get('/US-EAST/patronquests');
     expect(res).to.have.status(404);
+  });
+
+  it('passes through validation requests', async function() {
+    const res = await requester
+      .post('/US-EAST/patron/validate')
+      .send({ barcode: '123', pin: '456' });
+    expect(res).to.have.status(200);
+    expect(res).to.be.json;
+    assert.equal(JSON.parse(res.text).userid, 'bob');
   });
 
   after(function() {

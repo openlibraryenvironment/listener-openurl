@@ -1,16 +1,24 @@
 import Koa from 'koa';
 import queryString from 'query-string';
+import { bodyParser } from '@koa/bodyparser';
 import Router from '@koa/router';
 import { OkapiSession } from './OkapiSession.js';
 import idTransform from './idTransform.js';
 
 const router = new Router();
 
-router.get('/:service/patronrequests', async (ctx, next) => {
+router.all('/:service/(.*)', async (ctx, next) => {
   const service = ctx.params?.service;
   const sess = ctx.services?.[service];
   if (!sess) ctx.throw(404, `Unrecognized service ${service}`);
+  ctx.state.sess = sess;
   const svcCfg = ctx.cfg.getServiceValues(service);
+  ctx.state.svcCfg = svcCfg;
+  await next();
+});
+
+router.get('/:service/patronrequests', async (ctx, next) => {
+  const { sess, svcCfg } = ctx.state;
   if (!svcCfg.reqIdHeader) ctx.throw(400, 'Service config does not specify header for patron id');
 
   const patronId = idTransform(ctx.request?.headers?.[svcCfg.reqIdHeader], svcCfg);
@@ -42,6 +50,21 @@ router.get('/:service/patronrequests', async (ctx, next) => {
   await next();
 });
 
+router.post('/:service/patron/validate', async (ctx, next) => {
+  const { sess } = ctx.state;
+  ctx.cfg.log('flow', 'Passing through validation request');
+  const fromOkapi = await sess.okapiFetch('POST', '/rs/patron/validate', ctx.request.body);
+
+  const passHeaders = ['Content-Type'];
+  passHeaders.forEach(h => {
+    if (fromOkapi.headers?.has(h)) ctx.response.set(h, fromOkapi.headers.get(h));
+  });
+
+  ctx.response.status = fromOkapi.status;
+  ctx.response.body = fromOkapi.body;
+  await next();
+});
+
 async function patronAPIServer(cfg) {
   const serviceConfigs = cfg.getValues().services;
   const services = {};
@@ -61,6 +84,7 @@ async function patronAPIServer(cfg) {
   app.context.cfg = cfg;
   app.context.services = services;
 
+  app.use(bodyParser());
   app.use(router.routes());
 
   // initialize Okapi sessions
