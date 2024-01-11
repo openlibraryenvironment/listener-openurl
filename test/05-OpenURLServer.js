@@ -95,9 +95,9 @@ const tests = [
 
 describe('05. send OpenURLs to server', () => {
   const server = app.listen({ port: 0, host: 'localhost' });
+  const requester = chai.request(server).keepOpen();
 
   tests.forEach(test => {
-    const requester = chai.request(server).keepOpen();
     it(`correctly returns parsed OpenURL '${test.input}'`, async () => {
       const res = await requester
         .get(`/US-EAST?${test.input}&svc_id=contextObject`)
@@ -122,10 +122,10 @@ describe('05. send OpenURLs to server', () => {
         assert.equal(_.get(data, path), value);
       });
     });
-    requester.close();
   });
 
   after(() => {
+    requester.close();
     server.close();
   });
 });
