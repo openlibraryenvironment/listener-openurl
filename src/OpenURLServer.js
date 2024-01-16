@@ -83,7 +83,7 @@ async function maybeRenderForm(ctx, next) {
 
     const allValues = Object.keys(omit(query, formFields))
       .sort()
-      .map(key => `<input type="hidden" name="${key}" value="${query[key]}" />`)
+      .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}" />`)
       .join('\n');
 
     const data = Object.assign({}, query, {
