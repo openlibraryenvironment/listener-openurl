@@ -19,15 +19,15 @@ const tests = [
   },
   {
     input: 'rft.btitle=water&rft.atitle=fish',
-    output: { title: 'water' },
+    output: { articleTitle: 'fish', title: 'water' },
   },
   {
     input: 'rft.atitle=water&rft.jtitle=fish',
-    output: { title: 'water' },
+    output: { articleTitle:'water', journalTitle: 'fish', title: 'water' },
   },
   {
     input: 'rft.jtitle=water',
-    output: { title: 'water' },
+    output: { journalTitle: 'water', title: 'water' },
   },
   {
     input: 'title=water',
@@ -75,6 +75,7 @@ const tests = [
       issue: '6',
       startPage: '1547',
       numberOfPages: 18,
+      pages: '1547-1564',
     },
   },
   {
@@ -88,19 +89,21 @@ const tests = [
     input: 'pages=453-491',
     output: {
       startPage: '453', // Extracted from page-range
+      pages: '453-491',
       numberOfPages: 39, // Calculated from page-range
     }
   },
   {
     input: 'pages=453x-491',
     output: {
-      // Nothing can be calculated from a malformed page-range
+      pages: '453x-491'
     }
   },
   {
     input: 'spage=996&pages=453-491',
     output: {
       startPage: '996', // Wins over start-page extracted from page-range
+      pages: '453-491',
       numberOfPages: 39, // Calculated from page-range
     }
   },
