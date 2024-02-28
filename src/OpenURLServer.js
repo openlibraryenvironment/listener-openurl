@@ -61,8 +61,8 @@ async function maybeRenderForm(ctx, next) {
 
     const query = Object.assign({}, co.getQuery());
     delete query.confirm;
-    const ntries = query['svc.ntries'] || 0;
-    query['svc.ntries'] = ntries + 1;
+    const ntries = query['svc.ntries'] || '0';
+    query['svc.ntries'] = (parseInt(ntries) + 1).toString();
 
     let formName;
     const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note'];
@@ -89,7 +89,7 @@ async function maybeRenderForm(ctx, next) {
     const data = Object.assign({}, query, {
       allValues,
       digitalOnly: ctx.state?.svcCfg?.digitalOnly,
-      noPickupLocation: ntries > 0 && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
+      noPickupLocation: parseInt(ntries) > 0 && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
       onePickupLocation: (service?.pickupLocations?.length === 1),
       pickupLocations: (service.pickupLocations || []).map(x => ({
         id: x.id,
