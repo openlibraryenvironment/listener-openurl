@@ -122,8 +122,8 @@ class ContextObject {
 
   // Returns a boolean indicating whether or not the context object is
   // considered to contain "basic data" sufficient to attempt a
-  // resoltion. Depending on whether this returns true of false, the
-  // resolver will invoke respective a simple form that prompts for a
+  // resolution. Depending on whether this returns true of false, the
+  // resolver will invoke respectively a simple form that prompts for a
   // pickup location, or a bigger form that invites the user to fill
   // in all the details.
   //
