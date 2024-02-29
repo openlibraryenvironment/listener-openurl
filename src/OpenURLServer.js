@@ -81,13 +81,13 @@ async function maybeRenderForm(ctx, next) {
       query['rft.au'] = query['rft.creator'] || query['rft.aulast'] || query['rft.aufirst'];
     }
 
-    const allValues = Object.keys(omit(query, formFields))
+    const valuesNotShownInForm = Object.keys(omit(query, formFields))
       .sort()
       .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}" />`)
       .join('\n');
 
     const data = Object.assign({}, query, {
-      allValues,
+      valuesNotShownInForm,
       digitalOnly: ctx.state?.svcCfg?.digitalOnly,
       noPickupLocation: parseInt(ntries) > 0 && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
       onePickupLocation: (service?.pickupLocations?.length === 1),
