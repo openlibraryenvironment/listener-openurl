@@ -143,7 +143,7 @@ async function postReshareRequest(ctx, next) {
   const body = await res.text();
   ctx.cfg.log('posted', `sent request, status ${res.status}`);
 
-  if (`${res.status}`[0] !== '2') {
+  if (!res.ok) {
     ctx.cfg.log('error', `POST error ${res.status}:`, body);
     ctx.throw(500, 'Error encountered submitting request to mod-rs', { expose: true });
   }
@@ -158,8 +158,7 @@ async function postReshareRequest(ctx, next) {
     };
   } else {
     ctx.set('Content-Type', 'text/html');
-    const status = `${res.status}`;
-    const vars = { status };
+    const vars = { status: res.status.toString() };
     try {
       vars.json = JSON.parse(body);
     } catch (e) {
@@ -172,8 +171,7 @@ async function postReshareRequest(ctx, next) {
       if (location) vars.pickupLocationName = location.name;
     }
 
-    const ok = (status[0] === '2');
-    const template = ctx.cfg.getTemplate(ok ? 'good' : 'bad');
+    const template = ctx.cfg.getTemplate(res.ok ? 'good' : 'bad');
     ctx.body = template(vars);
   }
 };
