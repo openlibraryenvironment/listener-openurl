@@ -11,6 +11,7 @@
 * Added digitalOnly option to support CDL
 * bugfix to make svc.note optional
 * Avoid internal server error for OpenURLs with no `ntries` defined. Fixes PR-1646.
+* Add support for per-customer branding in the top-level configuration file. See [_Branding the OpenURL resolver for customers_](doc/branding.md). Fixes PR-1649.
 
 ## [1.5.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.5.0) (2021-05-05)
 
