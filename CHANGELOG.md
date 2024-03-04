@@ -1,6 +1,6 @@
 # Change history for listener-openurl
 
-## 1.6.0 (IN PROGRESS)
+## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
 * When only one pickup location is available, make that the default selection on the request and confirmation forms. Fixes PR-927.
 * Force all templates to be interpreted as UTF-8. (It's 2021 -- why would any piece of software ever interpret them as anything _but_ UTF-8? Oh well.) Fixes PR-993.
