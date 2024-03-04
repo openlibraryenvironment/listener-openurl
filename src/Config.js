@@ -3,7 +3,9 @@ const Logger = require('categorical-logger');
 const Handlebars = require('handlebars');
 
 Handlebars.registerHelper('json', function(obj) {
-  return JSON.stringify(obj, null, 2);
+  const objWithoutBranding = { ...obj };
+  delete objWithoutBranding.branding;
+  return JSON.stringify(objWithoutBranding, null, 2);
 });
 
 class Config {
