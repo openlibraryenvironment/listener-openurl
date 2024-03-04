@@ -144,7 +144,6 @@ async function postReshareRequest(ctx, next) {
 
   if (!res.ok) {
     ctx.cfg.log('error', `POST error ${res.status}:`, body);
-    ctx.throw(500, 'Error encountered submitting request to mod-rs', { expose: true });
   }
 
   if (admindata.svc?.id === 'json') {
