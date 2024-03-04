@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Request item — {{branding.customerName}}</title>
+    <title>Request item — PALCI E-ZBorrow</title>
     <link rel="stylesheet" type="text/css" href="/static/form1.css"/>
-    <style>body { background: {{branding.backgroundColor}}; }</style>
+    <style>body { background: #007ebd; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
   </head>
@@ -17,13 +17,13 @@
             <div class="sr-only" id="sr-announcer" aria-live="assertive"></div>
             <div class="page__header">
               <h1>Request item</h1>
-              <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" aria-hidden="true"></a></div>
+              <div class="logo"><a href="http://www.palci.org/" target="_blank" aria-label="PALCI E-ZBorrow"><img src="/static/logo.png" aria-hidden="true"></a></div>
             </div>
             <div class="page__body">
               <label class="key-value-pair is-required" for="input-title">
                 <div class="key">Title</div>
                 <div class="value">
-                  <input class="should-validate" id="input-title" autofocus="true" type="text" name="rft.title" value="{{'rft.title'}}" data-error="Please enter title" aria-describedby="input-title-error" aria-required="true">
+                  <input class="should-validate" id="input-title" autofocus="true" type="text" name="rft.title" value="" data-error="Please enter title" aria-describedby="input-title-error" aria-required="true">
                 </div>
                 <div class="error" aria-live="on">
                   <div class="error-text-positioner">
@@ -34,7 +34,7 @@
               <label class="key-value-pair is-required" for="input-author">
                 <div class="key">Author</div>
                 <div class="value">
-                  <input class="should-validate" id="input-author" type="text" name="rft.au" value="{{'rft.au'}}" data-error="Please enter author name" aria-describedby="input-author-error" aria-required="true">
+                  <input class="should-validate" id="input-author" type="text" name="rft.au" value="" data-error="Please enter author name" aria-describedby="input-author-error" aria-required="true">
                 </div>
                 <div class="error" aria-live="on">
                   <div class="error-text-positioner">
@@ -45,7 +45,7 @@
               <label class="key-value-pair is-required" for="input-publication-date">
                 <div class="key">Year of publication</div>
                 <div class="value">
-                  <input class="should-validate" id="input-publication-date" type="number" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" data-error="Please enter year of publication" aria-describedby="input-publication-date-error" aria-required="true">
+                  <input class="should-validate" id="input-publication-date" type="number" name="rft.date" value="" pattern="[0-9]*" data-error="Please enter year of publication" aria-describedby="input-publication-date-error" aria-required="true">
                 </div>
                 <div class="error" aria-live="on">
                   <div class="error-text-positioner">
@@ -56,59 +56,48 @@
               <label class="key-value-pair" for="input-4">
                 <div class="key">Publisher</div>
                 <div class="value">
-                  <input id="input-4" type="text" name="rft.pub" value="{{'rft.pub'}}">
+                  <input id="input-4" type="text" name="rft.pub" value="">
                 </div>
               </label>
               <label class="key-value-pair" for="input-5">
                 <div class="key">Place of publication</div>
                 <div class="value">
-                  <input id="input-5" type="text" name="rft.place" value="{{'rft.place'}}">
+                  <input id="input-5" type="text" name="rft.place" value="">
                 </div>
               </label>
               <label class="key-value-pair" for="input-6">
                 <div class="key">Edition</div>
                 <div class="value">
-                  <input id="input-6" type="text" name="rft.edition" value="{{'rft.edition'}}">
+                  <input id="input-6" type="text" name="rft.edition" value="">
                 </div>
               </label>
               <label class="key-value-pair" for="input-7">
                 <div class="key">ISBN</div>
                 <div class="value"> 
-                  <input id="input-7" type="text" name="rft.isbn" value="{{'rft.isbn'}}">
+                  <input id="input-7" type="text" name="rft.isbn" value="">
                 </div>
               </label>
               <label class="key-value-pair" for="input-9">
                 <div class="key">Volume(s) needed</div>
                 <div class="value">
-                  <input id="input-9" type="text" name="rft.volume" value="{{'rft.volume'}}">
+                  <input id="input-9" type="text" name="rft.volume" value="">
                 </div>
               </label>
               <label class="key-value-pair" for="input-10">
                 <div class="key">Note</div>
                 <div class="value">
-                  <input id="input-10" type="text" name="svc.note" value="{{'svc.note'}}">
+                  <input id="input-10" type="text" name="svc.note" value="">
                 </div>
               </label>
-              {{#unless digitalOnly}}
               <label class="key-value-pair" for="input-11">
                 <div class="key">Pick up location</div>
                 <div class="value">
-                  <select class="select" id="input-11" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
-                    {{#unless onePickupLocation}}
+                  <select class="select" id="input-11" name="svc.pickupLocation" value="">
                     <option value="">(None selected)</option>
-                    {{/unless}}
-                    {{#each pickupLocations}}
-                      <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
-                    {{/each}}
                   </select>
                   *
-                  {{#if noPickupLocation}}
-                    <br />
-                    <span class="error">Please supply a pickup location.</span>
-                  {{/if}}
                 </div>
               </label>
-              {{/unless}}
             </div>
             <div class="page__footer">
               <div class="button-group">
@@ -116,7 +105,7 @@
                 <!--button.button--secondary.flex-order-minus-one Cancel-->
               </div>
             </div>
-            {{{allValues}}}
+            
           </form>
         </div>
       </div>

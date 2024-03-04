@@ -35,14 +35,17 @@ class Config {
     return fs.readFileSync(this.path + '/' + filename, 'utf8');
   }
 
-  getTemplate(name) {
-    if (!this.cachedTemplates[name]) {
+  runTemplate(name, values) {
+    let template = this.cachedTemplates[name];
+    if (!template) {
       const filename = this.values[`template.${name}`];
       if (!filename) throw Error(`no template '${name}'`);
       const text = this.readFile(filename);
-      this.cachedTemplates[name] = Handlebars.compile(text);
+      template = Handlebars.compile(text);
+      this.cachedTemplates[name] = template;
     }
-    return this.cachedTemplates[name];
+
+    return template({ ...values, branding: this.values.branding });
   }
 }
 

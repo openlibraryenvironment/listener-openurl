@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Request sent &mdash; {{branding.customerName}}</title>
+    <title>Request sent &mdash; PALCI E-ZBorrow</title>
     <link rel="stylesheet" href="/static/style.css">
-    <style>body { background: {{branding.backgroundColor}}; }</style>
+    <style>body { background: #007ebd; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
   </head>
@@ -16,36 +16,22 @@
           <div class="page">
             <div class="page__header">
               <h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27"><g data-name="Group 137" transform="translate(-21 -23)"><g data-name="Ellipse 5" transform="translate(21 23)" fill="#66a61c" stroke="rgba(0,0,0,0.21)" stroke-width="1"><circle cx="13.5" cy="13.5" r="13.5" stroke="none"/><circle cx="13.5" cy="13.5" r="13" fill="none"/></g><path data-name="Path 8" d="M26,35.163l4.178,4.178,7.071-7.071" transform="translate(3 1)" fill="none" stroke="#fff" stroke-width="3"/></g></svg> Request sent</h1>
-              <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" aria-hidden="true"></a></div>
+              <div class="logo"><a href="http://www.palci.org/" target="_blank" aria-label="PALCI E-ZBorrow"><img src="/static/logo.png" aria-hidden="true"></a></div>
             </div>
             <div class="page__body">
               <div class="summary">
-                <h2>{{json.title}}</h2>
+                <h2>Surprised by Joy</h2>
                 <p>
-		  {{#if json.author}}
-		    <span class="no-break">By {{json.author}}.</span>
-		  {{/if}}
-		  {{#if json.publicationDate}}
-		    <span class="no-break">Published {{json.publicationDate}}.</span>
-		  {{/if}}
-		  {{#if json.isbn}}
-  		    <span class="no-break">ISBN {{json.isbn}}.</span>
-		  {{/if}}
+		    <span class="no-break">By C. S. Lewis.</span>
+		    <span class="no-break">Published 1955.</span>
+  		    <span class="no-break">ISBN 1518737161.</span>
 		</p>
               </div>
               <dl>
-                {{#if pickupLocationName}}
                   <div class="key-value-pair">
                     <dt class="key">Pick up location</dt>
-                    <dd class="value">{{pickupLocationName}}</dd>
+                    <dd class="value">Front desk</dd>
                   </div>
-                {{/if}}
-		{{#if json.volume}}
-                  <div class="key-value-pair">
-		    <dt class="key">Volume(s) needed</dt>
-		    <dd class="value">{{json.volume}}</dd>
-                  </div>
-		{{/if}}
               </dl>
             </div>
           </div>

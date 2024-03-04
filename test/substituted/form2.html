@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Confirm request — {{branding.customerName}}</title>
+    <title>Confirm request — PALCI E-ZBorrow</title>
     <link rel="stylesheet" type="text/css" href="/static/form2.css"/>
-    <style>body { background: {{branding.backgroundColor}}; }</style>
+    <style>body { background: #007ebd; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
   </head>
@@ -16,49 +16,38 @@
           <form class="page">
             <div class="page__header">
               <h1>Confirm request</h1>
-              <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" aria-hidden="true"></a></div>
+              <div class="logo"><a href="http://www.palci.org/" target="_blank" aria-label="PALCI E-ZBorrow"><img src="/static/logo.png" aria-hidden="true"></a></div>
             </div>
             <div class="page__body">
               <div class="summary">
-                <h2>{{'rft.title'}} <span class="no-break">({{'rft.genre'}})</span></h2>
-                <p>By {{'rft.au'}}. <span class="no-break">Published {{'rft.date'}}.</span> <span class="no-break">ISBN {{'rft.isbn'}}.</span></p>
+                <h2> <span class="no-break">()</span></h2>
+                <p>By . <span class="no-break">Published .</span> <span class="no-break">ISBN .</span></p>
               </div>
-              {{#unless digitalOnly}}
               <label class="key-value-pair" for="input-pick-up-location">
                 <div class="key">Pick up location</div>
                 <div class="value">
-                  <select class="select" id="input-pick-up-location" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
-                    {{#unless onePickupLocation}}
+                  <select class="select" id="input-pick-up-location" name="svc.pickupLocation" value="">
                     <option value="">(None selected)</option>
-                    {{/unless}}
-                    {{#each pickupLocations}}
-                      <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
-                    {{/each}}
                   </select>
                   *
-                  {{#if noPickupLocation}}
-                    <br />
-                    <span class="error">Please supply a pickup location.</span>
-                  {{/if}}
                 </div>
               </label>
-              {{/unless}}
               <label class="key-value-pair" for="date-needed">
                 <div class="key">Date needed by</div>
                 <div class="value">
-                  <input id="date-needed" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}" />
+                  <input id="date-needed" type="date" name="svc.neededBy" value="" />
                 </div>
               </label>
               <label class="key-value-pair" for="volume">
                 <div class="key">Volume(s) needed</div>
                 <div class="value">
-                  <input id="volume" type="text" name="rft.volume" value="{{'rft.volume'}}" />
+                  <input id="volume" type="text" name="rft.volume" value="" />
                 </div>
               </label>
               <label class="key-value-pair" for="note">
                 <div class="key">Note</div>
                 <div class="value">
-                  <input id="note" type="text" name="svc.note" value="{{'svc.note'}}" maxlength="255" />
+                  <input id="note" type="text" name="svc.note" value="" maxlength="255" />
                 </div>
               </label>
             </div>
@@ -68,7 +57,7 @@
                 <!--button.button--secondary.flex-order-minus-one Cancel-->
               </div>
             </div>
-            {{{allValues}}}
+            
           </form>
         </div>
       </div>

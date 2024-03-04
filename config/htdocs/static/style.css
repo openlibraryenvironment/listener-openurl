@@ -55,7 +55,7 @@ html {
 body {
   font-size: 1em;
   letter-spacing: 0.04em;
-  background: #007ebd;
+  /* `background` should now be set in individual forms to respect branding */
 }
 @media (max-width: 800px) {
   body {
