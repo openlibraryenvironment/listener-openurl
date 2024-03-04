@@ -162,6 +162,7 @@ async function postReshareRequest(ctx, next) {
     try {
       vars.json = JSON.parse(body);
     } catch (e) {
+      vars.json = {};
       vars.text = body;
     };
 
