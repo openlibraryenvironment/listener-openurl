@@ -3,18 +3,26 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Error</title>
     <link rel="stylesheet" type="text/css" href="/static/form.css"/>
-    <style>body { background: {{branding.backgroundColor}}; }</style>
+    <style>body { background: #007ebd; }</style>
   </head>
   <body>
     <h1 class="center">Error</h1>
     <p class="center">
       <img src="/static/X_mark.svg" alt="red cross" height="100" width"100" />
       <br />
-      Something is wrong, and the HTTP status is {{status}}.
+      Something is wrong, and the HTTP status is .
     </p>  
     <h2>Detail</h2>
     <pre>
-{{json .}}
+{
+  &quot;json&quot;: {},
+  &quot;branding&quot;: {
+    &quot;backgroundColor&quot;: &quot;#007ebd&quot;,
+    &quot;customerName&quot;: &quot;PALCI E-ZBorrow&quot;,
+    &quot;logoUrl&quot;: &quot;/static/logo.png&quot;,
+    &quot;logoLink&quot;: &quot;http://www.palci.org/&quot;
+  }
+}
     </pre>
   </body>
 </html>

@@ -8,6 +8,20 @@
   "template.form1": "templates/form1.html",
   "template.form2": "templates/form2.html",
 
+  "branding": {
+    "backgroundColor": "#007ebd",
+    "customerName": "PALCI E-ZBorrow",
+    "logoUrl": "/static/logo.png",
+    "logoLink": "http://www.palci.org/"
+  },
+
+  "branding--UNUSED--BorrowDirect": {
+    "backgroundColor": "#28536b",
+    "customerName": "BorrowDirect",
+    "logoUrl": "/static/logos/borrowDirect.png",
+    "logoLink": "https://ivpluslibraries.org/"
+  },
+
   "services": {
     "US-EAST": {
       "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",

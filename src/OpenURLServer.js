@@ -99,8 +99,7 @@ async function maybeRenderForm(ctx, next) {
       })),
     });
 
-    const template = ctx.cfg.getTemplate(formName);
-    ctx.body = template(data);
+    ctx.body = ctx.cfg.runTemplate(formName, data);
   } else {
     await next();
   }
@@ -172,8 +171,7 @@ async function postReshareRequest(ctx, next) {
       if (location) vars.pickupLocationName = location.name;
     }
 
-    const template = ctx.cfg.getTemplate(res.ok ? 'good' : 'bad');
-    ctx.body = template(vars);
+    ctx.body = ctx.cfg.runTemplate(res.ok ? 'good' : 'bad', vars);
   }
 };
 
