@@ -532,3 +532,21 @@ select:focus {
   height: 0;
   width: 0;
 }
+
+
+
+/* Hand-authored */
+h2 {
+    font-size: 125%;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+.nyi {
+    font-size: 87.5%;
+    color: darkred;
+    margin-bottom: 0.75em;
+}
+.nyi::before { content: "(Not yet implemented: " }
+.nyi::after { content: ")" }
