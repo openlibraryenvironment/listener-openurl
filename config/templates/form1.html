@@ -22,7 +22,17 @@
             <div class="page__body">
 
               <h2>Request</h2>
-              <div class="nyi">Service</div>
+
+              <label class="key-value-pair" for="input-service">
+                <div class="key">Service</div>
+                <div class="value" id="input-title">
+                  <input type="radio" id="loan" name="svc_id" value="loan" checked>
+                  <label for="loan">Loan</label>
+                  <input type="radio" id="copy" name="svc_id" value="copy">
+                  <label for="copy">Copy</label>
+                </div>
+              </label>
+
               <div class="nyi">Copyright type</div>
               <label class="key-value-pair is-required" for="input-title">
                 <div class="key">Title</div>

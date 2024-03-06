@@ -302,7 +302,7 @@ label.key-value-pair {
 .required {
   color: #b30021;
 }
-input,
+input[type=text],
 select {
   -moz-appearance: none;
   -webkit-appearance: none;
