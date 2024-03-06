@@ -33,7 +33,18 @@
                 </div>
               </label>
 
-              <div class="nyi">Copyright type</div>
+              <label class="key-value-pair" for="input-copyright">
+                <div class="key">Copyright type</div>
+                <div class="value">
+                  <select class="select" id="input-copyright" name="svc.copyrightType" value="{{'svc.copyrightType'}}">
+                    <option value="">(None selected)</option>
+                    <option value="pd">Public domain</option>
+                    <option value="cc-by">Creative Commons attribution</option>
+                    <option value="arr">All rights reserved</option>
+                  </select>
+                </div>
+              </label>
+
               <label class="key-value-pair is-required" for="input-title">
                 <div class="key">Title</div>
                 <div class="value">

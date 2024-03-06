@@ -116,6 +116,7 @@ function translateCOtoRR(co) {
 
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.isRequester = true;
+  rr.copyrightType = _.get(m, 'svc.copyrightType');
 
   // All of the following are probably used only internally
   // rr.state;
