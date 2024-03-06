@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+{{#*inline "field"}}
+<label class="key-value-pair" for="input-9">
+  <div class="key">{{label}}</div>
+  <div class="value">
+    <input id="{{id}}" type="{{type}}" name="{{name}}" value="{{'rft.volume'}}">
+  </div>
+</label>
+{{/inline}}
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -62,12 +70,7 @@
               <h2>Part details</h2>
               <div class="nyi">Author of chapter/article/paper</div>
               <div class="nyi">Title of chapter/article/paper</div>
-              <label class="key-value-pair" for="input-9">
-                <div class="key">Volume(s) needed</div>
-                <div class="value">
-                  <input id="input-9" type="text" name="rft.volume" value="{{'rft.volume'}}">
-                </div>
-              </label>
+              {{> field id="input-9" label="Volume(s) needed" type="text" name="rft.volume"}}
               <div class="nyi">Pages</div>
 
               <h2>Publication details</h2>
