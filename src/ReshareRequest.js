@@ -62,7 +62,6 @@ function translateCOtoRR(co) {
 
   // This all seems to be metadata about the requested item
   rr.title = _.get(m, 'rft.title') || _.get(m, 'rft.btitle') || _.get(m, 'rft.atitle') || _.get(m, 'rft.jtitle');
-  rr.subtitle = _.get(m, 'rft.subtitle');
   rr.author = _.get(m, 'rft.au') || _.get(m, 'rft.creator') || _.get(m, 'rft.aulast') || _.get(m, 'rft.aufirst');
   // rr.subtitle has no corresponding OpenURL field
   // rr.sponsoringBody has no corresponding OpenURL field
@@ -117,7 +116,8 @@ function translateCOtoRR(co) {
 
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.isRequester = true;
-  rr.copyrightType = _.get(m, 'svc.copyrightType');
+  rr.copyrightType = _.get(m, 'rft.copyrightType');
+  rr.subtitle = _.get(m, 'rft.subtitle');
   rr.sponsoringBody = _.get(m, 'rft.sponsoringBody');
   rr.authorOfComponent = _.get(m, 'rft.authorOfComponent');
   rr.titleOfComponent = _.get(m, 'rft.titleOfComponent');
