@@ -5,6 +5,7 @@
 * [Keys](#keys)
     * [Special keys](#special-keys)
     * [Item metadata](#item-metadata)
+    * [Non-standard item metadata](#non-standard-item-metadata)
     * [What constitutes a complete request?](#what-constitutes-a-complete-request)
 * [Appendix: reading the source code](#appendix-reading-the-source-code)
 
@@ -45,11 +46,6 @@ These are keys that have special meaning either to the resolver itself or to the
 * `rft.genre` -- indicates the type of published resource the patron is seeking. Drawn from a small controlled vocabulary: `journal`, `article`, `book`, `bookitem`, `conference`, `preprint`, `proceeding`.
 * `rft.oclc` -- If supplied will pass an OCLC number through to the ReShare request upon creation.
 * `rft.identifier.illiad` -- If supplied creates a namespaced identifier that can be used to correlate iliiad requests inside reshare.
-* `rft.copyrightType` -- (non-standard) copyright type as expressed in ISO 18626.
-* `rft.subtitle` -- (non-standard) subtitle as expressed in ISO 18626.
-* `rft.sponsoringBody` -- (non-standard) sponsoring body as expressed in ISO 18626.
-* `rft.authorOfComponent` -- (non-standard) author of component (e.g. chapter of a book or article in a journal) as expressed in ISO 18626.
-* `rft.titleOfComponent` -- (non-standard) title of component (e.g. chapter of a book or article in a journal) as expressed in ISO 18626.
 
 
 ### Item metadata
@@ -77,6 +73,17 @@ The remaining keys simply describe the sought resource, and have their usual mea
 * `rft.artnum` -- The number of an individual item, in cases where there are no pages available. 
 * `rft.ssn` -- The season of publication, constrained (when provided) to be `winter`, `spring`, `summer` or `fall`. (All you gotta do is call.)
 * `rft.quarter` -- Apparently there are publications out there which use neither issue numbers nor seasons of publication, but specify which quarter of the year an issue came out. For these, you will find `rft.quarter` is exactly what you are looking for. Let me know how that works out for you.
+
+
+### Non-standard item metadata
+
+ReShare requests have several fields, drawn from ISO 118626, which do not have direct equivalents in the OpenURL 1.0 standard. For these, we accept the following non-standard item metadata fields.
+
+* `rft.copyrightType` -- copyright type
+* `rft.subtitle` -- subtitle
+* `rft.sponsoringBody` -- sponsoring body
+* `rft.authorOfComponent` -- author of component (e.g. chapter of a book or article in a journal)
+* `rft.titleOfComponent` -- title of component (e.g. chapter of a book or article in a journal)
 
 
 ### What constitutes a complete request?
