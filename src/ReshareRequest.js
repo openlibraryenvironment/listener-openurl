@@ -114,6 +114,7 @@ function translateCOtoRR(co) {
   rr.pickupLocationSlug = _.get(m, 'svc.pickupLocation');
   rr.neededBy = _.get(m, 'svc.neededBy');
 
+  // These are non-standard fields in OpenURL 1.0
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.isRequester = true;
   rr.copyrightType = _.get(m, 'rft.copyrightType');
