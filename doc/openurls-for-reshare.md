@@ -47,6 +47,10 @@ These are keys that have special meaning either to the resolver itself or to the
 * `rft.oclc` -- If supplied will pass an OCLC number through to the ReShare request upon creation.
 * `rft.identifier.illiad` -- If supplied creates a namespaced identifier that can be used to correlate iliiad requests inside reshare.
 * `rft.subtitle` -- (non-standard) subtitle as expressed in ISO 18626.
+* `rft.sponsoringBody` -- (non-standard) sponsoring body as expressed in ISO 18626.
+* `rft.authorOfComponent` -- (non-standard) author of component (e.g. chapter of a book or article in a journal) as expressed in ISO 18626.
+* `rft.titleOfComponent` -- (non-standard) title of component (e.g. chapter of a book or article in a journal) as expressed in ISO 18626.
+
 
 ### Item metadata
 

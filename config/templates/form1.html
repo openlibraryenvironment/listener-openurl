@@ -65,7 +65,14 @@
                   <input class="should-validate" id="input-author" type="text" name="rft.au" value="{{'rft.au'}}" aria-required="true">
                 </div>
               </label>
-              <div class="nyi">Sponsoring body</div>
+
+              <label class="key-value-pair" for="input-sponsoringBody">
+                <div class="key">Sponsoring body</div>
+                <div class="value">
+                  <input id="input-sponsoringBody" type="text" name="rft.sponsoringBody" value="{{'rft.sponsoringBody'}}">
+                </div>
+              </label>
+
               {{#unless digitalOnly}}
               <label class="key-value-pair" for="input-11">
                 <div class="key">Pick up location</div>
@@ -88,8 +95,21 @@
               {{/unless}}
 
               <h2>Part details</h2>
-              <div class="nyi">Author of chapter/article/paper</div>
-              <div class="nyi">Title of chapter/article/paper</div>
+
+              <label class="key-value-pair" for="input-authorOfComponent">
+                <div class="key">Author of chapter/article/paper</div>
+                <div class="value">
+                  <input id="input-authorOfComponent" type="text" name="rft.authorOfComponent" value="{{'rft.authorOfComponent'}}">
+                </div>
+              </label>
+
+              <label class="key-value-pair" for="input-titleOfComponent">
+                <div class="key">Title of chapter/article/paper</div>
+                <div class="value">
+                  <input id="input-titleOfComponent" type="text" name="rft.titleOfComponent" value="{{'rft.titleOfComponent'}}">
+                </div>
+              </label>
+
               <label class="key-value-pair" for="input-9">
                 <div class="key">Volume(s) needed</div>
                 <div class="value">
