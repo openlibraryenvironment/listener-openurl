@@ -122,6 +122,7 @@ function translateCOtoRR(co) {
   rr.authorOfComponent = _.get(m, 'rft.authorOfComponent');
   rr.titleOfComponent = _.get(m, 'rft.titleOfComponent');
   rr.pagesRequested = _.get(m, 'rft.pagesRequested');
+  rr.stitle = _.get(m, 'rft.jtitle'); // stitle/jtitle is NOT a typo! See ../doc/openurls-for-reshare.md
 
   // All of the following are probably used only internally
   // rr.state;

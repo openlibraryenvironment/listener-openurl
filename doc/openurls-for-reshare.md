@@ -55,6 +55,7 @@ These are keys that have special meaning either to the resolver itself or to the
 The remaining keys simply describe the sought resource, and have their usual meanings as specified (admittedly very tersely) in the standards documents:
 
 * `rft.title` `rft.btitle`, `rft.atitle`, `rft.jtitle` -- title, book title, article title and journal title, all of which are treated simply as "title" by ReShare.
+* `rft.jtitle` -- as well as being one of the candidates to become the main title in the ReShare request, this is also passed as the misleadingly named `stitle` field. (In OpenURL, `rft.stitle` is the useless "short title"; but in ISO 18626, and therefore also in ReShare, it's "serial title".)
 * `rft.au`, `rft.creator`, `rft.aulast`, `rft.aufirst` -- author, creator, author last name and author first name, all of which are treated simply as "author" by ReShare.
 * `rft.pub` -- publisher.
 * `rft.place` -- place of publication.
@@ -75,7 +76,6 @@ The remaining keys simply describe the sought resource, and have their usual mea
 * `rft.artnum` -- The number of an individual item, in cases where there are no pages available. 
 * `rft.ssn` -- The season of publication, constrained (when provided) to be `winter`, `spring`, `summer` or `fall`. (All you gotta do is call.)
 * `rft.quarter` -- Apparently there are publications out there which use neither issue numbers nor seasons of publication, but specify which quarter of the year an issue came out. For these, you will find `rft.quarter` is exactly what you are looking for. Let me know how that works out for you.
-
 
 ### Non-standard item metadata
 
