@@ -176,7 +176,17 @@
               <div class="nyi">UPC</div>
 
               <h2>(Empty heading)</h2>
-              <div class="nyi">Format</div>
+
+              <label class="key-value-pair" for="input-format">
+                <div class="key">Format</div>
+                <div class="value">
+                  <select class="select" id="input-format" name="rft.genre" value="{{'rft.genre'}}">
+                    {{#each formats}}
+                      <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </label>
 
               <h2>Additional information</h2>
               <div class="nyi">This item is not needed after</div>

@@ -97,6 +97,11 @@ async function maybeRenderForm(ctx, next) {
         name: x.name,
         selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
       })),
+      formats: ['journal', 'article', 'book', 'bookitem'].map(x => ({
+        code: x,
+        name: x.charAt(0).toUpperCase() + x.slice(1),
+        selected: x === query['rft.genre'] ? 'selected' : '',
+      })),
     });
 
     ctx.body = ctx.cfg.runTemplate(formName, data);
