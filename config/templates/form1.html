@@ -33,14 +33,13 @@
                 </div>
               </label>
 
-              <label class="key-value-pair" for="input-copyright">
+              <label class="key-value-pair" for="input-copyrightType">
                 <div class="key">Copyright type</div>
                 <div class="value">
-                  <select class="select" id="input-copyright" name="rft.copyrightType" value="{{'rft.copyrightType'}}">
-                    <option value="">(None selected)</option>
-                    <option value="pd">Public domain</option>
-                    <option value="cc-by">Creative Commons attribution</option>
-                    <option value="arr">All rights reserved</option>
+                  <select class="select" id="input-copyrightType" name="rft.copyrightType" value="{{'rft.copyrightType'}}">
+                    {{#each copyrightTypes}}
+                      <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
+                    {{/each}}
                   </select>
                 </div>
               </label>

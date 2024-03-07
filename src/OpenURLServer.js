@@ -102,6 +102,17 @@ async function maybeRenderForm(ctx, next) {
         name: x.charAt(0).toUpperCase() + x.slice(1),
         selected: x === query['rft.genre'] ? 'selected' : '',
       })),
+      // XXX hardwire the copyright types for now: later we will get them from a refdata
+      copyrightTypes: [
+        ['', '(None selected)'],
+        ['pd', 'Public domain'],
+        ['cc-by', 'Creative Commons attribution'],
+        ['arr', 'All rights reserved'],
+      ].map(x => ({
+        code: x[0],
+        name: x[1],
+        selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
+      })),
     });
 
     ctx.body = ctx.cfg.runTemplate(formName, data);
