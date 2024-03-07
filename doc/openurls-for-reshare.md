@@ -35,6 +35,8 @@ These are keys that have special meaning either to the resolver itself or to the
 * `svc.neededBy` -- The date by which the patron needs the requested item, expressed in [ISO 8601 format](https://xkcd.com/1179/).
 * `svc.note` -- A free-text note which the patron may elect to include along with the request.
 * `svc_id` -- specifies what kind of service the resolver is being asked to provide. By default, it posts a patron request in a ReShare node, but certain values will change this:
+  * `loan` (default) -- places a request to loan the item, entering a workflow in which it will eventually be returned.
+  * `copy` -- places a request for a copy of the item, either electronic or physical, which will not need to be returned.
   * `contextObject` -- returns a JSON representation of the parsed context-object: only useful for debugging.
   * `reshareRequest` -- returns a JSON representation of the constructed ReShare patron request: only useful for debugging.
   * `json` -- returns a JSON document indicating the status of the posted request. It contains the elements:
