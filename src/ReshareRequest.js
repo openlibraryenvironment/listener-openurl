@@ -121,6 +121,7 @@ function translateCOtoRR(co) {
   rr.sponsoringBody = _.get(m, 'rft.sponsoringBody');
   rr.authorOfComponent = _.get(m, 'rft.authorOfComponent');
   rr.titleOfComponent = _.get(m, 'rft.titleOfComponent');
+  rr.pagesRequested = _.get(m, 'rft.pagesRequested');
 
   // All of the following are probably used only internally
   // rr.state;
