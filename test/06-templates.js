@@ -3,7 +3,7 @@ const { describe, it } = require('mocha');
 const { assert } = require('chai');
 const { Config } = require('../src/Config');
 
-const cfg = new Config();
+const cfg = new Config({ filename: 'test/data/openurl.json' });
 
 const tests = [
   {
@@ -100,7 +100,7 @@ describe('06. substitute into templates', () => {
         });
       }
       if (test.equalToFile) {
-        const expected = fs.readFileSync(`test/substituted/${test.equalToFile}`, 'utf8');
+        const expected = fs.readFileSync(`test/data/substituted/${test.equalToFile}`, 'utf8');
         assert.equal(text, expected, 'templated text as expected');
       }
     });

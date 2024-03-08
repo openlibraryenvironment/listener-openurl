@@ -23,11 +23,11 @@ const tests = [
   },
   {
     input: 'rft.atitle=water&rft.jtitle=fish',
-    output: { title: 'water' },
+    output: { title: 'water', stitle: 'fish' },
   },
   {
     input: 'rft.jtitle=water',
-    output: { title: 'water' },
+    output: { title: 'water', stitle: 'water' },
   },
   {
     input: 'title=water',

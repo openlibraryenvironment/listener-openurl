@@ -1,0 +1,13 @@
+{
+  "template.good": "templates/good.html",
+  "template.bad": "templates/bad.html",
+  "template.form1": "templates/form1.html",
+  "template.form2": "templates/form2.html",
+
+  "branding": {
+    "backgroundColor": "#007ebd",
+    "customerName": "PALCI E-ZBorrow",
+    "logoUrl": "/static/logo.png",
+    "logoLink": "http://www.palci.org/"
+  }
+}

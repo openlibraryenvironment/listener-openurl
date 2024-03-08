@@ -302,7 +302,7 @@ label.key-value-pair {
 .required {
   color: #b30021;
 }
-input,
+input[type=text],
 select {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -532,3 +532,23 @@ select:focus {
   height: 0;
   width: 0;
 }
+
+
+
+/* Hand-authored */
+h2 {
+    font-size: 125%;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+.nyi {
+    font-size: 87.5%;
+    font-weight: bold;
+    color: darkred;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.nyi::before { content: "(Not yet implemented: " }
+.nyi::after { content: ")" }

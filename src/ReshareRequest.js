@@ -114,8 +114,16 @@ function translateCOtoRR(co) {
   rr.pickupLocationSlug = _.get(m, 'svc.pickupLocation');
   rr.neededBy = _.get(m, 'svc.neededBy');
 
+  // These are non-standard fields in OpenURL 1.0
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.isRequester = true;
+  rr.copyrightType = _.get(m, 'rft.copyrightType');
+  rr.subtitle = _.get(m, 'rft.subtitle');
+  rr.sponsoringBody = _.get(m, 'rft.sponsoringBody');
+  rr.authorOfComponent = _.get(m, 'rft.authorOfComponent');
+  rr.titleOfComponent = _.get(m, 'rft.titleOfComponent');
+  rr.pagesRequested = _.get(m, 'rft.pagesRequested');
+  rr.stitle = _.get(m, 'rft.jtitle'); // stitle/jtitle is NOT a typo! See ../doc/openurls-for-reshare.md
 
   // All of the following are probably used only internally
   // rr.state;

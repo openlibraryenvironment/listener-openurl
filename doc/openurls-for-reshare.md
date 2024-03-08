@@ -5,6 +5,7 @@
 * [Keys](#keys)
     * [Special keys](#special-keys)
     * [Item metadata](#item-metadata)
+    * [Non-standard item metadata](#non-standard-item-metadata)
     * [What constitutes a complete request?](#what-constitutes-a-complete-request)
 * [Appendix: reading the source code](#appendix-reading-the-source-code)
 
@@ -34,6 +35,8 @@ These are keys that have special meaning either to the resolver itself or to the
 * `svc.neededBy` -- The date by which the patron needs the requested item, expressed in [ISO 8601 format](https://xkcd.com/1179/).
 * `svc.note` -- A free-text note which the patron may elect to include along with the request.
 * `svc_id` -- specifies what kind of service the resolver is being asked to provide. By default, it posts a patron request in a ReShare node, but certain values will change this:
+  * `loan` (default) -- places a request to loan the item, entering a workflow in which it will eventually be returned.
+  * `copy` -- places a request for a copy of the item, either electronic or physical, which will not need to be returned.
   * `contextObject` -- returns a JSON representation of the parsed context-object: only useful for debugging.
   * `reshareRequest` -- returns a JSON representation of the constructed ReShare patron request: only useful for debugging.
   * `json` -- returns a JSON document indicating the status of the posted request. It contains the elements:
@@ -46,11 +49,13 @@ These are keys that have special meaning either to the resolver itself or to the
 * `rft.oclc` -- If supplied will pass an OCLC number through to the ReShare request upon creation.
 * `rft.identifier.illiad` -- If supplied creates a namespaced identifier that can be used to correlate iliiad requests inside reshare.
 
+
 ### Item metadata
 
 The remaining keys simply describe the sought resource, and have their usual meanings as specified (admittedly very tersely) in the standards documents:
 
 * `rft.title` `rft.btitle`, `rft.atitle`, `rft.jtitle` -- title, book title, article title and journal title, all of which are treated simply as "title" by ReShare.
+* `rft.jtitle` -- as well as being one of the candidates to become the main title in the ReShare request, this is also passed as the misleadingly named `stitle` field. (In OpenURL, `rft.stitle` is the useless "short title"; but in ISO 18626, and therefore also in ReShare, it's "serial title".)
 * `rft.au`, `rft.creator`, `rft.aulast`, `rft.aufirst` -- author, creator, author last name and author first name, all of which are treated simply as "author" by ReShare.
 * `rft.pub` -- publisher.
 * `rft.place` -- place of publication.
@@ -72,6 +77,16 @@ The remaining keys simply describe the sought resource, and have their usual mea
 * `rft.ssn` -- The season of publication, constrained (when provided) to be `winter`, `spring`, `summer` or `fall`. (All you gotta do is call.)
 * `rft.quarter` -- Apparently there are publications out there which use neither issue numbers nor seasons of publication, but specify which quarter of the year an issue came out. For these, you will find `rft.quarter` is exactly what you are looking for. Let me know how that works out for you.
 
+### Non-standard item metadata
+
+ReShare requests have several fields, drawn from ISO 118626, which do not have direct equivalents in the OpenURL 1.0 standard. For these, we accept the following non-standard item metadata fields.
+
+* `rft.copyrightType` -- copyright type
+* `rft.subtitle` -- subtitle
+* `rft.sponsoringBody` -- sponsoring body
+* `rft.authorOfComponent` -- author of component (e.g. chapter of a book or article in a journal)
+* `rft.titleOfComponent` -- title of component (e.g. chapter of a book or article in a journal)
+* `rft.pagesRequested` -- the page-range requested within a large work, e.g. an article appears on pages 1547-1564 of a volume of a journal.
 
 ### What constitutes a complete request?
 
