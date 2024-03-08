@@ -113,6 +113,11 @@ async function maybeRenderForm(ctx, next) {
         name: x[1],
         selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
       })),
+      services: ['loan', 'copy'].map(x => ({
+        code: x,
+        name: x.charAt(0).toUpperCase() + x.slice(1),
+        checked: x === query.svc_id ? 'checked' : '',
+      })),
     });
 
     ctx.body = ctx.cfg.runTemplate(formName, data);
