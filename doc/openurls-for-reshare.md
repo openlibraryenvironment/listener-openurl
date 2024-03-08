@@ -87,7 +87,6 @@ ReShare requests have several fields, drawn from ISO 118626, which do not have d
 * `rft.authorOfComponent` -- author of component (e.g. chapter of a book or article in a journal)
 * `rft.titleOfComponent` -- title of component (e.g. chapter of a book or article in a journal)
 * `rft.pagesRequested` -- the page-range requested within a large work, e.g. an article appears on pages 1547-1564 of a volume of a journal.
-* `rft.neededBy` -- date after which an item is no longer needed. XXX in what format?
 
 ### What constitutes a complete request?
 
