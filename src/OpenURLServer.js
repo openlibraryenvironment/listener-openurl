@@ -97,9 +97,9 @@ async function maybeRenderForm(ctx, next) {
         name: x.name,
         selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
       })),
-      formats: ['journal', 'article', 'book', 'bookitem'].map(x => ({
+      formats: ['article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
         code: x,
-        name: x.charAt(0).toUpperCase() + x.slice(1),
+        name: x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
         selected: x === query['rft.genre'] ? 'selected' : '',
       })),
       // XXX hardwire the copyright types for now: later we will get them from a refdata

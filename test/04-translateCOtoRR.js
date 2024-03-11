@@ -105,12 +105,12 @@ const tests = [
     }
   },
   { input: 'genre=journal', output: { publicationType: 'Journal' }, },
-  { input: 'genre=article', output: { publicationType: 'Journal' }, },
+  { input: 'genre=article', output: { publicationType: 'Article' }, },
   { input: 'genre=book', output: { publicationType: 'Book' }, },
-  { input: 'genre=bookitem', output: { publicationType: 'Book' }, },
-  { input: 'genre=conference', output: { publicationType: 'Other' }, },
-  { input: 'genre=preprint', output: { publicationType: 'Other' }, },
-  { input: 'genre=proceeding', output: { publicationType: 'Other' }, },
+  { input: 'genre=bookitem', output: { publicationType: 'Chapter' }, },
+  { input: 'genre=other', output: { publicationType: 'X-Other' }, },
+  { input: 'genre=preprint', output: { publicationType: 'Preprint' }, },
+  { input: 'genre=proceeding', output: { publicationType: 'Proceeding' }, },
   {
     input: [
       'issn=2376-5992',

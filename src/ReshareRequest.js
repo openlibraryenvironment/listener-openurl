@@ -27,14 +27,14 @@ const { v4: uuidv4 } = require('uuid');
 // unrecognised values are simply discarded rather than rejected.
 //
 function genreToPublicatonType(genre) {
-  if (genre === 'journal' || genre === 'article') {
-    return 'Journal';
-  } else if (genre === 'book' || genre === 'bookitem') {
-    return 'Book';
-  } else if (genre) { // conference, preprint, proceeding
-    return 'Other';
+  if (genre === undefined) {
+    return undefined;
+  } else if (genre === 'bookitem') {
+    return 'Chapter';
+  } else if (genre === 'other') {
+    return 'X-Other'; // XXX not part of https://illtransactions.org/opencode/2017/
   } else {
-    return genre;
+    return genre.charAt(0).toUpperCase() + genre.slice(1);
   }
 }
 
