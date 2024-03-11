@@ -14,7 +14,6 @@
         <div class="site__header"></div>
         <div class="site__body">
           <form class="page" id="form">
-            <div class="sr-only" id="sr-announcer" aria-live="assertive"></div>
             <div class="page__header">
               <h1>Request item</h1>
               <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" aria-hidden="true"></a></div>
@@ -200,14 +199,14 @@
               <label class="key-value-pair" for="input-neededBy">
                 <div class="key">This item is not needed after</div>
                 <div class="value">
-                  <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}">
+                  <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}" />
                 </div>
               </label>
 
               <label class="key-value-pair" for="input-note">
                 <div class="key">Special instructions</div>
                 <div class="value">
-                  <input id="input-note" type="text" name="svc.note" value="{{'svc.note'}}">
+                  <input id="input-note" type="text" name="svc.note" value="{{'svc.note'}}" maxlength="255" />
                 </div>
               </label>
             </div>

@@ -13,7 +13,7 @@
       <div class="site" lang="en" dir="ltr">
         <div class="site__header"></div>
         <div class="site__body">
-          <form class="page">
+          <form class="page" id="form">
             <div class="page__header">
               <h1>Confirm request</h1>
               <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" aria-hidden="true"></a></div>
@@ -24,10 +24,10 @@
                 <p>By {{'rft.au'}}. <span class="no-break">Published {{'rft.date'}}.</span> <span class="no-break">ISBN {{'rft.isbn'}}.</span></p>
               </div>
               {{#unless digitalOnly}}
-              <label class="key-value-pair" for="input-pick-up-location">
+              <label class="key-value-pair" for="input-pickupLocation">
                 <div class="key">Pick up location</div>
                 <div class="value">
-                  <select class="select" id="input-pick-up-location" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
+                  <select class="select" id="input-pickupLocation" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
                     {{#unless onePickupLocation}}
                     <option value="">(None selected)</option>
                     {{/unless}}
@@ -43,25 +43,29 @@
                 </div>
               </label>
               {{/unless}}
-              <label class="key-value-pair" for="date-needed">
+
+              <label class="key-value-pair" for="input-neededBy">
                 <div class="key">Date needed by</div>
                 <div class="value">
-                  <input id="date-needed" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}" />
+                  <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}" />
                 </div>
               </label>
+
               <label class="key-value-pair" for="volume">
                 <div class="key">Volume(s) needed</div>
                 <div class="value">
                   <input id="volume" type="text" name="rft.volume" value="{{'rft.volume'}}" />
                 </div>
               </label>
-              <label class="key-value-pair" for="note">
+
+              <label class="key-value-pair" for="input-note">
                 <div class="key">Note</div>
                 <div class="value">
-                  <input id="note" type="text" name="svc.note" value="{{'svc.note'}}" maxlength="255" />
+                  <input id="input-note" type="text" name="svc.note" value="{{'svc.note'}}" maxlength="255" />
                 </div>
               </label>
             </div>
+
             <div class="page__footer">
               <div class="button-group">
                 <button class="button--primary" id="submit" type="submit">Confirm request</button>
