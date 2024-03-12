@@ -56,14 +56,6 @@ async function maybeRenderForm(ctx, next) {
 
   ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
   if (!co.hasBasicData() || typeof ctx.query?.confirm !== 'undefined' || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
-    ctx.cfg.log('flow', 'Rendering form');
-    if (!npl) await service.getPickupLocations();
-
-    const query = Object.assign({}, co.getQuery());
-    delete query.confirm;
-    const ntries = query['svc.ntries'] || '0';
-    query['svc.ntries'] = (parseInt(ntries) + 1).toString();
-
     let formName;
     const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note'];
     if (co.hasBasicData()) {
@@ -73,6 +65,14 @@ async function maybeRenderForm(ctx, next) {
       formName = 'form1';
       formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc');
     }
+
+    ctx.cfg.log('flow', 'Rendering form', formName);
+    if (!npl) await service.getPickupLocations();
+
+    const query = Object.assign({}, co.getQuery());
+    delete query.confirm;
+    const ntries = query['svc.ntries'] || '0';
+    query['svc.ntries'] = (parseInt(ntries) + 1).toString();
 
     if (!query['rft.title']) {
       query['rft.title'] = query['rft.btitle'] || query['rft.atitle'] || query['rft.jtitle'];
