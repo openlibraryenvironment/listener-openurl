@@ -51,6 +51,14 @@ async function parseRequest(ctx, next) {
   await next();
 }
 
+
+// Used to protect against keys that are included multiple times
+function unArray(val) {
+  while (Array.isArray(val)) val = val[0];
+  return val;
+}
+
+
 async function maybeRenderForm(ctx, next) {
   const { co, metadata, service, npl } = ctx.state;
 
@@ -69,8 +77,14 @@ async function maybeRenderForm(ctx, next) {
     ctx.cfg.log('flow', 'Rendering form', formName);
     if (!npl) await service.getPickupLocations();
 
-    const query = Object.assign({}, co.getQuery());
-    delete query.confirm;
+    const originalQuery = co.getQuery();
+    const query = {};
+    Object.keys(originalQuery).forEach(key => {
+      if (key !== 'confirm') {
+        query[key] = unArray(originalQuery[key]);
+      }
+    });
+
     const ntries = query['svc.ntries'] || '0';
     query['svc.ntries'] = (parseInt(ntries) + 1).toString();
 
