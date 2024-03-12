@@ -1,5 +1,12 @@
 # Change history for listener-openurl
 
+## 1.7.0 (IN PROGRESS)
+
+* Support new metadata fields for non-returnables. Fixes PR-1619.
+* Modify available genres and their mapping to publication types. Fixes PR-1614.
+* Non-functional improvements to forms, now more consistent with each other. Fixes PR-1653.
+* Forms correctly render hidden values once more (This bug was introduced in commit b78ece4b and included in v1.6.0). Fixes PR-1662.
+
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
 * When only one pickup location is available, make that the default selection on the request and confirmation forms. Fixes PR-927.
