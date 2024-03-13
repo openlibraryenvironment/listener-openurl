@@ -112,7 +112,7 @@ body {
 	transition: box-shadow 3s, -webkit-box-shadow 3s;
 }
 .page__header {
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid #8f8f8f;
 	padding: 1.5em 2em;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -144,7 +144,7 @@ body {
 }
 .page__footer {
 	padding: 2em;
-	border-top: 1px solid #aaa;
+	border-top: 1px solid #8f8f8f;
 }
 @media (max-width: 800px) {
 	.page__footer {
@@ -206,7 +206,7 @@ h1 {
 	-webkit-transition: none;
 	-o-transition: none;
 	transition: none;
-	opacity: 0.5;
+	opacity: 1;
 }
 .logo a::-moz-focus-inner {
 	border: 0;
@@ -238,7 +238,7 @@ h1 {
 }
 .summary {
 	padding-bottom: 2em;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #bfbfbf;
 	margin-bottom: 2em;
 }
 .summary h2 {
@@ -312,7 +312,7 @@ select {
 	background-color: #fff;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #aaa;
+	border: 1px solid #8f8f8f;
 	width: 95%;
 	height: calc(1.5em + 2px);
 	padding: 0 0.4em;
@@ -453,7 +453,7 @@ select:focus {
 	-webkit-transition: none;
 	-o-transition: none;
 	transition: none;
-	opacity: 0.7;
+	opacity: 1;
 }
 .button::-moz-focus-inner,
 .button--secondary::-moz-focus-inner,
@@ -508,3 +508,33 @@ select:focus {
 		order: 0;
 	}
 }
+.sr-only {
+	position: fixed;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	border: 0;
+	height: 0;
+	width: 0;
+}
+
+
+
+/* Hand-authored */
+h2 {
+	font-size: 125%;
+	font-weight: bold;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	text-align: center;
+}
+.nyi {
+	font-size: 87.5%;
+	font-weight: bold;
+	color: darkred;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+.nyi::before { content: "(Not yet implemented: " }
+.nyi::after { content: ")" }
