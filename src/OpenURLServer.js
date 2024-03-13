@@ -73,8 +73,8 @@ async function maybeRenderForm(ctx, next) {
     } else {
       formName = 'form1';
       formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
-                      'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle',
-                      'rft.pagesRequested', 'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent','svc.neededBy');
+        'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
+        'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'svc.neededBy');
     }
 
     ctx.cfg.log('flow', 'Rendering form', formName);
