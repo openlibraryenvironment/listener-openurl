@@ -9,7 +9,7 @@
     "listener-openurl": "src/listener-openurl.js"
   },
   "scripts": {
-    "lint": "eslint --ext .js,.mjs src test",
+    "lint": "eslint -f unix --ext .js,.mjs src test",
     "test": "mocha",
     "integration": "mocha test/integration",
     "coverage": "nyc mocha",
