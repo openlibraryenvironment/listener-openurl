@@ -357,21 +357,7 @@ select:focus {
 	border: 0;
 }
 .error {
-	font-size: 0.875em;
-	font-weight: 600;
-	color: #b30021;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 0 0;
-	-webkit-transition: height 0.3s ease-in-out;
-	-o-transition: height 0.3s ease-in-out;
-	transition: height 0.3s ease-in-out;
-	display: none;
-	height: 0;
-	opacity: 0;
-	-webkit-transition: opacity 0.3s, height 0.3s ease-in-out;
-	-o-transition: opacity 0.3s, height 0.3s ease-in-out;
-	transition: opacity 0.3s, height 0.3s ease-in-out;
+	color: red;
 }
 .error.is-visible {
 	opacity: 1;
