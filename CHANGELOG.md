@@ -6,6 +6,7 @@
 * Modify available genres and their mapping to publication types. Fixes PR-1614.
 * Non-functional improvements to forms, now more consistent with each other. Fixes PR-1653.
 * Forms correctly render hidden values once more (This bug was introduced in commit b78ece4b and included in v1.6.0). Fixes PR-1662.
+* Forms do not generate duplicate fields (and code is robust against that possibility if they somehow do). Fixes PR-1663.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
