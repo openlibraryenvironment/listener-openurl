@@ -162,6 +162,23 @@ h1 {
 		font-size: 1em;
 	}
 }
+h1 svg {
+	height: 1.7em;
+	margin: 0 0.6em 0 -0.4em;
+}
+@media (max-width: 800px) {
+	h1 svg {
+		margin: 0 0.6em 0 -0.1em;
+	}
+}
+[dir="rtl"] h1 svg {
+	margin: 0 -0.4em 0 0.6em;
+}
+@media (max-width: 800px) {
+	[dir="rtl"] h1 svg {
+		margin: 0 -0.4em 0 0.6em;
+	}
+}
 .logo {
 	-webkit-transition: -webkit-transform 0.3s ease-in-out;
 	transition: -webkit-transform 0.3s ease-in-out;
@@ -271,6 +288,9 @@ label.key-value-pair {
 		margin-bottom: 1em;
 	}
 }
+label.key-value-pair:last-child {
+	margin-bottom: 0;
+}
 .key {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -298,6 +318,29 @@ label.key-value-pair {
 .is-required .key:after {
 	content: "*";
 	color: #b30021;
+}
+.value {
+	font-weight: 600;
+	font-size: 1em;
+	margin-bottom: 1.2em;
+}
+.value:last-child {
+	margin-bottom: 0;
+}
+dd.value {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+	margin-bottom: 0.8em;
+	min-height: calc(1.5em + 2px);
+}
+@media (max-width: 800px) {
+	dd.value {
+		min-height: calc(1em + 2px);
+	}
 }
 .required {
 	color: #b30021;
