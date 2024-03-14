@@ -9,6 +9,7 @@
 * Forms do not generate duplicate fields (and code is robust against that possibility if they somehow do). Fixes PR-1663.
 * Unify CSS used by form1 and form2. Fixes PR-1654.
 * Unify CSS styling between form.css and style.css. Fixes PR-1668.
+* Support the "issue" field in the forms. Fixes PR-1671.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
