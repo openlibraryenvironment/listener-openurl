@@ -10,6 +10,7 @@
 * Unify CSS used by form1 and form2. Fixes PR-1654.
 * Unify CSS styling between form.css and style.css. Fixes PR-1668.
 * Support the "issue" field in the forms. Fixes PR-1671.
+* Re-order and re-categorize request-form fields. Fixes PR-1656.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
