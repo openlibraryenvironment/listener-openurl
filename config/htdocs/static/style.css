@@ -302,6 +302,7 @@ label.key-value-pair {
 	width: 40%;
 	padding-right: 2em;
 	padding-bottom: 0.6em;
+	vertical-align: top;
 }
 @media (max-width: 800px) {
 	.key {
@@ -366,6 +367,10 @@ select {
 	font-family: "Source Sans Pro", sans-serif;
 	font-weight: 600;
 	letter-spacing: 0.04em;
+}
+textarea {
+	// For some reason, a 93% textarea is as wide as a 95% input[type=text]
+	width: 93%;
 }
 @media (max-width: 800px) {
 	input,
