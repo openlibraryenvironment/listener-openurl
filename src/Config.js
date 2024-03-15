@@ -39,10 +39,11 @@ class Config {
 
   runTemplate(name, values) {
     let template = this.cachedTemplates[name];
-    if (!template) {
+    if (!template || this.values.reloadTemplates) {
       const filename = this.values[`template.${name}`];
       if (!filename) throw Error(`no template '${name}'`);
       const text = this.readFile(filename);
+      this.log('loadTemplate', filename);
       template = Handlebars.compile(text);
       this.cachedTemplates[name] = template;
     }

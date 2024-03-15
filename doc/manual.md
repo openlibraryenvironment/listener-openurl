@@ -110,6 +110,7 @@ The following category names are currently used:
 * `rr` -- logs the ReShare request translated from the ContextObject
 * `posted` -- notes whenever a new request has been successfully or unsuccessfully posted
 * `error` -- logs errors such as failed posting, including HTTP response body
+* `loadTemplate` -- logs the filename of each template as it is loaded. If the top-level configuration item `reloadTemplates` is set true, then this will be each time a template is accessed.
 
 ## Starting the service
 

@@ -1,5 +1,5 @@
 {
-  "loggingCategories": "error,start,okapi,co,rr,admindata,metadata,flow",
+  "loggingCategories": "error,start,okapi,co,rr,admindata,metadata,flow,loadTemplate",
   "listenPort": 3012,
   "docRoot": "htdocs",
 
@@ -7,6 +7,9 @@
   "template.bad": "templates/bad.html",
   "template.form1": "templates/form1.html",
   "template.form2": "templates/form2.html",
+
+  "**comment**": "Use this next setting only in development",
+  "reloadTemplates": false,
 
   "branding": {
     "backgroundColor": "#007ebd",
