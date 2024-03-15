@@ -23,7 +23,7 @@
               <h2>Request type</h2>
 
               <label class="key-value-pair" for="input-service">
-                <div class="key">Service</div>
+                <div class="key">Service type</div>
                 <div class="value" id="input-service">
                   {{#each services}}
                     <label for="service_{{code}}">{{name}}</label>
@@ -54,7 +54,7 @@
               {{/unless}}
 
               <label class="key-value-pair" for="input-format">
-                <div class="key">Format</div>
+                <div class="key">Genre</div>
                 <div class="value">
                   <select class="select" id="input-format" name="rft.genre" value="{{'rft.genre'}}">
                     {{#each formats}}
@@ -65,7 +65,7 @@
               </label>
 
               <label class="key-value-pair" for="input-neededBy">
-                <div class="key">This item is not needed after</div>
+                <div class="key">Date needed by</div>
                 <div class="value">
                   <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}" />
                 </div>
@@ -138,7 +138,7 @@
               </label>
 
               <label class="key-value-pair" for="input-volume">
-                <div class="key">Volume(s) needed</div>
+                <div class="key">Volume</div>
                 <div class="value">
                   <input id="input-volume" type="text" name="rft.volume" value="{{'rft.volume'}}">
                 </div>
@@ -201,7 +201,7 @@
               <h2>Additional information</h2>
 
               <label class="key-value-pair" for="input-note">
-                <div class="key valign-top">Special instructions</div>
+                <div class="key valign-top">Patron notes</div>
                 <div class="value">
                   <textarea id="input-note" name="svc.note" rows="3" maxlength="255">
 {{'svc.note'}}
