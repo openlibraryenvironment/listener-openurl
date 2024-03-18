@@ -130,10 +130,10 @@ async function maybeRenderForm(ctx, next) {
         name: x[1],
         selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
       })),
-      services: ['loan', 'copy'].map(x => ({
+      services: ['loan', 'copy'].map((x, i) => ({
         code: x,
         name: x.charAt(0).toUpperCase() + x.slice(1),
-        checked: x === query.svc_id ? 'checked' : '',
+        checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
       })),
     });
 
