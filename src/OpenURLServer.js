@@ -114,9 +114,9 @@ async function maybeRenderForm(ctx, next) {
         name: x.name,
         selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
       })),
-      formats: ['article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
+      formats: ['', 'article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
         code: x,
-        name: x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
+        name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
         selected: x === query['rft.genre'] ? 'selected' : '',
       })),
       // XXX hardwire the copyright types for now: later we will get them from a refdata
@@ -136,6 +136,15 @@ async function maybeRenderForm(ctx, next) {
         checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
       })),
     });
+
+    const format = data.formats.filter(x => x.selected);
+    if (format.length === 0) {
+      // Nothing explicitly selected, so default from service-type
+      if (data.services[0].checked) {
+        data.formats[2].selected = 'selected';
+      }
+    }
+    console.log('format =', format);
 
     ctx.body = ctx.cfg.runTemplate(formName, data);
   } else {
