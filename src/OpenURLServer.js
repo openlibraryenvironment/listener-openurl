@@ -149,7 +149,6 @@ async function maybeRenderForm(ctx, next) {
       data.formats[2].selected = 'selected';
     }
   }
-  console.log('format =', format);
 
   ctx.body = ctx.cfg.runTemplate(formName, data);
 }
