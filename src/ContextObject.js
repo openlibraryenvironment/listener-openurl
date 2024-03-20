@@ -21,7 +21,7 @@ const some = require('lodash/some');
 //
 function isVersion0point1(originalQuery) {
   const keys = Object.keys(originalQuery);
-  return !some(keys, key => key.match(/^rft[_.]/));
+  return !some(keys, key => key.match(/^(rft|req)[_.]/));
 }
 
 
