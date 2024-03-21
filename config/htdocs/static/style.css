@@ -55,7 +55,7 @@ html {
 	font-size: 100%;
 	font-family: "Source Sans Pro", sans-serif;
 	box-sizing: border-box;
-	min-height: 100dvh;
+	min-height: 100vh;
 }
 
 *,
@@ -72,7 +72,7 @@ html {
 }
 
 body {
-	min-height: 100dvh;
+	min-height: 100vh;
 	display: grid;
 	place-content: center;
 	letter-spacing: 0.04em;
@@ -270,6 +270,6 @@ button:hover {
 		margin: 0.75em 0 .2em;
 	}
 	.site {
-		width: 90dvw;
+		width: 90vw;
 	}
 }
