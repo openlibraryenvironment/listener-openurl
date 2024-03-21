@@ -59,6 +59,53 @@ function unArray(val) {
 }
 
 
+function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
+  const data = Object.assign({}, query, {
+    valuesNotShownInForm,
+    digitalOnly: ctx.state?.svcCfg?.digitalOnly,
+    noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
+    onePickupLocation: (service?.pickupLocations?.length === 1),
+    pickupLocations: (service.pickupLocations || []).map(x => ({
+      id: x.id,
+      code: x.code,
+      name: x.name,
+      selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
+    })),
+    formats: ['', 'article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
+      code: x,
+      name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
+      selected: x === query['rft.genre'] ? 'selected' : '',
+    })),
+    // XXX hardwire the copyright types for now: later we will get them from a refdata
+    copyrightTypes: [
+      ['', '(None selected)'],
+      ['pd', 'Public domain'],
+      ['cc-by', 'Creative Commons attribution'],
+      ['arr', 'All rights reserved'],
+    ].map(x => ({
+      code: x[0],
+      name: x[1],
+      selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
+    })),
+    services: ['loan', 'copy'].map((x, i) => ({
+      code: x,
+      name: x.charAt(0).toUpperCase() + x.slice(1),
+      checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
+    })),
+  });
+
+  const format = data.formats.filter(x => x.selected);
+  if (format.length === 0) {
+    // Nothing explicitly selected, so default from service-type
+    if (data.services[0].checked) {
+      data.formats[2].selected = 'selected';
+    }
+  }
+
+  return data;
+}
+
+
 async function maybeRenderForm(ctx, next) {
   const { co, metadata, service, npl } = ctx.state;
 
@@ -104,48 +151,7 @@ async function maybeRenderForm(ctx, next) {
     .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}" />`)
     .join('\n');
 
-  const data = Object.assign({}, query, {
-    valuesNotShownInForm,
-    digitalOnly: ctx.state?.svcCfg?.digitalOnly,
-    noPickupLocation: parseInt(ntries) > 0 && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
-    onePickupLocation: (service?.pickupLocations?.length === 1),
-    pickupLocations: (service.pickupLocations || []).map(x => ({
-      id: x.id,
-      code: x.code,
-      name: x.name,
-      selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
-    })),
-    formats: ['', 'article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
-      code: x,
-      name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
-      selected: x === query['rft.genre'] ? 'selected' : '',
-    })),
-    // XXX hardwire the copyright types for now: later we will get them from a refdata
-    copyrightTypes: [
-      ['', '(None selected)'],
-      ['pd', 'Public domain'],
-      ['cc-by', 'Creative Commons attribution'],
-      ['arr', 'All rights reserved'],
-    ].map(x => ({
-      code: x[0],
-      name: x[1],
-      selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
-    })),
-    services: ['loan', 'copy'].map((x, i) => ({
-      code: x,
-      name: x.charAt(0).toUpperCase() + x.slice(1),
-      checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
-    })),
-  });
-
-  const format = data.formats.filter(x => x.selected);
-  if (format.length === 0) {
-    // Nothing explicitly selected, so default from service-type
-    if (data.services[0].checked) {
-      data.formats[2].selected = 'selected';
-    }
-  }
-
+  const data = makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0);
   ctx.body = ctx.cfg.runTemplate(formName, data);
 }
 
