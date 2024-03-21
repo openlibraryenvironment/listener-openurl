@@ -63,7 +63,7 @@ const tests = [
     ],
   },
   {
-    input: 'id=doi:123/345678&id=pmid:202123&title=t&au=a&date=d&req.emailAddress=x&svc.pickupLocation=y',
+    input: 'id=doi:123/345678&id=pmid:202123&title=t&au=a&date=d&svc.pickupLocation=y',
     checks: [
       ['metadata.rft.id.0', 'doi:123/345678'],
       ['metadata.rft.id.1', 'pmid:202123'],
