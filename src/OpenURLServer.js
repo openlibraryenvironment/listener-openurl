@@ -64,7 +64,6 @@ async function maybeRenderForm(ctx, next) {
 
   ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
   if (co.hasBasicData() &&
-      typeof ctx.query?.confirm === 'undefined' &&
       (npl || get(metadata, ['svc', 'pickupLocation']))) {
     return await next();
   }
@@ -88,9 +87,7 @@ async function maybeRenderForm(ctx, next) {
   const originalQuery = co.getQuery();
   const query = {};
   Object.keys(originalQuery).forEach(key => {
-    if (key !== 'confirm') {
-      query[key] = unArray(originalQuery[key]);
-    }
+    query[key] = unArray(originalQuery[key]);
   });
 
   const ntries = query['svc.ntries'] || '0';
