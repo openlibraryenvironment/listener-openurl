@@ -70,15 +70,14 @@ async function maybeRenderForm(ctx, next) {
 
   let formName;
   // Fields that are included in the form, and whose values should therefore NOT be provided as hidden inputs
-  const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note'];
+  const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note', 'svc.neededBy'];
   if (co.hasBasicData()) {
     formName = 'form2';
-    formFields.push('svc.neededBy'); // XXX Should this also be in form1?
   } else {
     formName = 'form1';
     formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
       'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
-      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'svc.neededBy', 'rft.issue');
+      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue');
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
