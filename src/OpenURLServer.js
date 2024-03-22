@@ -112,7 +112,7 @@ async function maybeRenderForm(ctx, next) {
         id: x.id,
         code: x.code,
         name: x.name,
-        selected: x.id === query['svc.pickupLocation'] ? 'selected' : '',
+        selected: x.code === query['svc.pickupLocation'] ? 'selected' : '',
       })),
       formats: ['article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
         code: x,
