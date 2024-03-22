@@ -60,7 +60,10 @@ function unArray(val) {
 
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
+  const displayOnlyForCopy = query.svc_id === 'copy' ? 'block' : 'none';
+
   const data = Object.assign({}, query, {
+    displayOnlyForCopy,
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
     noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,

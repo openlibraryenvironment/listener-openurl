@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Request item — {{branding.customerName}}</title>
+    <style>.only-for-copy { display: {{displayOnlyForCopy}}; }</style>
     <link rel="stylesheet" type="text/css" href="/static/style.css"/>
     <style>body { background: {{branding.backgroundColor}}; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +72,7 @@
                 </div>
               </label>
 
-              <label class="key-value-pair" for="input-copyrightType">
+              <label class="key-value-pair only-for-copy" for="input-copyrightType">
                 <div class="key">Copyright type</div>
                 <div class="value">
                   <select class="select" id="input-copyrightType" name="rft.copyrightType" value="{{'rft.copyrightType'}}">
