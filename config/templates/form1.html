@@ -23,21 +23,21 @@
 
               <h2>Request type</h2>
 
-              <label class="key-value-pair" for="input-service">
+              <div class="key-value-pair">
                 <div class="key">Service type</div>
-                <div class="value" id="input-service">
+                <div class="value">
                   {{#each services}}
                     <label for="service_{{code}}">{{name}}</label>
                     <input type="radio" id="service_{{code}}" name="svc_id" value="{{code}}" {{this.checked}}>
                   {{/each}}
                 </div>
-              </label>
+              </div>
 
               {{#unless digitalOnly}}
-              <label class="key-value-pair is-required" for="input-pickupLocation">
-                <div class="key">Pick up location</div>
+              <div class="key-value-pair is-required">
+                <label class="key" for="input-pickupLocation">Pick up location</label>
                 <div class="value">
-                  <select class="select" id="input-pickupLocation" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
+                  <select class="select" id="input-pickupLocation" name="svc.pickupLocation">
                     {{#unless onePickupLocation}}
                     <option value="">(None selected)</option>
                     {{/unless}}
@@ -50,164 +50,164 @@
                     <div class="error">Please supply a pickup location.</div>
                   {{/if}}
                 </div>
-              </label>
+              </div>
               {{/unless}}
 
-              <label class="key-value-pair" for="input-format">
-                <div class="key">Genre</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-format">Genre</label>
                 <div class="value">
-                  <select class="select" id="input-format" name="rft.genre" value="{{'rft.genre'}}">
+                  <select class="select" id="input-format" name="rft.genre">
                     {{#each formats}}
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-neededBy">
-                <div class="key">Date needed by</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-neededBy">Date needed by</label>
                 <div class="value">
                   <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="onlyForCopy key-value-pair" for="input-copyrightType">
-                <div class="key">Copyright type</div>
+              <div class="onlyForCopy key-value-pair">
+                <label class="key" for="input-copyrightType">Copyright type</label>
                 <div class="value">
-                  <select class="select" id="input-copyrightType" name="rft.copyrightType" value="{{'rft.copyrightType'}}">
+                  <select class="select" id="input-copyrightType" name="rft.copyrightType">
                     {{#each copyrightTypes}}
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
-              </label>
+              </div>
 
 
               <h2>Details</h2>
 
-              <label class="key-value-pair is-required" for="input-title">
-                <div class="key">Title</div>
+              <div class="key-value-pair is-required">
+                <label class="key" for="input-title">Title</label>
                 <div class="value">
-                  <input class="should-validate" id="input-title" autofocus="true" type="text" name="rft.title" value="{{'rft.title'}}" aria-required="true">
+                  <input class="should-validate" id="input-title" autofocus type="text" name="rft.title" value="{{'rft.title'}}" aria-required="true">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-subtitle">
-                <div class="key">Subtitle</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-subtitle">Subtitle</label>
                 <div class="value">
                   <input id="input-subtitle" type="text" name="rft.subtitle" value="{{'rft.subtitle'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair is-required" for="input-author">
-                <div class="key">Author</div>
+              <div class="key-value-pair is-required">
+                <label class="key" for="input-author">Author</label>
                 <div class="value">
                   <input class="should-validate" id="input-author" type="text" name="rft.au" value="{{'rft.au'}}" aria-required="true">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-isbn">
-                <div class="key">ISBN</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-isbn">ISBN</label>
                 <div class="value"> 
                   <input id="input-isbn" type="text" name="rft.isbn" value="{{'rft.isbn'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-issn">
-                <div class="key">ISSN</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-issn">ISSN</label>
                 <div class="value"> 
                   <input id="input-issn" type="text" name="rft.issn" value="{{'rft.issn'}}">
                 </div>
-              </label>
+              </div>
 
 
               <div class="onlyForCopy">
               <h2>Part Details</h2>
 
-              <label class="key-value-pair" for="input-titleOfComponent">
-                <div class="key">Title of chapter/article/paper</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-titleOfComponent">Title of chapter/article/paper</label>
                 <div class="value">
                   <input id="input-titleOfComponent" type="text" name="rft.titleOfComponent" value="{{'rft.titleOfComponent'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-authorOfComponent">
-                <div class="key">Author of chapter/article/paper</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-authorOfComponent">Author of chapter/article/paper</label>
                 <div class="value">
                   <input id="input-authorOfComponent" type="text" name="rft.authorOfComponent" value="{{'rft.authorOfComponent'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-volume">
-                <div class="key">Volume</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-volume">Volume</label>
                 <div class="value">
                   <input id="input-volume" type="text" name="rft.volume" value="{{'rft.volume'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-issue">
-                <div class="key">Issue</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-issue">Issue</label>
                 <div class="value">
                   <input id="input-issue" type="text" name="rft.issue" value="{{'rft.issue'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-pagesRequested">
-                <div class="key">Pages</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-pagesRequested">Pages</label>
                 <div class="value">
                   <input id="input-pagesRequested" type="text" name="rft.pagesRequested" value="{{'rft.pagesRequested'}}">
                 </div>
-              </label>
+              </div>
               </div>
 
 
 
               <h2>Publication Details</h2>
 
-              <label class="key-value-pair" for="input-jtitle">
-                <div class="key">Series title and numbering</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-jtitle">Series title and numbering</label>
                 <div class="value">
                   <input id="input-jtitle" type="text" name="rft.jtitle" value="{{'rft.jtitle'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-publisher">
-                <div class="key">Publisher</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-publisher">Publisher</label>
                 <div class="value">
                   <input id="input-publisher" type="text" name="rft.pub" value="{{'rft.pub'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-place">
-                <div class="key">Place of publication</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-place">Place of publication</label>
                 <div class="value">
                   <input id="input-place" type="text" name="rft.place" value="{{'rft.place'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair is-required" for="input-publication-date">
-                <div class="key">Year of publication</div>
+              <div class="key-value-pair is-required">
+                <label class="key" for="input-publication-date">Year of publication</label>
                 <div class="value">
                   <input class="should-validate" id="input-publication-date" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" aria-required="true">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-edition">
-                <div class="key">Edition</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-edition">Edition</label>
                 <div class="value">
                   <input id="input-edition" type="text" name="rft.edition" value="{{'rft.edition'}}">
                 </div>
-              </label>
+              </div>
 
 
               <h2>Additional information</h2>
 
-              <label class="key-value-pair" for="input-note">
-                <div class="key valign-top">Patron notes</div>
+              <div class="key-value-pair">
+                <label class="key valign-top" for="input-note">Patron notes</label>
                 <div class="value">
                   <textarea id="input-note" name="svc.note" rows="3" maxlength="255">{{'svc.note'}}</textarea>
                 </div>
-              </label>
+              </div>
 
             </div>
 
