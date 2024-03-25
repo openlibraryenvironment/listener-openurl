@@ -60,7 +60,7 @@ function unArray(val) {
 
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
-  const onlyForCopy = query.svc_id === 'copy' ? '' : 'opacity: 40%; disabled';
+  const onlyForCopy = query.svc_id === 'copy' ? '' : 'opacity: 40%';
 
   const data = Object.assign({}, query, {
     onlyForCopy,
@@ -151,7 +151,7 @@ async function maybeRenderForm(ctx, next) {
 
   const valuesNotShownInForm = Object.keys(omit(query, formFields))
     .sort()
-    .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}" />`)
+    .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}">`)
     .join('\n');
 
   const data = makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0);
