@@ -59,88 +59,103 @@ function unArray(val) {
 }
 
 
+function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
+  const onlyForCopy = query.svc_id === 'copy' ? '' : ''; // ### For now. We need to rethink this
+
+  const data = Object.assign({}, query, {
+    onlyForCopy,
+    valuesNotShownInForm,
+    digitalOnly: ctx.state?.svcCfg?.digitalOnly,
+    noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
+    onePickupLocation: (service?.pickupLocations?.length === 1),
+    pickupLocations: (service.pickupLocations || []).map(x => ({
+      id: x.id,
+      code: x.code,
+      name: x.name,
+      selected: x.code === query['svc.pickupLocation'] ? 'selected' : '',
+    })),
+    formats: ['', 'article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
+      code: x,
+      name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
+      selected: x === query['rft.genre'] ? 'selected' : '',
+    })),
+    // XXX hardwire the copyright types for now: later we will get them from a refdata
+    copyrightTypes: [
+      ['', '(None selected)'],
+      ['pd', 'Public domain'],
+      ['cc-by', 'Creative Commons attribution'],
+      ['arr', 'All rights reserved'],
+    ].map(x => ({
+      code: x[0],
+      name: x[1],
+      selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
+    })),
+    services: ['loan', 'copy'].map((x, i) => ({
+      code: x,
+      name: x.charAt(0).toUpperCase() + x.slice(1),
+      checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
+    })),
+  });
+
+  const format = data.formats.filter(x => x.selected);
+  if (format.length === 0) {
+    // Nothing explicitly selected, so default from service-type
+    if (data.services[0].checked) {
+      data.formats[2].selected = 'selected';
+    }
+  }
+
+  return data;
+}
+
+
 async function maybeRenderForm(ctx, next) {
   const { co, metadata, service, npl } = ctx.state;
 
   ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
-  if (!co.hasBasicData() || typeof ctx.query?.confirm !== 'undefined' || (!npl && !get(metadata, ['svc', 'pickupLocation']))) {
-    let formName;
-    // Fields that are included in the form, and whose values should therefore NOT be provided as hidden inputs
-    const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note'];
-    if (co.hasBasicData()) {
-      formName = 'form2';
-      formFields.push('svc.neededBy'); // XXX Should this also be in form1?
-    } else {
-      formName = 'form1';
-      formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
-        'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
-        'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'svc.neededBy', 'rft.issue');
-    }
-
-    ctx.cfg.log('flow', 'Rendering form', formName);
-    if (!npl) await service.getPickupLocations();
-
-    const originalQuery = co.getQuery();
-    const query = {};
-    Object.keys(originalQuery).forEach(key => {
-      if (key !== 'confirm') {
-        query[key] = unArray(originalQuery[key]);
-      }
-    });
-
-    const ntries = query['svc.ntries'] || '0';
-    query['svc.ntries'] = (parseInt(ntries) + 1).toString();
-
-    if (!query['rft.title']) {
-      query['rft.title'] = query['rft.btitle'] || query['rft.atitle'] || query['rft.jtitle'];
-    }
-    if (!query['rft.au']) {
-      query['rft.au'] = query['rft.creator'] || query['rft.aulast'] || query['rft.aufirst'];
-    }
-
-    const valuesNotShownInForm = Object.keys(omit(query, formFields))
-      .sort()
-      .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}" />`)
-      .join('\n');
-
-    const data = Object.assign({}, query, {
-      valuesNotShownInForm,
-      digitalOnly: ctx.state?.svcCfg?.digitalOnly,
-      noPickupLocation: parseInt(ntries) > 0 && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
-      onePickupLocation: (service?.pickupLocations?.length === 1),
-      pickupLocations: (service.pickupLocations || []).map(x => ({
-        id: x.id,
-        code: x.code,
-        name: x.name,
-        selected: x.code === query['svc.pickupLocation'] ? 'selected' : '',
-      })),
-      formats: ['article', 'book', 'bookitem', 'journal', 'other'].map(x => ({
-        code: x,
-        name: x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
-        selected: x === query['rft.genre'] ? 'selected' : '',
-      })),
-      // XXX hardwire the copyright types for now: later we will get them from a refdata
-      copyrightTypes: [
-        ['', '(None selected)'],
-        ['pd', 'Public domain'],
-        ['cc-by', 'Creative Commons attribution'],
-        ['arr', 'All rights reserved'],
-      ].map(x => ({
-        code: x[0],
-        name: x[1],
-        selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
-      })),
-      services: ['loan', 'copy'].map((x, i) => ({
-        code: x,
-        name: x.charAt(0).toUpperCase() + x.slice(1),
-        checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
-      })),
-    });
-
-    ctx.body = ctx.cfg.runTemplate(formName, data);
-  } else {
-    await next();
+  if (co.hasBasicData() &&
+      (npl || get(metadata, ['svc', 'pickupLocation']))) {
+    return await next();
   }
+
+  let formName;
+  // Fields that are included in the form, and whose values should therefore NOT be provided as hidden inputs
+  const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note', 'svc.neededBy'];
+  if (co.hasBasicData()) {
+    formName = 'form2';
+  } else {
+    formName = 'form1';
+    formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
+      'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
+      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue');
+  }
+
+  ctx.cfg.log('flow', 'Rendering form', formName);
+  if (!npl) await service.getPickupLocations();
+
+  const originalQuery = co.getQuery();
+  const query = {};
+  Object.keys(originalQuery).forEach(key => {
+    query[key] = unArray(originalQuery[key]);
+  });
+
+  const ntries = query['svc.ntries'] || '0';
+  query['svc.ntries'] = (parseInt(ntries) + 1).toString();
+
+  if (!query['rft.title']) {
+    query['rft.title'] = query['rft.btitle'] || query['rft.atitle'] || query['rft.jtitle'];
+  }
+  if (!query['rft.au']) {
+    query['rft.au'] = query['rft.creator'] || query['rft.aulast'] || query['rft.aufirst'];
+  }
+
+  const valuesNotShownInForm = Object.keys(omit(query, formFields))
+    .sort()
+    .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}">`)
+    .join('\n');
+
+  const data = makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0);
+  ctx.body = ctx.cfg.runTemplate(formName, data);
 }
 
 async function maybeReturnAdminData(ctx, next) {
