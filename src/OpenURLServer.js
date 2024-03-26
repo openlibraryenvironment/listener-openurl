@@ -60,7 +60,7 @@ function unArray(val) {
 
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
-  const onlyForCopy = query.svc_id === 'copy' ? '' : 'opacity: 40%';
+  const onlyForCopy = query.svc_id === 'copy' ? '' : ''; // ### For now. We need to rethink this
 
   const data = Object.assign({}, query, {
     onlyForCopy,
