@@ -14,6 +14,7 @@
 * Add `reloadTemplates` top-level config option and `loadTemplate` logging category for dynamic template loading. Fixes PR-1672.
 * Redesign long form to be more space-efficient. Fixes PR-1655.
 * OpenURL v0.1 detection now returns false if there is a `req.*` or `req_*` key. Fixes PR-1675.
+* Completely rework CSS, to look the same but be maintainable. Done by Corina Wong. Fixes PR-1673.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
