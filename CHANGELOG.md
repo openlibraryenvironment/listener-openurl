@@ -2,6 +2,7 @@
 
 ## 1.7.0 (IN PROGRESS)
 
+* Allow patron to select service type on the blank request form. Fixes PR-1613.
 * Support new metadata fields for non-returnables. Fixes PR-1619.
 * Modify available genres and their mapping to publication types. Fixes PR-1614.
 * Non-functional improvements to forms, now more consistent with each other. Fixes PR-1653.
