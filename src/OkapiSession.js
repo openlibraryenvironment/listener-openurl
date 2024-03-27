@@ -31,12 +31,17 @@ class OkapiSession {
       });
   }
 
-  async getPickupLocations() {
-    const path = '/directory/entry?filters=tags.value%3Di%3Dpickup&filters=status.value%3Di%3Dmanaged&perPage=100&stats=true';
+  async _getDataFromReShare(path, caption) {
     const res = await this.okapiFetch('GET', path);
-    if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
+    if (res.status !== 200) throw new HTTPError(res, `cannot fetch default ${caption} for '${this.label}'`);
     const json = await res.json();
     this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    return json;
+  }
+
+  async getPickupLocations() {
+    const path = '/directory/entry?filters=tags.value%3Di%3Dpickup&filters=status.value%3Di%3Dmanaged&perPage=100&stats=true';
+    const json = await this._getDataFromReShare(path, 'pickup locations');
     this.pickupLocations = json.results
       .map(r => ({ id: r.id, code: r.slug, name: r.name }))
       .sort((a, b) => {
@@ -51,20 +56,14 @@ class OkapiSession {
 
   async getCopyrightTypes() {
     const path = '/rs/refdata?filters=desc%3D%3DcopyrightType&sort=desc%3Basc&max=100';
-    const res = await this.okapiFetch('GET', path);
-    if (res.status !== 200) throw new HTTPError(res, `cannot fetch copyright types for '${this.label}'`);
-    const json = await res.json();
-    this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    const json = await this._getDataFromReShare(path, 'copyright types');
     this.copyrightTypes = json[0].values
       .map(r => ({ id: r.id, code: r.value, name: r.label }));
   }
 
   async getDefaultCopyrightType() {
     const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
-    const res = await this.okapiFetch('GET', path);
-    if (res.status !== 200) throw new HTTPError(res, `cannot fetch default copyright type for '${this.label}'`);
-    const json = await res.json();
-    this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    const json = await this._getDataFromReShare(path, 'default copyright type');
     this.defaultCopyrightType = json[0].value;
   }
 
