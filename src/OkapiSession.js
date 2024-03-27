@@ -31,25 +31,21 @@ class OkapiSession {
       });
   }
 
-  getPickupLocations() {
-    const method = 'GET';
+  async getPickupLocations() {
     const path = '/directory/entry?filters=tags.value%3Di%3Dpickup&filters=status.value%3Di%3Dmanaged&perPage=100&stats=true';
-    return this.okapiFetch(method, path, undefined)
-      .then(res => {
-        if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
-        return res.json().then((json) => {
-          this.logger.log('json', this.label, json);
-          this.pickupLocations = json.results
-            .map(r => ({ id: r.id, code: r.slug, name: r.name }))
-            .sort((a, b) => {
-              if (typeof a.name !== 'string') {
-                if (typeof b.name !== 'string') return 0;
-                return 1;
-              }
-              if (typeof b.name !== 'string') return -1;
-              return a.name.localeCompare(b.name);
-            });
-        });
+    const res = await this.okapiFetch('GET', path);
+    if (res.status !== 200) throw new HTTPError(res, `cannot fetch pickup locations for '${this.label}'`);
+    const json = await res.json();
+    this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    this.pickupLocations = json.results
+      .map(r => ({ id: r.id, code: r.slug, name: r.name }))
+      .sort((a, b) => {
+        if (typeof a.name !== 'string') {
+          if (typeof b.name !== 'string') return 0;
+          return 1;
+        }
+        if (typeof b.name !== 'string') return -1;
+        return a.name.localeCompare(b.name);
       });
   }
 
