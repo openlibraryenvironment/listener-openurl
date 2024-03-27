@@ -2,6 +2,7 @@
 
 ## 1.7.0 (IN PROGRESS)
 
+* Allow patron to select service type on the blank request form. Fixes PR-1613.
 * Support new metadata fields for non-returnables. Fixes PR-1619.
 * Modify available genres and their mapping to publication types. Fixes PR-1614.
 * Non-functional improvements to forms, now more consistent with each other. Fixes PR-1653.
@@ -15,6 +16,7 @@
 * Redesign long form to be more space-efficient. Fixes PR-1655.
 * OpenURL v0.1 detection now returns false if there is a `req.*` or `req_*` key. Fixes PR-1675.
 * Completely rework CSS, to look the same but be maintainable. Done by Corina Wong. Fixes PR-1673.
+* Patron can select copyright type from a list obtained from the server. Fixes PR-1643.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
