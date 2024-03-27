@@ -60,11 +60,10 @@ function unArray(val) {
 
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
-  const onlyForCopy = query.svc_id === 'copy' ? '' : ''; // ### For now. We need to rethink this
   const currentCopyrightType = query['rft.copyrightType'] || service.defaultCopyrightType;
+  query.svc_id ||= 'loan';
 
   const data = Object.assign({}, query, {
-    onlyForCopy,
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
     noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
