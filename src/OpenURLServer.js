@@ -61,6 +61,7 @@ function unArray(val) {
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
   const onlyForCopy = query.svc_id === 'copy' ? '' : ''; // ### For now. We need to rethink this
+  const currentCopyrightType = query['rft.copyrightType'] || service.defaultCopyrightType;
 
   const data = Object.assign({}, query, {
     onlyForCopy,
@@ -81,7 +82,7 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
     })),
     copyrightTypes: (service.copyrightTypes || []).map(x => ({
       ...x,
-      selected: x.code === query['rft.copyrightType'] ? 'selected' : '',
+      selected: x.code === currentCopyrightType ? 'selected' : '',
     })),
     services: ['loan', 'copy'].map((x, i) => ({
       code: x,
@@ -128,6 +129,7 @@ async function maybeRenderForm(ctx, next) {
     // XXX parallelise these with await Promise.all([someCall(), anotherCall()]);
     await service.getPickupLocations();
     await service.getCopyrightTypes();
+    await service.getDefaultCopyrightType();
   }
 
   const originalQuery = co.getQuery();

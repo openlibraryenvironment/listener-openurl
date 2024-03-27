@@ -63,6 +63,15 @@ class OkapiSession {
       .map(r => ({ id: r.id, code: r.value, name: r.label }));
   }
 
+  async getDefaultCopyrightType() {
+    const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
+    const res = await this.okapiFetch('GET', path);
+    if (res.status !== 200) throw new HTTPError(res, `cannot fetch default copyright type for '${this.label}'`);
+    const json = await res.json();
+    this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    this.defaultCopyrightType = json[0].value;
+  }
+
   post(path, payload) {
     return this.okapiFetch('POST', path, payload);
   }
