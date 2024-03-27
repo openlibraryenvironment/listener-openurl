@@ -3,13 +3,12 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Request item — {{branding.customerName}}</title>
-    <style>.onlyForCopy { {{onlyForCopy}}; }</style>
+    <style>.onlyForCopy { /* To be set dynamically */ }</style>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <style>body { background: {{branding.backgroundColor}}; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <script src="/static/setServiceType.js"></script>
-    <script>setServiceType('{{svc_id}}');</script>
   </head>
   <body>
     <div class="positioner">
@@ -30,13 +29,14 @@
                 <div class="value">
                   {{#each services}}
                     <label for="service_{{code}}">{{name}}</label>
-                    <input type="radio" id="service_{{code}}" name="svc_id" value="{{code}}" {{this.checked}}>
+                    <input type="radio" id="service_{{code}}" name="svc_id" value="{{code}}" {{this.checked}}
+                           onchange="setServiceType('{{code}}')">
                   {{/each}}
                 </div>
               </div>
 
               {{#unless digitalOnly}}
-              <div class="key-value-pair is-required">
+              <div id="div-pickupLocation" class="key-value-pair">
                 <label class="key" for="input-pickupLocation">Pick up location</label>
                 <div class="value">
                   <select class="select" id="input-pickupLocation" name="svc.pickupLocation">
@@ -55,7 +55,7 @@
               </div>
               {{/unless}}
 
-              <div class="key-value-pair">
+              <div id="div-genre" class="key-value-pair">
                 <label class="key" for="input-format">Genre</label>
                 <div class="value">
                   <select class="select" id="input-format" name="rft.genre">
@@ -73,7 +73,7 @@
                 </div>
               </div>
 
-              <div class="onlyForCopy key-value-pair">
+              <div id="div-copyrightType" class="onlyForCopy key-value-pair">
                 <label class="key" for="input-copyrightType">Copyright type</label>
                 <div class="value">
                   <select class="select" id="input-copyrightType" name="rft.copyrightType">
@@ -87,7 +87,7 @@
 
               <h2>Details</h2>
 
-              <div class="key-value-pair is-required">
+              <div id="div-title" class="key-value-pair">
                 <label class="key" for="input-title">Title</label>
                 <div class="value">
                   <input class="should-validate" id="input-title" autofocus type="text" name="rft.title" value="{{'rft.title'}}" aria-required="true">
@@ -101,7 +101,7 @@
                 </div>
               </div>
 
-              <div class="key-value-pair is-required">
+              <div id="div-author" class="key-value-pair">
                 <label class="key" for="input-author">Author</label>
                 <div class="value">
                   <input class="should-validate" id="input-author" type="text" name="rft.au" value="{{'rft.au'}}" aria-required="true">
@@ -126,14 +126,16 @@
               <div class="onlyForCopy">
                 <h2>Part Details</h2>
 
-                <div class="key-value-pair">
+		<p>If you only require a copy of part of this item please enter the details here.</p>
+
+                <div id="div-titleOfComponent" class="key-value-pair">
                   <label class="key" for="input-titleOfComponent">Title of chapter/article/paper</label>
                   <div class="value">
                     <input id="input-titleOfComponent" type="text" name="rft.titleOfComponent" value="{{'rft.titleOfComponent'}}">
                   </div>
                 </div>
 
-                <div class="key-value-pair">
+                <div id="div-authorOfComponent" class="key-value-pair">
                   <label class="key" for="input-authorOfComponent">Author of chapter/article/paper</label>
                   <div class="value">
                     <input id="input-authorOfComponent" type="text" name="rft.authorOfComponent" value="{{'rft.authorOfComponent'}}">
@@ -187,7 +189,7 @@
                 </div>
               </div>
 
-              <div class="key-value-pair is-required">
+              <div id="div-publicationDate" class="key-value-pair">
                 <label class="key" for="input-publication-date">Year of publication</label>
                 <div class="value">
                   <input class="should-validate" id="input-publication-date" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" aria-required="true">
@@ -223,5 +225,6 @@
         </div>
       </div>
     </div>
+    <script>setServiceType('{{svc_id}}');</script>
   </body>
 </html>
