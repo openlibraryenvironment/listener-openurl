@@ -53,6 +53,16 @@ class OkapiSession {
       });
   }
 
+  async getCopyrightTypes() {
+    const path = '/rs/refdata?filters=desc%3D%3DcopyrightType&sort=desc%3Basc&max=100';
+    const res = await this.okapiFetch('GET', path);
+    if (res.status !== 200) throw new HTTPError(res, `cannot fetch copyright types for '${this.label}'`);
+    const json = await res.json();
+    this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    this.copyrightTypes = json[0].values
+      .map(r => ({ id: r.id, code: r.value, name: r.label }));
+  }
+
   post(path, payload) {
     return this.okapiFetch('POST', path, payload);
   }

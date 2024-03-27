@@ -79,16 +79,9 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
       name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
       selected: x === query['rft.genre'] ? 'selected' : '',
     })),
-    // XXX hardwire the copyright types for now: later we will get them from a refdata
-    copyrightTypes: [
-      ['', '(None selected)'],
-      ['pd', 'Public domain'],
-      ['cc-by', 'Creative Commons attribution'],
-      ['arr', 'All rights reserved'],
-    ].map(x => ({
-      code: x[0],
-      name: x[1],
-      selected: x[0] === query['rft.copyrightType'] ? 'selected' : '',
+    copyrightTypes: (service.copyrightTypes || []).map(x => ({
+      ...x,
+      selected: x.code === query['rft.copyrightType'] ? 'selected' : '',
     })),
     services: ['loan', 'copy'].map((x, i) => ({
       code: x,
@@ -131,7 +124,11 @@ async function maybeRenderForm(ctx, next) {
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
-  if (!npl) await service.getPickupLocations();
+  if (!npl) {
+    // XXX parallelise these with await Promise.all([someCall(), anotherCall()]);
+    await service.getPickupLocations();
+    await service.getCopyrightTypes();
+  }
 
   const originalQuery = co.getQuery();
   const query = {};
