@@ -126,10 +126,11 @@ async function maybeRenderForm(ctx, next) {
 
   ctx.cfg.log('flow', 'Rendering form', formName);
   if (!npl) {
-    // XXX parallelise these with await Promise.all([someCall(), anotherCall()]);
-    await service.getPickupLocations();
-    await service.getCopyrightTypes();
-    await service.getDefaultCopyrightType();
+    await Promise.all([
+      service.getPickupLocations(),
+      service.getCopyrightTypes(),
+      service.getDefaultCopyrightType(),
+    ]);
   }
 
   const originalQuery = co.getQuery();
