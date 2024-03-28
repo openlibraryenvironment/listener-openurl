@@ -23,20 +23,29 @@ function removeClassFromElements(className, ...elementIds) {
   }
 }
 
+function disableElements(disabled, ...elementIds) {
+  for (let i = 0; i < elementIds.length; i++) {
+    document.getElementById('input-' + elementIds[i]).disabled = disabled;
+  }
+}
+
 const requiredForLoan = ['div-pickupLocation', 'div-title', 'div-author'];
 const requiredForCopy = ['div-genre', 'div-publicationDate', 'div-copyrightType', 'div-titleOfComponent', 'div-authorOfComponent'];
+const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
 function setServiceType(st) {
-  // XXX we need to actually disable the fields we grey out
-  updateStyle('onlyForCopy', 'opacity', st === 'copy' ? '100%' : '40%');
-
   // XXX we need to actually require the fields we mark as mandatory
   if (st === 'loan') {
     addClassToElements('is-required', ...requiredForLoan);
     removeClassFromElements('is-required', ...requiredForCopy);
-  } else {
+    disableElements(true, ...disabledForLoan);
+    updateStyle('onlyForCopy', 'opacity', '40%');
+    document.getElementById("label-title").textContent = "Title";
+  } else { // st === 'copy'
     addClassToElements('is-required', ...requiredForCopy);
     removeClassFromElements('is-required', ...requiredForLoan);
-    // XXX In the Details section, can the label Title be changed to Title of Journal?
+    disableElements(false, ...disabledForLoan);
+    updateStyle('onlyForCopy', 'opacity', '100%');
+    document.getElementById("label-title").textContent = "Title of journal";
   }
 }
