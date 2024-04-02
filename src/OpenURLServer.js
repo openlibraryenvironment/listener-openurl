@@ -66,7 +66,15 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
   const data = Object.assign({}, query, {
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
+
     noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
+    noGenre: !firstTry && !query['rft.genre'] && query.svc_id === 'copy',
+    noTitle: !firstTry && !query['rft.title'] && query.svc_id === 'loan',
+    noAuthor: !firstTry && !query['rft.au'] && query.svc_id === 'loan',
+    noChapterTitle: !firstTry && !query['rft.titleOfComponent'] && query.svc_id === 'copy',
+    noChapterAuthor: !firstTry && !query['rft.authorOfComponent'] && query.svc_id === 'copy',
+    noDate: !firstTry && !query['rft.date'] && query.svc_id === 'copy',
+
     onePickupLocation: (service?.pickupLocations?.length === 1),
     pickupLocations: (service.pickupLocations || []).map(x => ({
       id: x.id,
@@ -173,7 +181,7 @@ async function constructAndMaybeReturnReshareRequest(ctx, next) {
   const rreq = rr.getRequest();
   rreq.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
 
-  if (svcCfg.digitalOnly) rreq.deliveryMethod = 'URL';
+  if (svcCfg.digitalonly) rreq.deliveryMethod = 'URL';
 
   ctx.cfg.log('rr', JSON.stringify(rreq));
   if (admindata.svc?.id === 'reshareRequest') {
