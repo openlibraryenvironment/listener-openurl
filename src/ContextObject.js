@@ -122,18 +122,28 @@ class ContextObject {
 
   // Returns a boolean indicating whether or not the context object is
   // considered to contain "basic data" sufficient to attempt a
-  // resolution. Depending on whether this returns true of false, the
+  // resolution. Depending on whether this returns true or false, the
   // resolver will invoke respectively a simple form that prompts for a
   // pickup location, or a bigger form that invites the user to fill
   // in all the details.
   //
-  // For now, our criteria are simple: a context object is considered
-  // capable of attempting resolution if it has EITHER an rft_id or
-  // all three of rft.title, rft.au and rft.date.
+  // For now, our criteria are that a context object is considered
+  // capable of attempting resolution if:
+  // * It has an rft_id, or
+  // * It is a loan request and has both title and author
+  // * It is a copy request and has all of genre, copyright type, chapter title, chapter author and date
+  // Requests for the parsed ContextObject are considered loan requests for these purposes.
   //
   hasBasicData() {
     const rft = (this.metadata || {}).rft || {};
-    return !!((this.admindata.rft || {}).id || (rft.title && rft.au && rft.date));
+    let st = this.admindata.svc?.id;
+    if (st === 'contextObject') st = 'loan';
+
+    if (this.admindata.rft?.id) return true;
+    if (st === 'loan' && rft.title && rft.au) return true;
+    if (st === 'copy' && rft.genre && rft.copyrightType && rft.titleOfComponent && rft.authorOfComponent && rft.date) return true;
+
+    return false;
   }
 }
 
