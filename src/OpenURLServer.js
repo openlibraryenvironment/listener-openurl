@@ -60,14 +60,21 @@ function unArray(val) {
 
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
-  const onlyForCopy = query.svc_id === 'copy' ? '' : ''; // ### For now. We need to rethink this
   const currentCopyrightType = query['rft.copyrightType'] || service.defaultCopyrightType;
+  query.svc_id ||= 'loan';
 
   const data = Object.assign({}, query, {
-    onlyForCopy,
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
+
     noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
+    noGenre: !firstTry && !query['rft.genre'] && query.svc_id === 'copy',
+    noTitle: !firstTry && !query['rft.title'] && query.svc_id === 'loan',
+    noAuthor: !firstTry && !query['rft.au'] && query.svc_id === 'loan',
+    noChapterTitle: !firstTry && !query['rft.titleOfComponent'] && query.svc_id === 'copy',
+    noChapterAuthor: !firstTry && !query['rft.authorOfComponent'] && query.svc_id === 'copy',
+    noDate: !firstTry && !query['rft.date'] && query.svc_id === 'copy',
+
     onePickupLocation: (service?.pickupLocations?.length === 1),
     pickupLocations: (service.pickupLocations || []).map(x => ({
       id: x.id,
@@ -121,7 +128,7 @@ async function maybeRenderForm(ctx, next) {
     formName = 'form1';
     formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
       'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
-      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue');
+      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue', 'svc_id');
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
