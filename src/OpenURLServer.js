@@ -181,7 +181,7 @@ async function constructAndMaybeReturnReshareRequest(ctx, next) {
   const rreq = rr.getRequest();
   rreq.requestingInstitutionSymbol = symbol.includes(':') ? symbol : `RESHARE:${symbol}`;
 
-  if (svcCfg.digitalonly) rreq.deliveryMethod = 'URL';
+  if (svcCfg.digitalOnly) rreq.deliveryMethod = 'URL';
 
   ctx.cfg.log('rr', JSON.stringify(rreq));
   if (admindata.svc?.id === 'reshareRequest') {
