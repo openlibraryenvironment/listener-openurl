@@ -128,7 +128,7 @@ async function maybeRenderForm(ctx, next) {
     formName = 'form1';
     formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
       'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
-      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue');
+      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue', 'svc_id');
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
