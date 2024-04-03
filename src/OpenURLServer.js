@@ -114,8 +114,12 @@ async function maybeRenderForm(ctx, next) {
   const { co, metadata, service, npl } = ctx.state;
 
   ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
+  // The form is good if it has no pickup location is required OR one is supplied OR it's a copy request
   if (co.hasBasicData() &&
-      (npl || get(metadata, ['svc', 'pickupLocation']))) {
+      (npl ||
+       get(metadata, ['svc', 'pickupLocation']) ||
+       co.admindata.svc?.id === 'copy'
+      )) {
     return await next();
   }
 
