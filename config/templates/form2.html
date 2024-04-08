@@ -21,8 +21,21 @@
             <div class="page__body">
 
               <div class="summary">
-                <h2>{{'rft.title'}} <span class="no-break">({{'rft.genre'}})</span></h2>
-                <p>By {{'rft.au'}}. <span class="no-break">Published {{'rft.date'}}.</span> <span class="no-break">ISBN {{'rft.isbn'}}.</span></p>
+                <h2>
+                  {{'rft.title'}}
+                  {{#if hasGenre}}
+                    ({{'rft.genre'}})
+                  {{/if}}
+                </h2>
+                <p>
+		  By {{'rft.au'}}.
+		  {{#if hasDate}}
+		    Published {{'rft.date'}}.
+                  {{/if}}
+		  {{#if hasISBN}}
+		    ISBN {{'rft.isbn'}}.
+                  {{/if}}
+		</p>
               </div>
 
               {{#unless digitalOnly}}
