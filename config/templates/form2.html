@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Confirm request — {{branding.customerName}}</title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
     <style>body { background: {{branding.backgroundColor}}; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
@@ -16,16 +16,18 @@
           <form class="page" id="form">
             <div class="page__header">
               <h1>Confirm request</h1>
-              <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" aria-hidden="true"></a></div>
+              <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" alt="{{branding.customerName}}" aria-hidden="true"></a></div>
             </div>
             <div class="page__body">
+
               <div class="summary">
                 <h2>{{'rft.title'}} <span class="no-break">({{'rft.genre'}})</span></h2>
                 <p>By {{'rft.au'}}. <span class="no-break">Published {{'rft.date'}}.</span> <span class="no-break">ISBN {{'rft.isbn'}}.</span></p>
               </div>
+
               {{#unless digitalOnly}}
-              <label class="key-value-pair is-required" for="input-pickupLocation">
-                <div class="key">Pick up location</div>
+              <div class="key-value-pair is-required">
+                <label class="key" for="input-pickupLocation">Pick up location</label>
                 <div class="value">
                   <select class="select" id="input-pickupLocation" name="svc.pickupLocation">
                     {{#unless onePickupLocation}}
@@ -36,39 +38,37 @@
                     {{/each}}
                   </select>
                   {{#if noPickupLocation}}
-                    <br />
                     <div class="error">Please supply a pickup location.</div>
                   {{/if}}
                 </div>
-              </label>
+              </div>
               {{/unless}}
 
-              <label class="key-value-pair" for="input-neededBy">
-                <div class="key">Date needed by</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-neededBy">Date needed by</label>
                 <div class="value">
-                  <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}" />
+                  <input id="input-neededBy" type="date" name="svc.neededBy" value="{{'svc.neededBy'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="volume">
-                <div class="key">Volume</div>
+              <div class="key-value-pair">
+                <label class="key" for="input-volume">Volume/parts needed</label>
                 <div class="value">
-                  <input id="volume" type="text" name="rft.volume" value="{{'rft.volume'}}" />
+                  <input id="input-volume" type="text" name="rft.volume" value="{{'rft.volume'}}">
                 </div>
-              </label>
+              </div>
 
-              <label class="key-value-pair" for="input-note">
-                <div class="key">Patron notes</div>
+              <div class="key-value-pair">
+                <label class="key valign-top" for="input-note">Patron notes</label>
                 <div class="value">
-                  <input id="input-note" type="text" name="svc.note" value="{{'svc.note'}}" maxlength="255" />
+                  <textarea id="input-note" name="svc.note" rows="3" maxlength="255">{{'svc.note'}}</textarea>
                 </div>
-              </label>
+              </div>
             </div>
 
             <div class="page__footer">
               <div class="button-group">
                 <button class="button--primary" id="submit" type="submit">Confirm request</button>
-                <!--button.button--secondary.flex-order-minus-one Cancel-->
               </div>
             </div>
             {{{valuesNotShownInForm}}}
