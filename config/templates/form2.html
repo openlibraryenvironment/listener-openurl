@@ -24,10 +24,10 @@
                 <p>By {{'rft.au'}}. <span class="no-break">Published {{'rft.date'}}.</span> <span class="no-break">ISBN {{'rft.isbn'}}.</span></p>
               </div>
               {{#unless digitalOnly}}
-              <label class="key-value-pair" for="input-pickupLocation">
+              <label class="key-value-pair is-required" for="input-pickupLocation">
                 <div class="key">Pick up location</div>
                 <div class="value">
-                  <select class="select" id="input-pickupLocation" name="svc.pickupLocation" value="{{'svc.pickupLocation'}}">
+                  <select class="select" id="input-pickupLocation" name="svc.pickupLocation">
                     {{#unless onePickupLocation}}
                     <option value="">(None selected)</option>
                     {{/unless}}
@@ -35,7 +35,6 @@
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
                   </select>
-                  *
                   {{#if noPickupLocation}}
                     <br />
                     <div class="error">Please supply a pickup location.</div>
