@@ -126,7 +126,7 @@ async function maybeRenderForm(ctx, next) {
   let formName;
   // Fields that are included in the form, and whose values should therefore NOT be provided as hidden inputs
   const formFields = ['svc.pickupLocation', 'rft.volume', 'svc.note', 'svc.neededBy'];
-  if (co.hasBasicData()) {
+  if (co.hasBasicData() && !metadata.svc?.longForm) {
     formName = 'form2';
   } else {
     formName = 'form1';
@@ -149,6 +149,11 @@ async function maybeRenderForm(ctx, next) {
   Object.keys(originalQuery).forEach(key => {
     query[key] = unArray(originalQuery[key]);
   });
+
+  if (formName === 'form1') {
+    // Stay on this form until everything is filled in
+    query['svc.longForm'] = '1';
+  }
 
   const ntries = query['svc.ntries'] || '0';
   query['svc.ntries'] = (parseInt(ntries) + 1).toString();
