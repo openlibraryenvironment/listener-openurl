@@ -21,6 +21,7 @@
 * Require relevant parts of the OpenURL form dependent on service/genre. Fixes PR-1679.
 * If the user starts with the long form, stick with it (do not switch to short form after partial filling). Fixes PR-1686 part 3.
 * Catch confirmation form up to recent changes in the long form. Fixes PR-1688.
+* Update the "request sent" page to reflect appropriate metadata for copies as well as loans. Fixes PR-1687.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 

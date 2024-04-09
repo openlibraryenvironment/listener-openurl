@@ -245,6 +245,12 @@ async function postReshareRequest(ctx, next) {
       if (location) vars.pickupLocationName = location.name;
     }
 
+    vars.isCopy = vars.json?.serviceType.value === 'copy';
+    vars.hasGenre = !!vars.json?.publicationType?.value;
+    vars.hasDate = !!vars.json?.publicationDate;
+    vars.hasISBN = !!vars.json?.isbn;
+    vars.clientSideCopyrightType = rreq.copyrightType; // XXX This should not be necessary
+
     ctx.body = ctx.cfg.runTemplate(res.ok ? 'good' : 'bad', vars);
   }
 };
