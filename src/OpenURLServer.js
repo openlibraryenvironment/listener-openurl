@@ -66,6 +66,12 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
   const data = Object.assign({}, query, {
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
+    isCopy: query.svc_id === 'copy',
+
+    // Annoyingly, Handlebars' {{#if NAME}} does not work with dotted names like `rft.genre`, so we need these redundant booleans
+    hasGenre: !!query['rft.genre'],
+    hasDate: !!query['rft.date'],
+    hasISBN: !!query['rft.isbn'],
 
     noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
     noGenre: !firstTry && !query['rft.genre'] && query.svc_id === 'copy',
