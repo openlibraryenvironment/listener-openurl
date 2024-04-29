@@ -64,7 +64,7 @@ class OkapiSession {
   async getDefaultCopyrightType() {
     const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
     const json = await this._getDataFromReShare(path, 'default copyright type');
-    this.defaultCopyrightType = json[0].value;
+    this.defaultCopyrightType = json[0].id;
   }
 
   post(path, payload) {

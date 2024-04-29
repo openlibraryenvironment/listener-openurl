@@ -95,7 +95,7 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
     })),
     copyrightTypes: (service.copyrightTypes || []).map(x => ({
       ...x,
-      selected: x.code === currentCopyrightType ? 'selected' : '',
+      selected: x.id === currentCopyrightType ? 'selected' : '',
     })),
     services: ['loan', 'copy'].map((x, i) => ({
       code: x,
