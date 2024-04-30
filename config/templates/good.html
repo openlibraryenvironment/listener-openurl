@@ -23,18 +23,12 @@
                 {{#if isCopy}}
                   <h2>
                     {{json.titleOfComponent}}
-                    {{#if hasGenre}}
-                      ({{json.publicationType.label}})
-                    {{/if}}
                   </h2>
                   <p>
                     By {{json.authorOfComponent}}.
                 {{else}}
                   <h2>
                     {{json.title}}
-                    {{#if hasGenre}}
-                      ({{json.publicationType.label}})
-                    {{/if}}
                   </h2>
                   <p>
                     By {{json.author}}.
