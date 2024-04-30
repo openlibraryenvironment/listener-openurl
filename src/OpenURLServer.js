@@ -60,20 +60,21 @@ function unArray(val) {
 
 
 function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
+  const isCopy = query.svc_id === 'copy';
   const currentCopyrightType = query['rft.copyrightType'] || service.defaultCopyrightType;
   query.svc_id ||= 'loan';
 
   const data = Object.assign({}, query, {
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
-    isCopy: query.svc_id === 'copy',
+    isCopy,
 
     // Annoyingly, Handlebars' {{#if NAME}} does not work with dotted names like `rft.genre`, so we need these redundant booleans
     hasGenre: !!query['rft.genre'],
     hasDate: !!query['rft.date'],
     hasISBN: !!query['rft.isbn'],
 
-    noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly,
+    noPickupLocation: !firstTry && !query['svc.pickupLocation'] && !ctx.state?.svcCfg?.digitalOnly && !isCopy,
     noGenre: !firstTry && !query['rft.genre'] && query.svc_id === 'copy',
     noTitle: !firstTry && !query['rft.title'] && query.svc_id === 'loan',
     noAuthor: !firstTry && !query['rft.au'] && query.svc_id === 'loan',
