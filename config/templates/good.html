@@ -46,9 +46,11 @@
                       ISBN {{json.isbn}}.
                     {{/if}}
                   </p>
+                {{#if isCopy}}
                   <p>
                     Copyright type: {{clientSideCopyrightType}}
                   </p>
+                {{/if}}
                 {{#if pickupLocationName}}
                   <p>Pick up location: {{pickupLocationName}}</p>
                 {{/if}}

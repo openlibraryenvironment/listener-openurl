@@ -249,7 +249,13 @@ async function postReshareRequest(ctx, next) {
     vars.hasGenre = !!vars.json?.publicationType?.value;
     vars.hasDate = !!vars.json?.publicationDate;
     vars.hasISBN = !!vars.json?.isbn;
-    vars.clientSideCopyrightType = rreq.copyrightType; // XXX This should not be necessary
+
+    if (vars.isCopy) {
+      await service.getCopyrightTypes();
+      // XXX It should not be necessary to consult the request we sent, this should be in the response
+      const ct = find(service.copyrightTypes, x => x.id === rreq.copyrightType);
+      if (ct) vars.clientSideCopyrightType = ct.name;
+    }
 
     ctx.body = ctx.cfg.runTemplate(res.ok ? 'good' : 'bad', vars);
   }
