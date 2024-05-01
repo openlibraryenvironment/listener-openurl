@@ -26,6 +26,7 @@
 * "Request sent" page shows copyright type only for copies, not loans. Fixes PR-1698.
 * Omit publication-type from "Request sent" page. Fixes PR-1699.
 * Do not show "Please supply a pickup location" message in incomplete form when requesting a copy. Fixes PR-1700.
+* Blank request form correctly displays Default copyright type. Fixes PR-1716.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 

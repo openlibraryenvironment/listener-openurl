@@ -62,9 +62,15 @@ class OkapiSession {
   }
 
   async getDefaultCopyrightType() {
+    if (!this.copyrightTypes) {
+      throw new Error('copyright types not defined when getDefaultCopyrightType called');
+    }
     const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
     const json = await this._getDataFromReShare(path, 'default copyright type');
-    this.defaultCopyrightType = json[0].id;
+    // We can't trust json[0].id, as the ID within the candidate list can be different
+    const cts = this.copyrightTypes.filter(x => x.code === json[0].value);
+    if (cts.length === 0) return undefined;
+    this.defaultCopyrightType = cts[0].id;
   }
 
   post(path, payload) {

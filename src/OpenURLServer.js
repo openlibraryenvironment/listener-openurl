@@ -144,9 +144,10 @@ async function maybeRenderForm(ctx, next) {
 
   ctx.cfg.log('flow', 'Rendering form', formName);
   if (!npl) {
+    const pickupLocationPromise = service.getPickupLocations();
+    await service.getCopyrightTypes(); // Needed before getDefaultCopyrightType can be called
     await Promise.all([
-      service.getPickupLocations(),
-      service.getCopyrightTypes(),
+      pickupLocationPromise,
       service.getDefaultCopyrightType(),
     ]);
   }
