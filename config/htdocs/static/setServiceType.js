@@ -31,32 +31,52 @@ function disableElements(disabled, ...elementIds) {
 
 const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
-function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel) {
+function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel, data) {
   addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
   disableElements(fieldsDisabled, ...disabledForLoan);
   updateStyle('onlyForCopy', 'opacity', copyDivOpacity);
   document.getElementById('label-title').textContent = titleLabel;
+
+  Object.keys(notRequired).forEach(id => {
+    document.getElementById(`error-${id}`).textContent = undefined;
+  });
+
+  Object.keys(required).forEach(id => {
+    const cfg = required[id];
+    if (cfg !== true) {
+      const [key, caption] = cfg;
+      const val = data[key];
+      const elem = document.getElementById(`error-${id}`);
+      // console.log(`id '${id}' is required: key='${key}', caption='${caption}', value='${val}'`);
+      if (val) {
+        elem.textContent = undefined;
+      } else {
+        elem.textContent = 'Please supply a ' + caption;
+      }
+    }
+  });
 }
 
 const requiredForLoan = {
-  'pickupLocation': 'pickup location',
-  'title': 'title',
-  'author': 'author',
+  'pickupLocation': ['svc.pickupLocation', 'pickup location'],
+  'title': ['rft.title', 'title'],
+  'author': ['rft.au', 'author'],
 };
 
 const requiredForCopy = {
-  'genre': 'genre',
-  'publicationDate': 'publication date',
+  'genre': ['rft.genre', 'genre'],
+  'publicationDate': ['rft.date', 'publication date'],
   'copyrightType': true,
-  'titleOfComponent': 'chapter title',
-  'authorOfComponent': 'chapter author',
+  'titleOfComponent': ['rft.titleOfComponent', 'chapter title'],
+  'authorOfComponent': ['rft.authorOfComponent', 'chapter author'],
 };
 
-function setServiceType(st) {
+function setServiceType(st, firstTry, json) {
+  const data = JSON.parse(json);
   if (st === 'loan') {
-    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title');
+    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title', data);
   } else { // st === 'copy'
-    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal');
+    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', data);
   }
 }

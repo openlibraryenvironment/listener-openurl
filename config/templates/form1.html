@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <script src="/static/setServiceType.js"></script>
+    <script>function setServiceTypeWithParams(st) { setServiceType(st, {{firstTry}}, `{{{encodedJson .}}}`) }</script>
   </head>
   <body>
     <div class="positioner">
@@ -30,7 +31,7 @@
                   {{#each services}}
                     <label for="service_{{code}}">{{name}}</label>
                     <input type="radio" id="service_{{code}}" name="svc_id" value="{{code}}" {{this.checked}}
-                           onchange="setServiceType('{{code}}')">
+                           onchange="setServiceTypeWithParams('{{code}}')">
                   {{/each}}
                 </div>
               </div>
@@ -47,9 +48,7 @@
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
                   </select>
-                  {{#if noPickupLocation}}
-                    <div class="error">Please supply a pickup location.</div>
-                  {{/if}}
+                  <div id="error-pickupLocation" class="error"></div>
                 </div>
               </div>
               {{/unless}}
@@ -62,9 +61,7 @@
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
                   </select>
-                  {{#if noGenre}}
-                    <div class="error">Please supply a genre.</div>
-                  {{/if}}
+                  <div id="error-genre" class="error"></div>
                 </div>
               </div>
 
@@ -83,6 +80,7 @@
                       <option value="{{this.id}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
                   </select>
+                  <div id="error-copyrightType" class="error"></div>
                 </div>
               </div>
 
@@ -93,9 +91,7 @@
                 <label id="label-title" class="key" for="input-title">Title</label>
                 <div class="value">
                   <input class="should-validate" id="input-title" autofocus type="text" name="rft.title" value="{{'rft.title'}}" aria-required="true">
-                  {{#if noTitle}}
-                    <div class="error">Please supply a title.</div>
-                  {{/if}}
+                  <div id="error-title" class="error"></div>
                 </div>
               </div>
 
@@ -110,9 +106,7 @@
                 <label class="key" for="input-author">Author</label>
                 <div class="value">
                   <input class="should-validate" id="input-author" type="text" name="rft.au" value="{{'rft.au'}}" aria-required="true">
-                  {{#if noAuthor}}
-                    <div class="error">Please supply an author.</div>
-                  {{/if}}
+                  <div id="error-author" class="error"></div>
                 </div>
               </div>
 
@@ -140,9 +134,7 @@
                   <label class="key" for="input-titleOfComponent">Title of chapter/article/paper</label>
                   <div class="value">
                     <input id="input-titleOfComponent" type="text" name="rft.titleOfComponent" value="{{'rft.titleOfComponent'}}">
-                    {{#if noChapterTitle}}
-                      <div class="error">Please supply a chapter title.</div>
-                    {{/if}}
+                    <div id="error-titleOfComponent" class="error"></div>
                   </div>
                 </div>
 
@@ -150,9 +142,7 @@
                   <label class="key" for="input-authorOfComponent">Author of chapter/article/paper</label>
                   <div class="value">
                     <input id="input-authorOfComponent" type="text" name="rft.authorOfComponent" value="{{'rft.authorOfComponent'}}">
-                    {{#if noChapterAuthor}}
-                      <div class="error">Please supply a chapter author.</div>
-                    {{/if}}
+                    <div id="error-authorOfComponent" class="error"></div>
                   </div>
                 </div>
 
@@ -207,9 +197,7 @@
                 <label class="key" for="input-publication-date">Year of publication</label>
                 <div class="value">
                   <input class="should-validate" id="input-publication-date" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" aria-required="true">
-                  {{#if noDate}}
-                    <div class="error">Please supply a publication date.</div>
-                  {{/if}}
+                  <div id="error-publicationDate" class="error"></div>
                 </div>
               </div>
 
@@ -242,6 +230,6 @@
         </div>
       </div>
     </div>
-    <script>setServiceType('{{svc_id}}');</script>
+    <script>setServiceTypeWithParams('{{svc_id}}')</script>
   </body>
 </html>
