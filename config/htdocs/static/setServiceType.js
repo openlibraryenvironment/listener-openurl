@@ -29,6 +29,16 @@ function disableElements(disabled, ...elementIds) {
   }
 }
 
+const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
+
+function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel) {
+  addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
+  removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
+  disableElements(fieldsDisabled, ...disabledForLoan);
+  updateStyle('onlyForCopy', 'opacity', copyDivOpacity);
+  document.getElementById('label-title').textContent = titleLabel;
+}
+
 const requiredForLoan = {
   'pickupLocation': 'pickup location',
   'title': 'title',
@@ -43,21 +53,10 @@ const requiredForCopy = {
   'authorOfComponent': 'chapter author',
 };
 
-const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
-
 function setServiceType(st) {
-  // XXX we need to actually require the fields we mark as mandatory
   if (st === 'loan') {
-    addClassToElements('is-required', ...Object.keys(requiredForLoan).map(x => `div-${x}`));
-    removeClassFromElements('is-required', ...Object.keys(requiredForCopy).map(x => `div-${x}`));
-    disableElements(true, ...disabledForLoan);
-    updateStyle('onlyForCopy', 'opacity', '40%');
-    document.getElementById("label-title").textContent = "Title";
+    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title');
   } else { // st === 'copy'
-    addClassToElements('is-required', ...Object.keys(requiredForCopy).map(x => `div-${x}`));
-    removeClassFromElements('is-required', ...Object.keys(requiredForLoan).map(x => `div-${x}`));
-    disableElements(false, ...disabledForLoan);
-    updateStyle('onlyForCopy', 'opacity', '100%');
-    document.getElementById("label-title").textContent = "Title of journal";
+    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal');
   }
 }
