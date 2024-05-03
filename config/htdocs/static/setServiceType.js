@@ -42,34 +42,35 @@ function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, title
     document.getElementById(`error-${id}`).textContent = undefined;
   });
 
+  // XXX don't display these if it's the first try
+
   Object.keys(required).forEach(id => {
-    const cfg = required[id];
-    if (cfg !== true) {
-      const [key, caption] = cfg;
-      const val = data[key];
-      const elem = document.getElementById(`error-${id}`);
-      // console.log(`id '${id}' is required: key='${key}', caption='${caption}', value='${val}'`);
-      if (val) {
-        elem.textContent = undefined;
-      } else {
-        elem.textContent = 'Please supply a ' + caption;
-      }
+    const caption = required[id];
+    const val = document.getElementById(`input-${id}`).value;
+    const elem = document.getElementById(`error-${id}`);
+    // console.log(`  id '${id}' is required: caption='${caption}', value='${val}'`);
+    if (val) {
+      elem.textContent = undefined;
+    } else {
+      let s = 'Please supply a';
+      if (caption.match(/^[AEIOUaeiou]/)) s += 'n';
+      elem.textContent = s + ' ' + caption;
     }
   });
 }
 
 const requiredForLoan = {
-  'pickupLocation': ['svc.pickupLocation', 'pickup location'],
-  'title': ['rft.title', 'title'],
-  'author': ['rft.au', 'author'],
+  'pickupLocation': 'pickup location',
+  'title': 'title',
+  'author': 'author',
 };
 
 const requiredForCopy = {
-  'genre': ['rft.genre', 'genre'],
-  'publicationDate': ['rft.date', 'publication date'],
-  'copyrightType': true,
-  'titleOfComponent': ['rft.titleOfComponent', 'chapter title'],
-  'authorOfComponent': ['rft.authorOfComponent', 'chapter author'],
+  'genre': 'genre',
+  'publicationDate': 'publication date',
+  'copyrightType': 'copyright type',
+  'titleOfComponent': 'chapter title',
+  'authorOfComponent': 'chapter author',
 };
 
 function setServiceType(st, firstTry, json) {
