@@ -25,6 +25,11 @@
     "logoLink": "https://ivpluslibraries.org/"
   },
 
+  "copyrightTypes": [
+    { "name": "CCG (US)", "code": "us-ccg"},
+    { "name": "CCL (US)", "code": "us-ccl"}
+  ],
+
   "services": {
     "US-EAST": {
       "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",
