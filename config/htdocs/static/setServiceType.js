@@ -31,7 +31,7 @@ function disableElements(disabled, ...elementIds) {
 
 const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
-function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel, data) {
+function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel) {
   addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
   disableElements(fieldsDisabled, ...disabledForLoan);
@@ -73,11 +73,10 @@ const requiredForCopy = {
   'authorOfComponent': 'chapter author',
 };
 
-function setServiceType(st, firstTry, json) {
-  const data = JSON.parse(json);
+function setServiceType(st, firstTry) {
   if (st === 'loan') {
-    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title', data);
+    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title');
   } else { // st === 'copy'
-    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', data);
+    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal');
   }
 }
