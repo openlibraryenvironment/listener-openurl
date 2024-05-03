@@ -31,7 +31,7 @@ function disableElements(disabled, ...elementIds) {
 
 const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
-function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel) {
+function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel) {
   addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
   disableElements(fieldsDisabled, ...disabledForLoan);
@@ -42,7 +42,8 @@ function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, title
     document.getElementById(`error-${id}`).textContent = undefined;
   });
 
-  // XXX don't display these if it's the first try
+  // Don't display "Please supply ..." messages if it's the first try
+  if (firstTry) return;
 
   Object.keys(required).forEach(id => {
     const caption = required[id];
@@ -75,8 +76,8 @@ const requiredForCopy = {
 
 function setServiceType(st, firstTry) {
   if (st === 'loan') {
-    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title');
+    changeForm(firstTry, requiredForLoan, requiredForCopy, true, '40%', 'Title');
   } else { // st === 'copy'
-    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal');
+    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of journal');
   }
 }
