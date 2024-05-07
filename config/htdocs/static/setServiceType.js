@@ -31,9 +31,11 @@ function disableElements(disabled, ...elementIds) {
 
 const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
-function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel, data) {
+function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel, npl) {
   addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
+  if (npl) removeClassFromElements('is-required', 'div-pickupLocation');
+
   disableElements(fieldsDisabled, ...disabledForLoan);
   updateStyle('onlyForCopy', 'opacity', copyDivOpacity);
   document.getElementById('label-title').textContent = titleLabel;
@@ -42,41 +44,42 @@ function changeForm(required, notRequired, fieldsDisabled, copyDivOpacity, title
     document.getElementById(`error-${id}`).textContent = undefined;
   });
 
+  // Don't display "Please supply ..." messages if it's the first try
+  if (firstTry) return;
+
   Object.keys(required).forEach(id => {
-    const cfg = required[id];
-    if (cfg !== true) {
-      const [key, caption] = cfg;
-      const val = data[key];
-      const elem = document.getElementById(`error-${id}`);
-      // console.log(`id '${id}' is required: key='${key}', caption='${caption}', value='${val}'`);
-      if (val) {
-        elem.textContent = undefined;
-      } else {
-        elem.textContent = 'Please supply a ' + caption;
-      }
+    const caption = required[id];
+    const val = document.getElementById(`input-${id}`).value;
+    const elem = document.getElementById(`error-${id}`);
+    // console.log(`  id '${id}' is required: caption='${caption}', value='${val}'`);
+    if (val || (id === 'pickupLocation' && npl)) {
+      elem.textContent = undefined;
+    } else {
+      let s = 'Please supply a';
+      if (caption.match(/^[AEIOUaeiou]/)) s += 'n';
+      elem.textContent = s + ' ' + caption;
     }
   });
 }
 
 const requiredForLoan = {
-  'pickupLocation': ['svc.pickupLocation', 'pickup location'],
-  'title': ['rft.title', 'title'],
-  'author': ['rft.au', 'author'],
+  'pickupLocation': 'pickup location',
+  'title': 'title',
+  'author': 'author',
 };
 
 const requiredForCopy = {
-  'genre': ['rft.genre', 'genre'],
-  'publicationDate': ['rft.date', 'publication date'],
-  'copyrightType': true,
-  'titleOfComponent': ['rft.titleOfComponent', 'chapter title'],
-  'authorOfComponent': ['rft.authorOfComponent', 'chapter author'],
+  'genre': 'genre',
+  'publicationDate': 'publication date',
+  'copyrightType': 'copyright type',
+  'titleOfComponent': 'chapter title',
+  'authorOfComponent': 'chapter author',
 };
 
-function setServiceType(st, firstTry, json) {
-  const data = JSON.parse(json);
+function setServiceType(st, firstTry, npl) {
   if (st === 'loan') {
-    changeForm(requiredForLoan, requiredForCopy, true, '40%', 'Title', data);
+    changeForm(firstTry, requiredForLoan, requiredForCopy, true, '40%', 'Title', npl);
   } else { // st === 'copy'
-    changeForm(requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', data);
+    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', npl);
   }
 }

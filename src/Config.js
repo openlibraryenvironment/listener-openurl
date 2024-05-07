@@ -8,19 +8,6 @@ Handlebars.registerHelper('json', function(obj) {
   return JSON.stringify(objWithoutBranding, null, 2);
 });
 
-function addSlashes(s) {
-  // eslint-disable-next-line no-control-regex
-  return s.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
-}
-
-// Returns a JavaScript string which can be parsed with JSON.parse
-Handlebars.registerHelper('encodedJson', function(obj) {
-  const objWithoutBranding = { ...obj };
-  delete objWithoutBranding.branding;
-  const unquoted = JSON.stringify(objWithoutBranding, null, 2);
-  return addSlashes(unquoted);
-});
-
 class Config {
   constructor(args) {
     if (!args) args = {};

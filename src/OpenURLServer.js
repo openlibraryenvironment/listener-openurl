@@ -59,7 +59,7 @@ function unArray(val) {
 }
 
 
-function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
+function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) {
   const isCopy = query.svc_id === 'copy';
   const currentCopyrightType = query['rft.copyrightType'] || service.defaultCopyrightType;
   query.svc_id ||= 'loan';
@@ -68,6 +68,7 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry) {
     valuesNotShownInForm,
     digitalOnly: ctx.state?.svcCfg?.digitalOnly,
     firstTry,
+    npl,
     isCopy,
 
     // Annoyingly, Handlebars' {{#if NAME}} does not work with dotted names like `rft.genre`, so we need these redundant booleans
@@ -171,7 +172,7 @@ async function maybeRenderForm(ctx, next) {
     .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}">`)
     .join('\n');
 
-  const data = makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0);
+  const data = makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0, npl);
   ctx.body = ctx.cfg.runTemplate(formName, data);
 }
 

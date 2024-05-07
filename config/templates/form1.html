@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <script src="/static/setServiceType.js"></script>
-    <script>function setServiceTypeWithParams(st) { setServiceType(st, {{firstTry}}, `{{{encodedJson .}}}`) }</script>
+    <script>function setServiceTypeWithParams(st) { setServiceType(st, {{firstTry}}, {{npl}}) }</script>
   </head>
   <body>
     <div class="positioner">
@@ -54,9 +54,9 @@
               {{/unless}}
 
               <div id="div-genre" class="key-value-pair">
-                <label class="key" for="input-format">Genre</label>
+                <label class="key" for="input-genre">Genre</label>
                 <div class="value">
-                  <select class="select" id="input-format" name="rft.genre">
+                  <select class="select" id="input-genre" name="rft.genre">
                     {{#each formats}}
                       <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
                     {{/each}}
@@ -194,9 +194,9 @@
               </div>
 
               <div id="div-publicationDate" class="key-value-pair">
-                <label class="key" for="input-publication-date">Year of publication</label>
+                <label class="key" for="input-publicationDate">Year of publication</label>
                 <div class="value">
-                  <input class="should-validate" id="input-publication-date" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" aria-required="true">
+                  <input class="should-validate" id="input-publicationDate" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" aria-required="true">
                   <div id="error-publicationDate" class="error"></div>
                 </div>
               </div>
