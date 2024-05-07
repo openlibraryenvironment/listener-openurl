@@ -31,9 +31,11 @@ function disableElements(disabled, ...elementIds) {
 
 const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
-function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel) {
+function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel, npl) {
   addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
+  if (npl) removeClassFromElements('is-required', 'div-pickupLocation');
+
   disableElements(fieldsDisabled, ...disabledForLoan);
   updateStyle('onlyForCopy', 'opacity', copyDivOpacity);
   document.getElementById('label-title').textContent = titleLabel;
@@ -50,7 +52,7 @@ function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpac
     const val = document.getElementById(`input-${id}`).value;
     const elem = document.getElementById(`error-${id}`);
     // console.log(`  id '${id}' is required: caption='${caption}', value='${val}'`);
-    if (val) {
+    if (val || (id === 'pickupLocation' && npl)) {
       elem.textContent = undefined;
     } else {
       let s = 'Please supply a';
@@ -74,10 +76,10 @@ const requiredForCopy = {
   'authorOfComponent': 'chapter author',
 };
 
-function setServiceType(st, firstTry) {
+function setServiceType(st, firstTry, npl) {
   if (st === 'loan') {
-    changeForm(firstTry, requiredForLoan, requiredForCopy, true, '40%', 'Title');
+    changeForm(firstTry, requiredForLoan, requiredForCopy, true, '40%', 'Title', npl);
   } else { // st === 'copy'
-    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of journal');
+    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', npl);
   }
 }
