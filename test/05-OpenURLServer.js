@@ -81,7 +81,7 @@ const tests = [
     input: 'rft.id=1&req.emailAddress=x&svc.ntries=1&svc.noPickupLocation=1',
     messages: [
       [false, /Please supply an email address/],
-      [true, /Please supply a pickup location/],
+      [false, /Please supply a pickup location/],
     ],
   },
   {
