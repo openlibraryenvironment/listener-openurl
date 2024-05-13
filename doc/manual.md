@@ -62,6 +62,7 @@ For general functioning:
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
 * `docRoot` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
 * `digitalOnly` -- boolean indicating that pickup location should not be solicited and `deliveryMethod` should be passed to ReShare as `URL`
+* `copyrightTypes` -- an array of objects with properties `code` and `name` specifying the ISO18626 copyright type codes to offer as options for that field and the display names to associate with them
 
 For communication with the ReShare back-end:
 

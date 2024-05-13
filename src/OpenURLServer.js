@@ -88,9 +88,9 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
       name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
       selected: x === query['rft.genre'] ? 'selected' : '',
     })),
-    copyrightTypes: (service.copyrightTypes || []).map(x => ({
+    copyrightTypes: (ctx.cfg.getValues()?.copyrightTypes || service.copyrightTypes || []).map(x => ({
       ...x,
-      selected: x.id === currentCopyrightType ? 'selected' : '',
+      selected: x.code === currentCopyrightType ? 'selected' : '',
     })),
     services: ['loan', 'copy'].map((x, i) => ({
       code: x,
@@ -247,9 +247,13 @@ async function postReshareRequest(ctx, next) {
     vars.hasISBN = !!vars.json?.isbn;
 
     if (vars.isCopy) {
-      await service.getCopyrightTypes();
+      let copyrightTypes = ctx.cfg.getValues()?.copyrightTypes;
+      if (!copyrightTypes) {
+        await service.getCopyrightTypes();
+        copyrightTypes = service.copyrightTypes;
+      }
       // XXX It should not be necessary to consult the request we sent, this should be in the response
-      const ct = find(service.copyrightTypes, x => x.id === rreq.copyrightType);
+      const ct = find(copyrightTypes, x => x.code === rreq.copyrightType?.value);
       if (ct) vars.clientSideCopyrightType = ct.name;
     }
 
