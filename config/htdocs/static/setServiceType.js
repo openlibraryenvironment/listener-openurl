@@ -65,21 +65,51 @@ function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpac
 const requiredForLoan = {
   'pickupLocation': 'pickup location',
   'title': 'title',
-  'author': 'author',
+  'author': 'author'
 };
 
 const requiredForCopy = {
+  'title': 'title',
   'genre': 'genre',
   'publicationDate': 'publication date',
   'copyrightType': 'copyright type',
   'titleOfComponent': 'chapter title',
   'authorOfComponent': 'chapter author',
+  'pickupLocation': 'pickup location'
 };
 
 function setServiceType(st, firstTry, npl) {
   if (st === 'loan') {
     changeForm(firstTry, requiredForLoan, requiredForCopy, true, '40%', 'Title', npl);
   } else { // st === 'copy'
-    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', npl);
+    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of book/journal', npl);
   }
 }
+
+function initializeComplianceCheck() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('form');
+    var submitButton = document.getElementById('submitButton');
+    var complianceModal = document.getElementById('complianceModal');
+    var acceptComplianceButton = document.getElementById('acceptCompliance');
+    var complianceAccepted = window.sessionStorage.getItem('complianceAccepted') === 'true';
+
+    // Show the compliance modal when the submit button is clicked and prevent the default submit logic
+    submitButton.addEventListener('click', function(event) {
+      if (!complianceAccepted) {
+        event.preventDefault();
+        complianceModal.style.display = 'block';
+      } else {
+        form.submit();
+      }
+    });
+
+    // Handle compliance acceptance and submit the form
+    acceptComplianceButton.addEventListener('click', function() {
+      window.sessionStorage.setItem('complianceAccepted', 'true');
+      complianceModal.style.display = 'none';
+      form.submit();
+    });
+  });
+}
+
