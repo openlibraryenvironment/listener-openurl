@@ -232,13 +232,13 @@
     </div>
 
     <!-- Compliance Modal -->
-    <div id="complianceModal" class="modal">
+    <div id="complianceModal" class="modal hide">
       <div class="modal-content">
-        <span class="close" onclick="document.getElementById('complianceModal').style.display='none'">&times;</span>
-        <h2>{{branding.complianceModal.header}}</h2>
-        <p>{{branding.complianceModal.body}}</p><br>
-        <p>{{branding.complianceModal.footer}}</p><br>
-        <button id="acceptCompliance" class="button--primary">Accept</button>
+        <span class="close" onclick=closeModal()>X</span>
+        <h1>{{branding.complianceModal.header}}</h1>
+        <p class="margin-y-30">{{branding.complianceModal.body}}</p>
+        <p class="margin-bottom-30">{{branding.complianceModal.footer}}</p>
+        <button id="acceptComplianceButton" class="button--primary">Accept</button>
       </div>
     </div>
 

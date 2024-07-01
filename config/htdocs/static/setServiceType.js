@@ -65,7 +65,7 @@ function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpac
 const requiredForLoan = {
   'pickupLocation': 'pickup location',
   'title': 'title',
-  'author': 'author'
+  'author': 'author',
 };
 
 const requiredForCopy = {
@@ -75,7 +75,7 @@ const requiredForCopy = {
   'copyrightType': 'copyright type',
   'titleOfComponent': 'chapter title',
   'authorOfComponent': 'chapter author',
-  'pickupLocation': 'pickup location'
+  'pickupLocation': 'pickup location',
 };
 
 function setServiceType(st, firstTry, npl) {
@@ -88,28 +88,38 @@ function setServiceType(st, firstTry, npl) {
 
 function initializeComplianceCheck() {
   document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('form');
-    var submitButton = document.getElementById('submitButton');
-    var complianceModal = document.getElementById('complianceModal');
-    var acceptComplianceButton = document.getElementById('acceptCompliance');
-    var complianceAccepted = window.sessionStorage.getItem('complianceAccepted') === 'true';
+    const complianceAcceptedKey = 'complianceAccepted';
+    const showElementCssClass = 'show';
+    const hideElementCssClass = 'hide';
+    const clickEventType = 'click';
+
+    const form = document.querySelector('.page#form');
+    const submitButton = document.querySelector('.button--primary#submitButton');
+    const complianceModal = document.querySelector('.modal#complianceModal');
+    const acceptComplianceButton = document.querySelector('.button--primary#acceptComplianceButton');
+
+    const complianceAcceptedValue = window.sessionStorage.getItem(complianceAcceptedKey) === 'true';
 
     // Show the compliance modal when the submit button is clicked and prevent the default submit logic
-    submitButton.addEventListener('click', function(event) {
-      if (!complianceAccepted) {
+    submitButton.addEventListener(clickEventType, function(event) {
+      if (!complianceAcceptedValue) {
         event.preventDefault();
-        complianceModal.style.display = 'block';
+        complianceModal.classList.replace(hideElementCssClass, showElementCssClass);
       } else {
         form.submit();
       }
     });
 
     // Handle compliance acceptance and submit the form
-    acceptComplianceButton.addEventListener('click', function() {
-      window.sessionStorage.setItem('complianceAccepted', 'true');
-      complianceModal.style.display = 'none';
+    acceptComplianceButton.addEventListener(clickEventType, function() {
+      window.sessionStorage.setItem(complianceAcceptedKey, 'true');
+      complianceModal.classList.replace(hideElementCssClass, showElementCssClass);
       form.submit();
     });
   });
 }
 
+function closeModal() {
+  const complianceModal = document.querySelector('.modal#complianceModal');
+  complianceModal.classList.replace('show', 'hide');
+}
