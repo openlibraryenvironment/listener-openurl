@@ -32,8 +32,8 @@ function disableElements(disabled, ...elementIds) {
 const disabledForLoan = ['copyrightType', 'titleOfComponent', 'authorOfComponent', 'volume', 'issue', 'pagesRequested'];
 
 function changeForm(firstTry, required, notRequired, fieldsDisabled, copyDivOpacity, titleLabel, npl) {
-  addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   removeClassFromElements('is-required', ...Object.keys(notRequired).map(x => `div-${x}`));
+  addClassToElements('is-required', ...Object.keys(required).map(x => `div-${x}`));
   if (npl) removeClassFromElements('is-required', 'div-pickupLocation');
 
   disableElements(fieldsDisabled, ...disabledForLoan);
