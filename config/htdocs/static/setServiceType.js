@@ -69,17 +69,57 @@ const requiredForLoan = {
 };
 
 const requiredForCopy = {
+  'title': 'title',
   'genre': 'genre',
   'publicationDate': 'publication date',
   'copyrightType': 'copyright type',
   'titleOfComponent': 'chapter title',
   'authorOfComponent': 'chapter author',
+  'pickupLocation': 'pickup location',
 };
 
 function setServiceType(st, firstTry, npl) {
   if (st === 'loan') {
     changeForm(firstTry, requiredForLoan, requiredForCopy, true, '40%', 'Title', npl);
   } else { // st === 'copy'
-    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of journal', npl);
+    changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of book/journal', npl);
   }
+}
+
+function initializeComplianceCheck() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const complianceAcceptedKey = 'complianceAccepted';
+    const showElementCssClass = 'show';
+    const hideElementCssClass = 'hide';
+    const clickEventType = 'click';
+
+    const form = document.querySelector('.page#form');
+    const submitButton = document.querySelector('.button--primary#submitButton');
+    const complianceModal = document.querySelector('.modal#complianceModal');
+    const acceptComplianceButton = document.querySelector('.button--primary#acceptComplianceButton');
+
+    const complianceAcceptedValue = window.sessionStorage.getItem(complianceAcceptedKey) === 'true';
+
+    // Show the compliance modal when the submit button is clicked and prevent the default submit logic
+    submitButton.addEventListener(clickEventType, function(event) {
+      if (!complianceAcceptedValue) {
+        event.preventDefault();
+        complianceModal.classList.replace(hideElementCssClass, showElementCssClass);
+      } else {
+        form.submit();
+      }
+    });
+
+    // Handle compliance acceptance and submit the form
+    acceptComplianceButton.addEventListener(clickEventType, function() {
+      window.sessionStorage.setItem(complianceAcceptedKey, 'true');
+      complianceModal.classList.replace(hideElementCssClass, showElementCssClass);
+      form.submit();
+    });
+  });
+}
+
+function closeModal() {
+  const complianceModal = document.querySelector('.modal#complianceModal');
+  complianceModal.classList.replace('show', 'hide');
 }

@@ -54,7 +54,7 @@
               {{/unless}}
 
               <div id="div-genre" class="key-value-pair">
-                <label class="key" for="input-genre">Genre</label>
+                <label class="key" for="input-genre">Format</label>
                 <div class="value">
                   <select class="select" id="input-genre" name="rft.genre">
                     {{#each formats}}
@@ -222,7 +222,7 @@
 
             <div class="page__footer">
               <div class="button-group">
-                <button class="button--primary" id="submit" type="submit">Request item</button>
+                <button class="button--primary" id="submitButton" type="submit">Request item</button>
               </div>
             </div>
             {{{valuesNotShownInForm}}}
@@ -230,6 +230,19 @@
         </div>
       </div>
     </div>
+
+    <!-- Compliance Modal -->
+    <div id="complianceModal" class="modal hide">
+      <div class="modal-content">
+        <span class="close" onclick=closeModal()>X</span>
+        <h1>{{branding.complianceModal.header}}</h1>
+        <p class="margin-y-30">{{branding.complianceModal.body}}</p>
+        <p class="margin-bottom-30">{{branding.complianceModal.footer}}</p>
+        <button id="acceptComplianceButton" class="button--primary">Accept</button>
+      </div>
+    </div>
+
     <script>setServiceTypeWithParams('{{svc_id}}')</script>
+    <script>initializeComplianceCheck()</script>
   </body>
 </html>
