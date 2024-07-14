@@ -84,37 +84,65 @@ function setServiceType(st, firstTry, npl) {
   } else { // st === 'copy'
     changeForm(firstTry, requiredForCopy, requiredForLoan, false, '100%', 'Title of book/journal', npl);
   }
+  addSubmitButtonListener(st);
 }
 
-function initializeComplianceCheck() {
-  document.addEventListener('DOMContentLoaded', function() {
-    const complianceAcceptedKey = 'complianceAccepted';
-    const showElementCssClass = 'show';
-    const hideElementCssClass = 'hide';
-    const clickEventType = 'click';
+function isFormValid(requiredForCopy) {
+  if (!requiredForCopy || Object.keys(requiredForCopy).length === 0) {
+    return false;
+  }
+  for (const key of Object.keys(requiredForCopy)) {
+    const inputElement = document.getElementById(`input-${key}`);
+    if (!inputElement || !inputElement.value) {
+      return false;
+    }
+  }
+  return true;
+}
 
-    const form = document.querySelector('.page#form');
-    const submitButton = document.querySelector('.button--primary#submitButton');
-    const complianceModal = document.querySelector('.modal#complianceModal');
-    const acceptComplianceButton = document.querySelector('.button--primary#acceptComplianceButton');
+function addSubmitButtonListener(serviceType) {
+  const complianceAcceptedKey = 'complianceAccepted';
+  const showElementCssClass = 'show';
+  const hideElementCssClass = 'hide';
 
-    const complianceAcceptedValue = window.sessionStorage.getItem(complianceAcceptedKey) === 'true';
+  const submitButton = document.querySelector('.button--primary#submitButton');
+  submitButton.replaceWith(submitButton.cloneNode(true));
 
-    // Show the compliance modal when the submit button is clicked and prevent the default submit logic
-    submitButton.addEventListener(clickEventType, function(event) {
+  const newSubmitButton = document.querySelector('.button--primary#submitButton');
+  const complianceModal = document.querySelector('.modal#complianceModal');
+  const form = document.querySelector('.page#form');
+  const complianceAcceptedValue = window.sessionStorage.getItem(complianceAcceptedKey) === 'true';
+
+  newSubmitButton.addEventListener('click', function(event) {
+    if (serviceType === 'copy') {
+      if (!isFormValid(requiredForCopy)) {
+        return;
+      }
+
       if (!complianceAcceptedValue) {
         event.preventDefault();
         complianceModal.classList.replace(hideElementCssClass, showElementCssClass);
-      } else {
-        form.submit();
+        return;
       }
-    });
-
-    // Handle compliance acceptance and submit the form
-    acceptComplianceButton.addEventListener(clickEventType, function() {
-      window.sessionStorage.setItem(complianceAcceptedKey, 'true');
-      complianceModal.classList.replace(hideElementCssClass, showElementCssClass);
       form.submit();
+    }
+  });
+}
+
+function initializeComplianceCheck(serviceType) {
+  document.addEventListener('DOMContentLoaded', function() {
+    addSubmitButtonListener(serviceType);
+
+    const complianceModal = document.querySelector('.modal#complianceModal');
+    const acceptComplianceButton = document.querySelector('.button--primary#acceptComplianceButton');
+    const complianceAcceptedKey = 'complianceAccepted';
+    const hideElementCssClass = 'hide';
+    const showElementCssClass = 'show';
+
+    acceptComplianceButton.addEventListener('click', function() {
+      window.sessionStorage.setItem(complianceAcceptedKey, 'true');
+      complianceModal.classList.replace(showElementCssClass, hideElementCssClass);
+      document.querySelector('.page#form').submit();
     });
   });
 }
@@ -122,4 +150,5 @@ function initializeComplianceCheck() {
 function closeModal() {
   const complianceModal = document.querySelector('.modal#complianceModal');
   complianceModal.classList.replace('show', 'hide');
+  changeForm(false, requiredForCopy, requiredForLoan, false, '100%', 'Title of book/journal', false);
 }
