@@ -57,14 +57,14 @@ class OkapiSession {
   async getCopyrightTypes() {
     const path = '/rs/refdata?filters=desc%3D%3DcopyrightType&sort=desc%3Basc&max=100';
     const json = await this._getDataFromReShare(path, 'copyright types');
-    this.copyrightTypes = json[0].values
+    this.copyrightTypes = json[0]?.values
       .map(r => ({ id: r.id, code: r.value, name: r.label }));
   }
 
   async getDefaultCopyrightType() {
     const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
     const json = await this._getDataFromReShare(path, 'default copyright type');
-    this.defaultCopyrightType = json[0].value;
+    this.defaultCopyrightType = json[0]?.value;
   }
 
   post(path, payload) {
