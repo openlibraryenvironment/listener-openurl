@@ -241,7 +241,7 @@ async function postReshareRequest(ctx, next) {
       if (location) vars.pickupLocationName = location.name;
     }
 
-    vars.isCopy = vars.json?.serviceType.value === 'copy';
+    vars.isCopy = vars.json?.serviceType?.value === 'copy';
     vars.hasGenre = !!vars.json?.publicationType?.value;
     vars.hasDate = !!vars.json?.publicationDate;
     vars.hasISBN = !!vars.json?.isbn;
