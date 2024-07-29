@@ -8,6 +8,14 @@ This implements an API that proxies requests through to a mod-rs instance after 
 
 Passes through all parameters to the `/rs/patronrequests` mod-rs URL configured for `<service>` and adds a filter for the patron id obtained from the configured header.
 
+### `/<service>/patronrequests/<request id>/cancel`
+
+Calls the `/rs/patronrequests/<request id>/performAction` endpoint with the `action` of `requesterCancel` and passes through the `reason` and `note` keys of the POST body as `actionParams`. 
+
+### `/<service>/patron/validate`
+
+Passes through all parameters to the `/rs/patron/validate` endpoint of the configured mod-rs.
+
 ## Environment variables
 
 ### `PORT`

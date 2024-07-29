@@ -25,6 +25,15 @@ nock(mockedRoot)
   .post('/rs/patron/validate', { barcode: '123', pin: '456' })
   .reply(200, { userid: 'bob' }, { 'content-type': 'application/json' });
 
+nock(mockedRoot)
+  .post('/rs/patronrequests/123someid/performAction', {
+    action: 'requesterCancel',
+    actionParams: {
+      reason: 'patron_requested',
+    },
+  })
+  .reply(200);
+
 const app = await (patronAPIServer(new Config({
   // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   loggingCategories: '',
@@ -97,6 +106,13 @@ describe('09. patron API server', function() {
     expect(res).to.have.status(200);
     expect(res).to.be.json;
     assert.equal(JSON.parse(res.text).userid, 'bob');
+  });
+
+  it('can cancel a request', async function() {
+    const res = await requester
+      .post('/US-EAST/patronrequests/123someid/cancel')
+      .send({ reason: 'patron_requested' });
+    expect(res).to.have.status(200);
   });
 
   after(function() {
