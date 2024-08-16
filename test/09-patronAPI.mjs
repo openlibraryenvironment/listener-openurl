@@ -34,6 +34,10 @@ nock(mockedRoot)
   })
   .reply(200);
 
+nock(mockedRoot)
+  .get('/rs/settings/appSettings?filters=section%3D%3Drequests&filters=key%3D%3Dmax_requests')
+  .reply(200, [{ value: '42' }], { 'content-type': 'application/json' });
+
 const app = await (patronAPIServer(new Config({
   // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   loggingCategories: '',
@@ -114,6 +118,21 @@ describe('09. patron API server', function() {
       .send({ reason: 'patron_requested' });
     expect(res).to.have.status(200);
   });
+
+  it('fetches a setting', async function() {
+    const res = await requester
+      .get('/US-EAST/settings/requests/max_requests');
+    expect(res).to.have.status(200);
+    expect(res).to.be.json;
+    assert.equal(JSON.parse(res.text)[0].value, '42');
+  });
+
+  it('fails on invalid setting', async function() {
+    const res = await requester
+      .get('/US-EAST/settings/not/likely');
+    expect(res).to.have.status(403);
+  });
+
 
   after(function() {
     requester.close();

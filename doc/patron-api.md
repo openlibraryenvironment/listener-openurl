@@ -16,6 +16,10 @@ Calls the `/rs/patronrequests/<request id>/performAction` endpoint with the `act
 
 Passes through all parameters to the `/rs/patron/validate` endpoint of the configured mod-rs.
 
+### `/<service>/settings/<setting section>/<setting name>`
+
+For allowed settings will pass through with filters on section and setting name to the `/rs/settings/appSettings` endpoint of the configured mod-rs.
+
 ## Environment variables
 
 ### `PORT`

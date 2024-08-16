@@ -55,6 +55,23 @@ router.get('/:service/patronrequests', async (ctx, next) => {
   await next();
 });
 
+const allowedSettings = {
+  'requests': ['max_requests'],
+};
+
+router.get('/:service/settings/:section/:setting', async (ctx, next) => {
+  const { sess } = ctx.state;
+  const { setting, section } = ctx.params;
+  if (!allowedSettings[section] || !allowedSettings[section].includes(setting)) {
+    ctx.throw(403, 'Proxying not permitted for this setting');
+  }
+  ctx.cfg.log('flow', `Passing through request for setting ${setting} in section ${section}`);
+  const fromOkapi = await sess.okapiFetch('GET', `/rs/settings/appSettings?filters=section%3D%3D${section}&filters=key%3D%3D${setting}`, ctx.request.body);
+
+  passOkapiResponse(ctx.response, fromOkapi);
+  await next();
+});
+
 router.post('/:service/patronrequests/:prid/cancel', async (ctx, next) => {
   const { sess } = ctx.state;
   const opts = (({ reason, note }) => ({ reason, note }))(ctx.request.body);
