@@ -203,6 +203,15 @@ async function constructAndMaybeReturnReshareRequest(ctx, next) {
   }
 }
 
+async function maybeAlreadyRequested(ctx, next) {
+  if (ctx.query?.submitted) {
+    ctx.cfg.log('flow', 'Already submitted');
+    ctx.body = ctx.cfg.runTemplate('already');
+  } else {
+    await next();
+  }
+}
+
 async function postReshareRequest(ctx, next) {
   const { admindata, metadata, npl, rreq, service } = ctx.state;
 
@@ -303,6 +312,7 @@ class OpenURLServer {
         maybeRenderForm,
         maybeReturnAdminData,
         constructAndMaybeReturnReshareRequest,
+        maybeAlreadyRequested,
         postReshareRequest,
       ])(ctx, next);
     });
