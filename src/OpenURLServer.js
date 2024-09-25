@@ -65,7 +65,9 @@ async function checkLimit(ctx, next) {
     try {
       const [maxResponse, reqsResponse] = await Promise.all([
         service.okapiFetch('GET', '/rs/settings/appSettings?filters=section%3D%3Drequests&filters=key%3D%3Dmax_requests'),
-        service.okapiFetch('GET', `/rs/patronrequests?filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3D${uid}`),
+        service.okapiFetch('GET', `/rs/patronrequests?perPage=1000&filters=state.terminal%3D%3Dfalse&filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3D${uid}`),
+        // TODO this would be better but we need to be sure it will match if any of the tags does
+        // service.okapiFetch('GET', `/rs/patronrequests?perPage=1000&filters=state.tags.value%3D%3DACTIVE_PATRON&filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3D${uid}`),
       ]);
       if (!maxResponse.ok) throw new Error(`HTTP error getting request limit ${maxResponse.status}`);
       if (!reqsResponse.ok) throw new Error(`HTTP error getting requests to check limit ${reqsResponse.status}`);
