@@ -52,6 +52,50 @@ async function parseRequest(ctx, next) {
 }
 
 
+async function checkLimit(ctx, next) {
+  const { metadata, service, svcCfg } = ctx.state;
+  const uid = metadata.req?.id;
+
+  // Check to see if this request would put us over the limit
+  // This isn't responsible for enforcing the limit but offers a way to reject
+  // the request early rather than creating one with state REQ_OVER_LIMIT
+  let overLimit = false;
+  if (svcCfg.checkLimit && uid) {
+    ctx.cfg.log('flow', 'Checking request limit');
+    try {
+      const [maxResponse, reqsResponse] = await Promise.all([
+        service.okapiFetch('GET', '/rs/settings/appSettings?filters=section%3D%3Drequests&filters=key%3D%3Dmax_requests'),
+        service.okapiFetch('GET', `/rs/patronrequests?filters=isRequester%3D%3Dtrue&filters=patronIdentifier%3D%3D${uid}`),
+      ]);
+      if (!maxResponse.ok) throw new Error(`HTTP error getting request limit ${maxResponse.status}`);
+      if (!reqsResponse.ok) throw new Error(`HTTP error getting requests to check limit ${reqsResponse.status}`);
+
+      // Setting a limit is optional and one may not be configured
+      const maxReqs = (await maxResponse.json())?.[0]?.value;
+      console.log(maxReqs)
+      if (maxReqs) {
+        const reqs = await reqsResponse.json();
+        const reqsThatCount = reqs.filter(pr => pr.state?.tags?.some(tag => tag.value === 'ACTIVE_PATRON'));
+        overLimit = reqsThatCount.length >= maxReqs;
+        console.log(overLimit);
+        ctx.cfg.log('flow', `User has ${reqsThatCount.length} requests, limit is ${maxReqs}. Are we at the limit? ${overLimit}.`);
+      } else {
+        ctx.cfg.log('flow', 'No limit configured');
+      }
+    } catch (e) {
+      ctx.cfg.log('error', 'Problem checking request limit', e);
+    }
+  }
+
+  if (overLimit) {
+    ctx.cfg.log('flow', 'Request over limit');
+    ctx.body = ctx.cfg.runTemplate('limit');
+  } else {
+    await next();
+  }
+}
+
+
 // Used to protect against keys that are included multiple times
 function unArray(val) {
   while (Array.isArray(val)) val = val[0];
@@ -309,6 +353,7 @@ class OpenURLServer {
       }
       return compose([
         parseRequest,
+        checkLimit,
         maybeRenderForm,
         maybeReturnAdminData,
         constructAndMaybeReturnReshareRequest,

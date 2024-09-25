@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Request limit reached — {{branding.customerName}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <style>body { background: {{branding.backgroundColor}}; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+  </head>
+  <body>
+    <div class="positioner">
+      <div class="site" lang="en" dir="ltr">
+        <div class="site__header"></div>
+        <div class="site__body">
+          <div class="page">
+            <div class="page__header">
+              <h1>You have reached your limit of active requests. You may save searches to place a request at another time.</h1>
+              <div class="logo"><a href="{{branding.logoLink}}" target="_blank" aria-label="{{branding.customerName}}"><img src="{{branding.logoUrl}}" alt="{{branding.customerName}}" aria-hidden="true"></a></div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
