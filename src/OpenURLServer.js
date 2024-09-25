@@ -53,8 +53,8 @@ async function parseRequest(ctx, next) {
 
 
 async function checkLimit(ctx, next) {
-  const { metadata, service, svcCfg } = ctx.state;
-  const uid = metadata.req?.id;
+  const { admindata, service, svcCfg } = ctx.state;
+  const uid = admindata.req?.id;
 
   // Check to see if this request would put us over the limit
   // This isn't responsible for enforcing the limit but offers a way to reject
