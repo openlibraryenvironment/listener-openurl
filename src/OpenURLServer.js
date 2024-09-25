@@ -72,12 +72,10 @@ async function checkLimit(ctx, next) {
 
       // Setting a limit is optional and one may not be configured
       const maxReqs = (await maxResponse.json())?.[0]?.value;
-      console.log(maxReqs)
       if (maxReqs) {
         const reqs = await reqsResponse.json();
         const reqsThatCount = reqs.filter(pr => pr.state?.tags?.some(tag => tag.value === 'ACTIVE_PATRON'));
         overLimit = reqsThatCount.length >= maxReqs;
-        console.log(overLimit);
         ctx.cfg.log('flow', `User has ${reqsThatCount.length} requests, limit is ${maxReqs}. Are we at the limit? ${overLimit}.`);
       } else {
         ctx.cfg.log('flow', 'No limit configured');
