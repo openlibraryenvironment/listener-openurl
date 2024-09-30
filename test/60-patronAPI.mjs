@@ -55,7 +55,7 @@ const app = await (patronAPIServer(new Config({
   }
 })));
 
-describe('09. patron API server', function() {
+describe('Patron API server', function() {
   const server = app.listen({ port: 0, host: 'localhost' });
   const requester = chai.request(server).keepOpen();
 

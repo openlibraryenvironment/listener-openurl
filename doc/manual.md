@@ -60,6 +60,7 @@ For general functioning:
 
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
+* `checkLimit` -- boolean, when `true` an attempt will be made to see if the request does not put the patron identified by `req_id` over the request limit and to notify them of this instead of placing a request or displaying the form.
 * `docRoot` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
 * `digitalOnly` -- boolean indicating that pickup location should not be solicited and `deliveryMethod` should be passed to ReShare as `URL`
 * `copyrightTypes` -- an array of objects with properties `code` and `name` specifying the ISO18626 copyright type codes to offer as options for that field and the display names to associate with them

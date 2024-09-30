@@ -2,10 +2,12 @@
   "loggingCategories": "error,start,okapi,co,rr,admindata,metadata,flow,loadTemplate",
   "listenPort": 3012,
   "docRoot": "htdocs",
+  "checkLimit": true,
 
   "template.good": "templates/good.html",
   "template.bad": "templates/bad.html",
   "template.already": "templates/already.html",
+  "template.limit": "templates/limit.html",
   "template.form1": "templates/form1.html",
   "template.form2": "templates/form2.html",
 
