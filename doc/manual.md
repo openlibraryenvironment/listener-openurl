@@ -9,6 +9,11 @@
 * [Configuration](#configuration)
     * [Environment](#environment)
     * [Configuration file](#configuration-file)
+        * [For general functioning:](#for-general-functioning)
+        * [For communication with the ReShare back-end:](#for-communication-with-the-reshare-back-end)
+        * [For preferentially sourcing the patron id from a header (eg. provided by SSO):](#for-preferentially-sourcing-the-patron-id-from-a-header-eg-provided-by-sso)
+        * [For templating:](#for-templating)
+        * [For multiple back ends:](#for-multiple-back-ends)
     * [Templates](#templates)
     * [Logging](#logging)
 * [Starting the service](#starting-the-service)
@@ -16,6 +21,7 @@
     * [OpenURL v0.1 and v1.0](#openurl-v01-and-v10)
     * [Service-types](#service-types)
     * [Serving static files](#serving-static-files)
+    * [Confirmation](#confirmation)
 
 
 ## Getting started
@@ -56,7 +62,7 @@ The functioning of the OpenURL listener is affected by the following environment
 
 Configuration of the OpenURL listener is primarily by means of configuration file whose name is [specified on the command-line](#starting-the-service). The file must be well-formed JSON, a single object. The following keys are recognised:
 
-For general functioning:
+#### For general functioning:
 
 * `loggingCategories` -- a comma-separated string such as `"start,co,rr"` specifying a default set of logging categories to be used unless [overridden with an environment variable](#environment).
 * `listenPort` -- specifies which TCP/IP port to listen on, defaulting to 3012 if this is not specified.
@@ -65,30 +71,39 @@ For general functioning:
 * `digitalOnly` -- boolean indicating that pickup location should not be solicited and `deliveryMethod` should be passed to ReShare as `URL`
 * `copyrightTypes` -- an array of objects with properties `code` and `name` specifying the ISO18626 copyright type codes to offer as options for that field and the display names to associate with them
 
-For communication with the ReShare back-end:
+#### For communication with the ReShare back-end:
 
 * `okapiUrl` -- The full HTTP or HTTPS URL of the Okapi instance that provides the gateway to the ReShare node that the listener serves, for example `http://localhost:9130`.
 * `tenant` -- The name of the tenant on that ReShare node which the resolver serves, for example `diku`.
 * `username` -- The name of the user who resource-sharing requests should be posted as. This should be a user who has all the necessary permissions, but it is preferable to avoid using an administrator -- just as one does not usually run Unix services as root. A special user such as `openurl` might be created for this purpose.
 * `password` -- The password needed to authenticate the specified user.
 
-For preferentially sourcing the patron id from a header (eg. provided by SSO):
+#### For preferentially sourcing the patron id from a header (eg. provided by SSO):
 
 * `reqIdHeader` -- The HTTP header providing the patron id. Typically this will be explicitly populated by a proxy that will strip any pre-existing value.
 * `reqIdToLower`, `reqIdToUpper` -- Boolean options that transform the case of the incoming id from a header.
 * `reqIdRegex`, `reqIdReplacement` -- Strings to facilitate transform of the incoming id from a header, syntax following the the [Javascript replace function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) that implements them. Example: `{ reqIdRegex: 'abc-(.*)', reqIdReplacement: '$1-b' }`
 
+#### For templating:
+
+These all contain the names of [template](#templates) to be used when generating the HTML to interact with the user. Templates are loaded from the `config/templates` directory.
+
+* `template.good` -- a response when a request has been successfully posted.
+* `template.bad` -- notification that a request has been unsuccessful.
+* `template.form1` -- a form to fill in with request details. This is typically presented empty or nearly empty, and contains many metadata fields.
+* `template.form2` -- a form to confirm a request and provide a few extra details such as pickup location.
+* `template.already` -- notification that the request just submitted had already been submitted.
+* `template.limit` -- notification that the request was not placed as the user is already at the configured limit for outstanding requests.
+* `template.*` -- other templates, to be added as necessary.
+
+#### For multiple back ends:
+
 To specify several different back-ends, provide a directory under the `services` key ([example](https://github.com/openlibraryenvironment/listener-openurl/blob/a68a71b8d2feab37e3cc24ad5444396e53668c6b/config/caliban.json#L10-L36)). Within this sub-object, each key is the identifier of a service, and the corresponding value is an object with most configuration listed above. These are used when the OpenURL resolver is accessed via a baseURL whose last path component is equal to the identifier. When the resolver is accessed using a baseURL that does not match any of the configured service identifiers, it falls back to using the default service configuration (`okapiURL` etc.) specified at the top level. `loggingCategories`, `listenPort` and `docRoot` are only valid at the top-level.
 
-For templating:
-
-* `template.good` -- the name of a [template](#templates) to be used when generating the HTML for a response when a request has been successfully posted.
-* `template.bad` -- the name of a template to be used when generating the HTML for a response when a request has been unsuccessful.
-* `template.*` -- other templates, to be added as necessary.
 
 ### Templates
 
-The HTML pages that are returned in response to OpenURL requests are generated using [Handlebars](https://handlebarsjs.com/) templates. Each template is stored in its own file, conventionally in the `templates` subdirectory of the `config` directory. The filenames are specified as the values corresponding to `template.*` keys in [the configuration file](#configuration-file), where the part of the key after `template.` is one of a small defined set. A set of values is passed into the template, so it can include them in the generated text. These values can in principle vary by template, because each template is invoked in a different situation where different information is pertinent. However, at present, only two templates are used -- `good` and `bad` -- and they are both passed the same variables:
+The HTML pages that are returned in response to OpenURL requests are generated using [Handlebars](https://handlebarsjs.com/) templates. Each template is stored in its own file, conventionally in the `templates` subdirectory of the `config` directory. The filenames are specified as the values corresponding to `template.*` keys in [the configuration file](#configuration-file), where the part of the key after `template.` is one of a small defined set. A set of values is passed into the template, so it can include them in the generated text. These values vary by template, because each template is invoked in a different situation where different information is pertinent. However, the `good` and `bad` template are both passed the same variables:
 
 * `status` -- the HTTP status of the Okapi-mediated response from ReShare. For successful requests this will be a 2XX code, most likely 201; for unsuccessful requests it could be anything.
 * `json` -- when the body of the response received from ReShare is valid JSON, this contains the decoded structure, which can be addressed granularly, and `text` is not present.
