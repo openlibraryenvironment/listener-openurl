@@ -55,7 +55,8 @@
       "okapiUrl": "https://north-okapi.folio-dev.indexdata.com",
       "tenant": "reshare_north",
       "username": "north_admin",
-      "password": "north5231"
+      "password": "north5231",
+      "allowAnyDate": true
     }
   }
 }

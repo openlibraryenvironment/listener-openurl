@@ -100,6 +100,8 @@ These all contain the names of [template](#templates) to be used when generating
 
 To specify several different back-ends, provide a directory under the `services` key ([example](https://github.com/openlibraryenvironment/listener-openurl/blob/a68a71b8d2feab37e3cc24ad5444396e53668c6b/config/caliban.json#L10-L36)). Within this sub-object, each key is the identifier of a service, and the corresponding value is an object with most configuration listed above. These are used when the OpenURL resolver is accessed via a baseURL whose last path component is equal to the identifier. When the resolver is accessed using a baseURL that does not match any of the configured service identifiers, it falls back to using the default service configuration (`okapiURL` etc.) specified at the top level. `loggingCategories`, `listenPort` and `docRoot` are only valid at the top-level.
 
+If the `allowAnyDate` configuration item is set for a service, then forms that require a publication date to be entered do not insist that it consist of four digits, allowing "fuzzy" dates such as "1950s", "c1935" or "17th Century".
+
 
 ### Templates
 

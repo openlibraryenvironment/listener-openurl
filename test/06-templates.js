@@ -56,14 +56,28 @@ const tests = [
   },
   {
     name: 'form1',
-    values: { json: {} },
+    values: { json: {}, pubDateValidation: 'pattern="[0-9]*" ' },
     equalToFile: 'form1.html'
   },
   {
     name: 'form2',
     values: { json: {} },
     equalToFile: 'form2.html'
-  }
+  },
+  {
+    name: 'form1',
+    values: { pubDateValidation: 'pattern="[0-9]*" ' },
+    checks: [
+      /id="input-publication-date".*pattern="\[0-9\]\*"/,
+    ]
+  },
+  {
+    name: 'form1',
+    values: {},
+    checks: [
+      /value="" data-error="Please enter year/,
+    ]
+  },
 ];
 
 describe('06. substitute into templates', () => {
