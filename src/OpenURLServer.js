@@ -18,9 +18,9 @@ async function parseRequest(ctx, next) {
   const metadata = co.getMetadata();
   ctx.cfg.log('metadata', JSON.stringify(metadata));
 
-  ctx.cfg.log('flow', 'Check service');
   // service can come from path OR parameter
   const symbol = get(metadata, ['res', 'org']) || ctx.path.replace(/^\//, '');
+  ctx.cfg.log('flow', 'Check service', symbol);
   const service = ctx.services[symbol] || ctx.services[''];
   if (!service) ctx.throw(404, `unsupported service '${symbol}'`);
 
