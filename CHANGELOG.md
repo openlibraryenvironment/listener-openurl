@@ -30,6 +30,7 @@
 * "Please supply a ..." messages come and go depending on submitted request type. Fixes PR-1717.
 * Do not assume that mod-rs's successful-POST response has a `serviceType` field. That assumption could cause an NPE under some circumstances. No Jira issue.
 * Make robust against old version of mod-rs (e.g. 2.15.5) that do not return lists of copyright types. Fixes PR-1841.
+* Support per-service config item `allowAnyDate` to disable date validation in forms. Update docs, add tests. Fixes PR-2059.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 

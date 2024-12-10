@@ -45,7 +45,7 @@
               <label class="key-value-pair is-required" for="input-publication-date">
                 <div class="key">Year of publication</div>
                 <div class="value">
-                  <input class="should-validate" id="input-publication-date" type="number" name="rft.date" value="{{'rft.date'}}" pattern="[0-9]*" data-error="Please enter year of publication" aria-describedby="input-publication-date-error" aria-required="true">
+                  <input class="should-validate" id="input-publication-date" type="number" name="rft.date" value="{{'rft.date'}}" {{{pubDateValidation}}}data-error="Please enter year of publication" aria-describedby="input-publication-date-error" aria-required="true">
                 </div>
                 <div class="error" aria-live="on">
                   <div class="error-text-positioner">

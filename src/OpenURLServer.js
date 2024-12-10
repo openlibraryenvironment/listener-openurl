@@ -141,6 +141,7 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
       name: x.charAt(0).toUpperCase() + x.slice(1),
       checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
     })),
+    pubDateValidation: ctx.state?.svcCfg?.allowAnyDate ? '' : 'pattern="[0-9]*" ',
   });
 
   const format = data.formats.filter(x => x.selected);
