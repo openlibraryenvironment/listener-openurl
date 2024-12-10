@@ -50,6 +50,12 @@
       "tenant": "reshare_west",
       "username": "west_admin",
       "password": "west5231"
+    },
+    "US-NORTH": {
+      "okapiUrl": "https://north-okapi.folio-dev.indexdata.com",
+      "tenant": "reshare_north",
+      "username": "north_admin",
+      "password": "north5231"
     }
   }
 }
