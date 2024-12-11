@@ -56,7 +56,8 @@
       "tenant": "reshare_north",
       "username": "north_admin",
       "password": "north5231",
-      "allowAnyDate": true
+      "allowAnyDate": true,
+      "alwaysShowForm": true
     }
   }
 }

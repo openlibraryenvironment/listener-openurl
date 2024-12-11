@@ -137,7 +137,7 @@ class ContextObject {
   hasBasicData() {
     const rft = (this.metadata || {}).rft || {};
     let st = this.admindata.svc?.id;
-    if (st === 'contextObject') st = 'loan';
+    if (st === 'contextObject' || !st) st = 'loan';
 
     if (this.admindata.rft?.id) return true;
     if (st === 'loan' && rft.title && rft.au) return true;

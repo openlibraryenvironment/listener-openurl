@@ -157,15 +157,16 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
 
 
 async function maybeRenderForm(ctx, next) {
-  const { co, metadata, service, npl } = ctx.state;
+  const { co, metadata, service, npl, svcCfg } = ctx.state;
 
   ctx.cfg.log('flow', 'Check metadata to determine if we should render form');
-  // The form is good if it has no pickup location is required OR one is supplied OR it's a copy request
-  if (co.hasBasicData() &&
-      (npl ||
-       get(metadata, ['svc', 'pickupLocation']) ||
-       co.admindata.svc?.id === 'copy'
-      )) {
+  const pickupLocationRequirementSatisfied = (npl ||
+    !!get(metadata, ['svc', 'pickupLocation']) ||
+    co.admindata.svc?.id === 'copy'
+  );
+  const firstTime = !co.getQuery()['svc.ntries'];
+  const insistOnForm = svcCfg.alwaysShowForm && firstTime;
+  if (co.hasBasicData() && pickupLocationRequirementSatisfied && !insistOnForm) {
     return await next();
   }
 
@@ -202,7 +203,7 @@ async function maybeRenderForm(ctx, next) {
     query['svc.longForm'] = '1';
   }
 
-  const ntries = query['svc.ntries'] || '0';
+  const ntries = query['svc.ntries'] || '0'; // Always a string, though the value is numeric
   query['svc.ntries'] = (parseInt(ntries) + 1).toString();
 
   if (!query['rft.title']) {
