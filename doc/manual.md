@@ -102,6 +102,8 @@ To specify several different back-ends, provide a directory under the `services`
 
 If the `allowAnyDate` configuration item is set for a service, then forms that require a publication date to be entered do not insist that it consist of four digits, allowing "fuzzy" dates such as "1950s", "c1935" or "17th Century".
 
+If the `alwaysShowForm` configuration item is set for a service, then the full form is always displayed once for confirmation even when the submitted OpenURL has complete basic metadata.
+
 
 ### Templates
 

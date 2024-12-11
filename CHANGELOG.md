@@ -31,6 +31,7 @@
 * Do not assume that mod-rs's successful-POST response has a `serviceType` field. That assumption could cause an NPE under some circumstances. No Jira issue.
 * Make robust against old version of mod-rs (e.g. 2.15.5) that do not return lists of copyright types. Fixes PR-1841.
 * Support per-service config item `allowAnyDate` to disable date validation in forms. Update docs, add tests. Fixes PR-2059.
+* Support per-service config item `alwaysShowForm` to specify that the full form always should be displayed once for confirmation even when the submitted OpenURL has complete basic metadata. Update docs. Fixes PR-2059.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
@@ -67,7 +68,7 @@
 * When `svc_id` is `json`, post the patron request as usual but return a JSON summary instead of an HTML page. Fixes PR-461.
 * When prompting for pickup location, offer a dropdown of valid values obtained from ReShare. Fixes PR-572. Available from v1.3.1.
 * Consolidate OpenURL resolver configuration files. Fixes PR-681.
-* Add service entries for EAST and WEST unviersities to the configuration file. Fixes PR-677.
+* Add service entries for EAST and WEST universities to the configuration file. Fixes PR-677.
 * When a baseURL is invoked with no parameters (or insufficient to attempt a resolution), the enter-metadata form is presented. Fixes PR-651.
 * Support the `rft.edition` key. This is not mentioned in the standards, but appears in some example v1.0 OpenURLs.
 * Apply styles to the Request Accepted page. Fixes PR-686.
