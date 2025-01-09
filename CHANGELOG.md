@@ -32,6 +32,7 @@
 * Make robust against old version of mod-rs (e.g. 2.15.5) that do not return lists of copyright types. Fixes PR-1841.
 * Support per-service config item `allowAnyDate` to disable date validation in forms. Update docs, add tests. Fixes PR-2059.
 * Support per-service config item `alwaysShowForm` to specify that the full form always should be displayed once for confirmation even when the submitted OpenURL has complete basic metadata. Update docs. Fixes PR-2059.
+* Add Service Level field to blank request form. Fixes PR-2056.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 

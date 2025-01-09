@@ -32,6 +32,11 @@ class OkapiSession {
   }
 
   async _getDataFromReShare(path, caption) {
+    if (this.logger.values?.withoutOkapi) {
+      // Running as part of a test: do nothing
+      return {};
+    }
+
     const res = await this.okapiFetch('GET', path);
     if (res.status !== 200) throw new HTTPError(res, `cannot fetch default ${caption} for '${this.label}'`);
     const json = await res.json();
@@ -54,11 +59,20 @@ class OkapiSession {
       });
   }
 
+  async _getRefDataValues(desc, caption) {
+    const path = `/rs/refdata?filters=desc%3D%3D${desc}&sort=desc%3Basc&max=100`;
+    const json = await this._getDataFromReShare(path, caption);
+    return json[0]?.values.map(r => ({ id: r.id, code: r.value, name: r.label }));
+  }
+
   async getCopyrightTypes() {
-    const path = '/rs/refdata?filters=desc%3D%3DcopyrightType&sort=desc%3Basc&max=100';
-    const json = await this._getDataFromReShare(path, 'copyright types');
-    this.copyrightTypes = json[0]?.values
-      .map(r => ({ id: r.id, code: r.value, name: r.label }));
+    // XXX could no-op if this.copyrightTypes is already defined
+    this.copyrightTypes = await this._getRefDataValues('copyrightType', 'copyright types');
+  }
+
+  async getServiceLevels() {
+    // XXX could no-op if this.serviceLevels is already defined
+    this.serviceLevels = await this._getRefDataValues('ServiceLevels', 'service levels');
   }
 
   async getDefaultCopyrightType() {

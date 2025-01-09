@@ -141,6 +141,10 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
       name: x.charAt(0).toUpperCase() + x.slice(1),
       checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
     })),
+    serviceLevels: (service.serviceLevels || []).map(x => ({
+      ...x,
+      selected: x.code === query['svc.level'] ? 'selected' : '',
+    })),
     pubDateValidation: ctx.state?.svcCfg?.allowAnyDate ? '' : 'pattern="[0-9]*" ',
   });
 
@@ -179,7 +183,7 @@ async function maybeRenderForm(ctx, next) {
     formName = 'form1';
     formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
       'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
-      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue', 'svc_id');
+      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue', 'svc_id', 'svc.level');
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
@@ -191,6 +195,8 @@ async function maybeRenderForm(ctx, next) {
       service.getDefaultCopyrightType(),
     ]);
   }
+
+  await service.getServiceLevels();
 
   const originalQuery = co.getQuery();
   const query = {};
@@ -322,7 +328,9 @@ class OpenURLServer {
 
     const serviceConfigs = cfg.getValues().services || [];
     Object.keys(serviceConfigs).forEach(label => {
-      this.services[label] = new OkapiSession(cfg, label, serviceConfigs[label]);
+      const values = { ...serviceConfigs[label] };
+      if (cfg.values.withoutOkapi) values.withoutOkapi = true;
+      this.services[label] = new OkapiSession(cfg, label, values);
     });
 
     // Default service

@@ -36,6 +36,17 @@
                 </div>
               </div>
 
+              <div class="key-value-pair">
+                <div class="key">Service level</div>
+                <div class="value">
+                  <select class="select" id="input-serviceLevel" name="svc.level">
+                    {{#each serviceLevels}}
+                      <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
               {{#unless digitalOnly}}
               <div id="div-pickupLocation" class="key-value-pair">
                 <label class="key" for="input-pickupLocation">Pick up location</label>
