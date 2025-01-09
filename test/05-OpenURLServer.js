@@ -10,9 +10,9 @@ chai.use(chaiHttp);
 const app = (new OpenURLServer(new Config({
   // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   loggingCategories: '',
+  withoutOkapi: true,
   services: {
     'US-EAST': {
-      withoutOkapi: true,
       reqIdToLower: true,
       reqIdRegex: 'abc-(.*)',
       reqIdReplacement: '$1-b',
