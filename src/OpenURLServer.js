@@ -145,6 +145,10 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
       ...x,
       selected: x.code === query['svc.level'] ? 'selected' : '',
     })),
+    currencies: (service.currencies || []).map(x => ({
+      ...x,
+      selected: x.code === query['svc.costCurrency'] ? 'selected' : '',
+    })),
     pubDateValidation: ctx.state?.svcCfg?.allowAnyDate ? '' : 'pattern="[0-9]*" ',
   });
 
@@ -183,7 +187,8 @@ async function maybeRenderForm(ctx, next) {
     formName = 'form1';
     formFields.push('rft.title', 'rft.au', 'rft.date', 'rft.pub', 'rft.place', 'rft.edition', 'rft.isbn', 'rft.oclc',
       'rft.authorOfComponent', 'rft.copyrightType', 'rft.genre', 'rft.issn', 'rft.jtitle', 'rft.pagesRequested',
-      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue', 'svc_id', 'svc.level');
+      'rft.sponsoringBody', 'rft.subtitle', 'rft.titleOfComponent', 'rft.issue', 'svc_id', 'svc.level',
+      'svc.costAmount', 'svc.costCurrency');
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
@@ -196,7 +201,10 @@ async function maybeRenderForm(ctx, next) {
     ]);
   }
 
-  await service.getServiceLevels();
+  await Promise.all([
+    service.getServiceLevels(),
+    service.getCurrencies()
+  ]);
 
   const originalQuery = co.getQuery();
   const query = {};
