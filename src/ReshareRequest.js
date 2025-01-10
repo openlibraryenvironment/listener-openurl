@@ -117,6 +117,8 @@ function translateCOtoRR(co) {
   // These are non-standard fields in OpenURL 1.0
   rr.serviceType = _.get(a, 'svc.id'); // No example of this in Z39.88
   rr.serviceLevel = _.get(m, 'svc.level');
+  rr.maximumCostsMonetaryValue = _.get(m, 'svc.costAmount');
+  rr.maximumCostsCurrencyCode = _.get(m, 'svc.costCurrency');
   rr.isRequester = true;
   const copyrightType = _.get(m, 'rft.copyrightType');
   if (copyrightType) rr.copyrightType = { value: copyrightType };

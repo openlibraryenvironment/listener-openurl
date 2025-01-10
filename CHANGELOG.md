@@ -33,6 +33,7 @@
 * Support per-service config item `allowAnyDate` to disable date validation in forms. Update docs, add tests. Fixes PR-2059.
 * Support per-service config item `alwaysShowForm` to specify that the full form always should be displayed once for confirmation even when the submitted OpenURL has complete basic metadata. Update docs. Fixes PR-2059.
 * Add Service Level field to blank request form. Fixes PR-2056.
+* Add maximum cost field-pair (`maximumCostsMonetaryValue` and `maximumCostsCurrencyCode`) to blank request form. Fixes PR-2058.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
