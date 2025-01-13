@@ -103,10 +103,26 @@ function unArray(val) {
 }
 
 
-function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) {
+async function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) {
   const isCopy = query.svc_id === 'copy';
-  const currentCopyrightType = query['rft.copyrightType'] || service.defaultCopyrightType;
   query.svc_id ||= 'loan';
+
+  const promises = [
+    service.listServiceLevels(),
+    service.listCurrencies()
+  ];
+  if (!npl) {
+    promises.push(
+      service.listCopyrightTypes(),
+      service.listPickupLocations(),
+      service.listDefaultCopyrightType(),
+    );
+  }
+
+  const res = await Promise.all(promises);
+  const [serviceLevels, currencies, copyrightTypes, pickupLocations, defaultCopyrightType] = res;
+  const currentCopyrightType = query['rft.copyrightType'] || defaultCopyrightType;
+  console.error('defaultCopyrightType =', defaultCopyrightType, '-- currentCopyrightType =', currentCopyrightType);
 
   const data = Object.assign({}, query, {
     valuesNotShownInForm,
@@ -120,8 +136,8 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
     hasDate: !!query['rft.date'],
     hasISBN: !!query['rft.isbn'],
 
-    onePickupLocation: (service?.pickupLocations?.length === 1),
-    pickupLocations: (service.pickupLocations || []).map(x => ({
+    onePickupLocation: (pickupLocations?.length === 1),
+    pickupLocations: (pickupLocations || []).map(x => ({
       id: x.id,
       code: x.code,
       name: x.name,
@@ -132,7 +148,7 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
       name: x === '' ? '(None selected)' : x === 'bookitem' ? 'Book chapter' : x.charAt(0).toUpperCase() + x.slice(1),
       selected: x === query['rft.genre'] ? 'selected' : '',
     })),
-    copyrightTypes: (ctx.cfg.getValues()?.copyrightTypes || service.copyrightTypes || []).map(x => ({
+    copyrightTypes: (ctx.cfg.getValues()?.copyrightTypes || copyrightTypes || []).map(x => ({
       ...x,
       selected: x.code === currentCopyrightType ? 'selected' : '',
     })),
@@ -141,11 +157,11 @@ function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry, npl) 
       name: x.charAt(0).toUpperCase() + x.slice(1),
       checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
     })),
-    serviceLevels: (service.serviceLevels || []).map(x => ({
+    serviceLevels: (serviceLevels || []).map(x => ({
       ...x,
       selected: x.code === query['svc.level'] ? 'selected' : '',
     })),
-    currencies: (service.currencies || []).map(x => ({
+    currencies: (currencies || []).map(x => ({
       ...x,
       selected: x.code === query['svc.costCurrency'] ? 'selected' : '',
     })),
@@ -192,20 +208,6 @@ async function maybeRenderForm(ctx, next) {
   }
 
   ctx.cfg.log('flow', 'Rendering form', formName);
-  if (!npl) {
-    const pickupLocationPromise = service.getPickupLocations();
-    await service.getCopyrightTypes(); // Needed before getDefaultCopyrightType can be called
-    await Promise.all([
-      pickupLocationPromise,
-      service.getDefaultCopyrightType(),
-    ]);
-  }
-
-  await Promise.all([
-    service.getServiceLevels(),
-    service.getCurrencies()
-  ]);
-
   const originalQuery = co.getQuery();
   const query = {};
   Object.keys(originalQuery).forEach(key => {
@@ -232,7 +234,7 @@ async function maybeRenderForm(ctx, next) {
     .map(key => `<input type="hidden" name="${key}" value="${query[key]?.replaceAll('"', '&quot;')}">`)
     .join('\n');
 
-  const data = makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0, npl);
+  const data = await makeFormData(ctx, query, service, valuesNotShownInForm, parseInt(ntries) === 0, npl);
   ctx.body = ctx.cfg.runTemplate(formName, data);
 }
 
