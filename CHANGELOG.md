@@ -35,6 +35,7 @@
 * Add Service Level field to blank request form. Fixes PR-2056.
 * Add maximum cost field-pair (`maximumCostsMonetaryValue` and `maximumCostsCurrencyCode`) to blank request form. Fixes PR-2058.
 * TECH DEBT: The `OkapiSession`'s config object is now in its `cfg` member, not `logger`. Fixes PR-2095.
+* TECH DEBT: Change modal API for fetching controlled vocabularies to one that returns the fetched data. Fixes PR-2097.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 

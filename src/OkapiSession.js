@@ -44,7 +44,8 @@ class OkapiSession {
     return json;
   }
 
-  async getPickupLocations() {
+  async listPickupLocations() {
+    // XXX could no-op if this.pickupLocations is already defined
     const path = '/directory/entry?filters=tags.value%3Di%3Dpickup&filters=status.value%3Di%3Dmanaged&perPage=100&stats=true';
     const json = await this._getDataFromReShare(path, 'pickup locations');
     this.pickupLocations = json.results
@@ -57,6 +58,8 @@ class OkapiSession {
         if (typeof b.name !== 'string') return -1;
         return a.name.localeCompare(b.name);
       });
+
+    return this.pickupLocations;
   }
 
   async _getRefDataValues(desc, caption) {
@@ -65,25 +68,30 @@ class OkapiSession {
     return json[0]?.values.map(r => ({ id: r.id, code: r.value, name: r.label }));
   }
 
-  async getCopyrightTypes() {
+  async listCopyrightTypes() {
     // XXX could no-op if this.copyrightTypes is already defined
     this.copyrightTypes = await this._getRefDataValues('copyrightType', 'copyright types');
+    return this.copyrightTypes;
   }
 
-  async getServiceLevels() {
+  async listServiceLevels() {
     // XXX could no-op if this.serviceLevels is already defined
     this.serviceLevels = await this._getRefDataValues('ServiceLevels', 'service levels');
+    return this.serviceLevels;
   }
 
-  async getCurrencies() {
+  async listCurrencies() {
     // XXX could no-op if this.currencies is already defined
     this.currencies = await this._getRefDataValues('CurrencyCodes', 'currencies');
+    return this.currencies;
   }
 
-  async getDefaultCopyrightType() {
+  async listDefaultCopyrightType() {
+    // XXX could no-op if this.defaultCopyrightType is already defined
     const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
     const json = await this._getDataFromReShare(path, 'default copyright type');
     this.defaultCopyrightType = json[0]?.value;
+    return this.defaultCopyrightType;
   }
 
   post(path, payload) {
