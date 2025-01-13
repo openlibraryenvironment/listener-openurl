@@ -5,7 +5,7 @@ const HTTPError = require('./HTTPError');
 
 class OkapiSession {
   constructor(cfg, label = 'main', values) {
-    this.logger = cfg;
+    this.cfg = cfg;
     this.label = label;
     if (!values) values = cfg.getValues();
     if (values.withoutOkapi) return;
@@ -22,7 +22,7 @@ class OkapiSession {
 
   login() {
     const { username, password } = this;
-    this.logger.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
+    this.cfg.log('okapi', `logging into Okapi session '${this.label}' as ${username}/${password}`);
     this.token = undefined;
     return this.okapiFetch('POST', '/authn/login', { username, password }, true)
       .then(res => {
@@ -32,7 +32,7 @@ class OkapiSession {
   }
 
   async _getDataFromReShare(path, caption) {
-    if (this.logger.values?.withoutOkapi) {
+    if (this.cfg.values?.withoutOkapi) {
       // Running as part of a test: do nothing
       return {};
     }
@@ -40,7 +40,7 @@ class OkapiSession {
     const res = await this.okapiFetch('GET', path);
     if (res.status !== 200) throw new HTTPError(res, `cannot fetch default ${caption} for '${this.label}'`);
     const json = await res.json();
-    this.logger.log('json', this.label, JSON.stringify(json, null, 2));
+    this.cfg.log('json', this.label, JSON.stringify(json, null, 2));
     return json;
   }
 
@@ -97,7 +97,7 @@ class OkapiSession {
       'x-okapi-tenant': this.tenant,
     };
     if (this.token) headers['x-okapi-token'] = this.token;
-    this.logger.log('okapi', `okapiFetch ${method} for session '${this.label}' at ${path}`);
+    this.cfg.log('okapi', `okapiFetch ${method} for session '${this.label}' at ${path}`);
     return fetch(`${this.okapiUrl}${path}`, {
       method,
       body: payload ? JSON.stringify(payload) : undefined,
