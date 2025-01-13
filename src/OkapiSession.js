@@ -75,6 +75,11 @@ class OkapiSession {
     this.serviceLevels = await this._getRefDataValues('ServiceLevels', 'service levels');
   }
 
+  async getCurrencies() {
+    // XXX could no-op if this.currencies is already defined
+    this.currencies = await this._getRefDataValues('CurrencyCodes', 'currencies');
+  }
+
   async getDefaultCopyrightType() {
     const path = '/rs/settings/appSettings?filters=section%3D%3Dother&filters=key%3D%3Ddefault_copyright_type&perPage=1';
     const json = await this._getDataFromReShare(path, 'default copyright type');

@@ -47,6 +47,24 @@
                 </div>
               </div>
 
+              <div class="key-value-pair">
+                <div class="key">Maximum cost (amount)</div>
+                <div class="value">
+                  <input id="input-costAmount" type="text" name="svc.costAmount" value="{{'svc.costAmount'}}" />
+                </div>
+              </div>
+
+              <div class="key-value-pair">
+                <div class="key">Maxium cost (currency)</div>
+                <div class="value">
+                  <select class="select" id="input-costCurrency" name="svc.costCurrency">
+                    {{#each currencies}}
+                      <option value="{{this.code}}" {{this.selected}}>{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
               {{#unless digitalOnly}}
               <div id="div-pickupLocation" class="key-value-pair">
                 <label class="key" for="input-pickupLocation">Pick up location</label>
