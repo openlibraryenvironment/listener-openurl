@@ -38,6 +38,12 @@
     { "name": "CCL (US)", "code": "us-ccl"}
   ],
 
+  "serviceLevels": [
+    { "name": "Standard", "code": "standard" },
+    { "name": "Rush", "code": "rush" },
+    { "name": "Express", "code": "express" }
+  ],
+
   "services": {
     "US-EAST": {
       "okapiUrl": "https://east-okapi.folio-dev.indexdata.com",

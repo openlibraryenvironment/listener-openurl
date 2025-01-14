@@ -156,7 +156,7 @@ async function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry,
       name: x.charAt(0).toUpperCase() + x.slice(1),
       checked: x === query.svc_id || (!query.svc_id && i === 0) ? 'checked' : '',
     })),
-    serviceLevels: (serviceLevels || []).map(x => ({
+    serviceLevels: (ctx.cfg.getValues()?.serviceLevels || serviceLevels || []).map(x => ({
       ...x,
       selected: x.code === query['svc.level'] ? 'selected' : '',
     })),

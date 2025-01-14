@@ -69,7 +69,8 @@ Configuration of the OpenURL listener is primarily by means of configuration fil
 * `checkLimit` -- boolean, when `true` an attempt will be made to see if the request does not put the patron identified by `req_id` over the request limit and to notify them of this instead of placing a request or displaying the form.
 * `docRoot` -- specifies the location of a directory, relative to the location of the configuration file, from which [static files can be served](#serving-static-files).
 * `digitalOnly` -- boolean indicating that pickup location should not be solicited and `deliveryMethod` should be passed to ReShare as `URL`
-* `copyrightTypes` -- an array of objects with properties `code` and `name` specifying the ISO18626 copyright type codes to offer as options for that field and the display names to associate with them
+* `copyrightTypes` -- an array of objects with properties `code` and `name` specifying the ISO18626 copyright type codes to offer as options for that field and the display names to associate with them, overriding those encoded in the system's Refdata
+* `serviceLevels` -- an array of objects with properties `code` and `name` specifying the ReShare service levels to offer as options for that field and the display names to associate with them, overriding those encoded in the system's Refdata
 
 #### For communication with the ReShare back-end:
 
