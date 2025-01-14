@@ -63,9 +63,10 @@ class OkapiSession {
   }
 
   async _getRefDataValues(desc, caption) {
-    const path = `/rs/refdata?filters=desc%3D%3D${desc}&sort=desc%3Basc&max=100`;
+    const path = `/rs/refdata?filters=desc%3D%3D${desc}&max=100`;
     const json = await this._getDataFromReShare(path, caption);
-    return json[0]?.values.map(r => ({ id: r.id, code: r.value, name: r.label }));
+    return json[0]?.values.map(r => ({ id: r.id, code: r.value, name: r.label }))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   async listCopyrightTypes() {

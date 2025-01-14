@@ -122,7 +122,6 @@ async function makeFormData(ctx, query, service, valuesNotShownInForm, firstTry,
   const res = await Promise.all(promises);
   const [serviceLevels, currencies, copyrightTypes, pickupLocations, defaultCopyrightType] = res;
   const currentCopyrightType = query['rft.copyrightType'] || defaultCopyrightType;
-  console.error('defaultCopyrightType =', defaultCopyrightType, '-- currentCopyrightType =', currentCopyrightType);
 
   const data = Object.assign({}, query, {
     valuesNotShownInForm,
