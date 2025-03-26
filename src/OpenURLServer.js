@@ -306,8 +306,8 @@ async function postReshareRequest(ctx, next) {
     };
 
     if (!npl) {
-      await service.getPickupLocations();
-      const location = find(service.pickupLocations, x => x.code === vars.json.pickupLocationSlug);
+      const pickupLocations = await service.listPickupLocations();
+      const location = find(pickupLocations, x => x.code === vars.json.pickupLocationSlug);
       if (location) vars.pickupLocationName = location.name;
     }
 
@@ -319,8 +319,7 @@ async function postReshareRequest(ctx, next) {
     if (vars.isCopy) {
       let copyrightTypes = ctx.cfg.getValues()?.copyrightTypes;
       if (!copyrightTypes) {
-        await service.getCopyrightTypes();
-        copyrightTypes = service.copyrightTypes;
+        copyrighttypes = await service.listCopyrightTypes();
       }
       // XXX It should not be necessary to consult the request we sent, this should be in the response
       const ct = find(copyrightTypes, x => x.code === rreq.copyrightType?.value);
