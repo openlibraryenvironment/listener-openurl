@@ -37,6 +37,7 @@
 * TECH DEBT: The `OkapiSession`'s config object is now in its `cfg` member, not `logger`. Fixes PR-2095.
 * TECH DEBT: Change modal API for fetching controlled vocabularies to one that returns the fetched data. Fixes PR-2097.
 * When loading controlled vocabaries from ReShare for the form, default to sorting alphabetically. Fixes PR-2201.
+* Update the submission code use newish non-modal service APIs. These has been in use in the form-display code since [commit 80b471f9](https://github.com/openlibraryenvironment/listener-openurl/commit/80b471f95ce54279deef1dafe1d0d0ae4279c493) of 13 January 2025, but I omitted to make the corresponding changed to the submission code. Fixes PR-2143.
 
 ## [1.6.0](https://github.com/openlibraryenvironment/listener-openurl/tree/v1.6.0) (2024-03-04)
 
