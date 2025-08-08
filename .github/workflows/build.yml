@@ -70,7 +70,7 @@ jobs:
 
       - name: Deploy latest to K8s
         if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
-        uses: actions-hub/kubectl@v1.21.2
+        uses: actions-hub/kubectl@v1.33.3
         env:
           KUBE_CONFIG: ${{ secrets.RESHARE_DEV_SA_KUBECONFIG }}
         with:
