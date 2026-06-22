@@ -319,7 +319,7 @@ async function postReshareRequest(ctx, next) {
     if (vars.isCopy) {
       let copyrightTypes = ctx.cfg.getValues()?.copyrightTypes;
       if (!copyrightTypes) {
-        copyrighttypes = await service.listCopyrightTypes();
+        copyrightTypes = await service.listCopyrightTypes();
       }
       // XXX It should not be necessary to consult the request we sent, this should be in the response
       const ct = find(copyrightTypes, x => x.code === rreq.copyrightType?.value);
