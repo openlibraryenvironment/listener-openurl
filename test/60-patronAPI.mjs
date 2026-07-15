@@ -22,6 +22,17 @@ nock(mockedRoot)
   .reply(200, { success: 'withfilter' }, { 'content-type': 'application/json' });
 
 nock(mockedRoot)
+  .post('/rs/patronrequests', body => {
+    assert.equal(body.title, 'Requested title');
+    assert.equal(body.patronIdentifier, 'alice-b');
+    assert.equal(body.isRequester, true);
+    assert.equal(body.requestingInstitutionSymbol, 'US-EAST');
+    expect(body.id).to.be.a('string');
+    return true;
+  })
+  .reply(201, { success: 'created' }, { 'content-type': 'application/json' });
+
+nock(mockedRoot)
   .post('/rs/patron/validate', { barcode: '123', pin: '456' })
   .reply(200, { userid: 'bob' }, { 'content-type': 'application/json' });
 
@@ -78,9 +89,29 @@ describe('Patron API server', function() {
     assert.equal(JSON.parse(res.text).success, 'withfilter');
   });
 
+  it('can create a request', async function() {
+    const res = await requester
+      .post('/US-EAST/patronrequests')
+      .set('x-remote-user', 'ABC-ALICE')
+      .send({
+        title: 'Requested title',
+        patronIdentifier: 'mallory',
+      });
+    expect(res).to.have.status(201);
+    expect(res).to.be.json;
+    assert.equal(JSON.parse(res.text).success, 'created');
+  });
+
   it('fails without patron id', async function() {
     const res = await requester
       .get('/US-EAST/patronrequests');
+    expect(res).to.have.status(400);
+  });
+
+  it('fails to create a request without patron id', async function() {
+    const res = await requester
+      .post('/US-EAST/patronrequests')
+      .send({ title: 'Requested title' });
     expect(res).to.have.status(400);
   });
 
@@ -94,6 +125,14 @@ describe('Patron API server', function() {
   it('fails on unknown service', async function() {
     const res = await requester
       .get('/US-EASE/patronrequests');
+    expect(res).to.have.status(404);
+  });
+
+  it('fails to create a request on unknown service', async function() {
+    const res = await requester
+      .post('/US-EASE/patronrequests')
+      .set('x-remote-user', 'bob')
+      .send({ title: 'Requested title' });
     expect(res).to.have.status(404);
   });
 
