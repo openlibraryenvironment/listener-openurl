@@ -62,6 +62,19 @@ router.get('/:service/patronrequests', async (ctx, next) => {
   await next();
 });
 
+router.get('/:service/directory/entry', async (ctx, next) => {
+  const { sess } = ctx.state;
+  const pathWithQuery = ctx.request.querystring
+    ? `/directory/entry?${ctx.request.querystring}`
+    : '/directory/entry';
+
+  ctx.cfg.log('flow', `Passing through directory entry request to ${pathWithQuery}`);
+  const fromOkapi = await sess.okapiFetch('GET', pathWithQuery);
+  passOkapiResponse(ctx.response, fromOkapi);
+
+  await next();
+});
+
 router.post('/:service/patronrequests', async (ctx, next) => {
   const { sess, svcCfg } = ctx.state;
   const patronId = getPatronId(ctx, svcCfg);

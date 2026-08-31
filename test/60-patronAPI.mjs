@@ -49,6 +49,14 @@ nock(mockedRoot)
   .get('/rs/settings/appSettings?filters=section%3D%3Drequests&filters=key%3D%3Dmax_requests')
   .reply(200, [{ value: '42' }], { 'content-type': 'application/json' });
 
+nock(mockedRoot)
+  .get('/directory/entry?filters=tags.value%3Di%3Dpickup&filters=status.value%3Di%3Dmanaged&perPage=100&stats=true')
+  .reply(200, { results: [{ slug: 'pickup' }] }, { 'content-type': 'application/json' });
+
+nock(mockedRoot)
+  .get('/directory/entry')
+  .reply(200, { results: [] }, { 'content-type': 'application/json' });
+
 const app = await (patronAPIServer(new Config({
   // loggingCategories: 'error,start,okapi,co,rr,admindata,metadata,flow',
   loggingCategories: '',
@@ -89,6 +97,27 @@ describe('Patron API server', function() {
     assert.equal(JSON.parse(res.text).success, 'withfilter');
   });
 
+  it('passes through directory entry requests with query parameters', async function() {
+    const res = await requester
+      .get('/US-EAST/directory/entry')
+      .query({
+        filters: ['tags.value=i=pickup', 'status.value=i=managed'],
+        perPage: '100',
+        stats: 'true'
+      });
+    expect(res).to.have.status(200);
+    expect(res).to.be.json;
+    assert.equal(JSON.parse(res.text).results[0].slug, 'pickup');
+  });
+
+  it('passes through directory entry requests without query parameters', async function() {
+    const res = await requester
+      .get('/US-EAST/directory/entry');
+    expect(res).to.have.status(200);
+    expect(res).to.be.json;
+    assert.deepEqual(JSON.parse(res.text).results, []);
+  });
+
   it('can create a request', async function() {
     const res = await requester
       .post('/US-EAST/patronrequests')
@@ -125,6 +154,12 @@ describe('Patron API server', function() {
   it('fails on unknown service', async function() {
     const res = await requester
       .get('/US-EASE/patronrequests');
+    expect(res).to.have.status(404);
+  });
+
+  it('fails directory entry requests on unknown service', async function() {
+    const res = await requester
+      .get('/US-EASE/directory/entry');
     expect(res).to.have.status(404);
   });
 
