@@ -2,6 +2,7 @@ import Koa from 'koa';
 import queryString from 'query-string';
 import { bodyParser } from '@koa/bodyparser';
 import Router from '@koa/router';
+import { v4 as uuidv4 } from 'uuid';
 import { OkapiSession } from './OkapiSession.js';
 import idTransform from './idTransform.js';
 
@@ -23,6 +24,15 @@ const passOkapiResponse = (response, fromOkapi) => {
 
 const router = new Router();
 
+const getPatronId = (ctx, svcCfg) => {
+  if (!svcCfg.reqIdHeader) ctx.throw(400, 'Service config does not specify header for patron id');
+
+  const patronId = idTransform(ctx.request?.headers?.[svcCfg.reqIdHeader], svcCfg);
+  if (typeof patronId !== 'string' || patronId.length < 1) ctx.throw(400, 'Configured patron id header missing value');
+
+  return patronId;
+};
+
 router.all('/:service/(.*)', async (ctx, next) => {
   const service = ctx.params?.service;
   const sess = ctx.services?.[service];
@@ -35,10 +45,7 @@ router.all('/:service/(.*)', async (ctx, next) => {
 
 router.get('/:service/patronrequests', async (ctx, next) => {
   const { sess, svcCfg } = ctx.state;
-  if (!svcCfg.reqIdHeader) ctx.throw(400, 'Service config does not specify header for patron id');
-
-  const patronId = idTransform(ctx.request?.headers?.[svcCfg.reqIdHeader], svcCfg);
-  if (typeof patronId !== 'string' || patronId.length < 1) ctx.throw(400, 'Configured patron id header missing value');
+  const patronId = getPatronId(ctx, svcCfg);
 
   // Constrain query to patron id
   const query = queryString.parse(ctx.request.querystring);
@@ -50,6 +57,23 @@ router.get('/:service/patronrequests', async (ctx, next) => {
   const pathWithQuery = `/rs/patronrequests?${queryString.stringify(query)}`;
   ctx.cfg.log('flow', `Passing through request with query ${ctx.request.querystring} to ${pathWithQuery}`);
   const fromOkapi = await sess.okapiFetch('GET', pathWithQuery);
+  passOkapiResponse(ctx.response, fromOkapi);
+
+  await next();
+});
+
+router.post('/:service/patronrequests', async (ctx, next) => {
+  const { sess, svcCfg } = ctx.state;
+  const patronId = getPatronId(ctx, svcCfg);
+  const payload = { ...(ctx.request.body || {}) };
+
+  payload.patronIdentifier = patronId;
+  if (typeof payload.isRequester === 'undefined') payload.isRequester = true;
+  if (!payload.requestingInstitutionSymbol) payload.requestingInstitutionSymbol = ctx.params.service;
+  if (!payload.id) payload.id = uuidv4();
+
+  ctx.cfg.log('flow', `Posting patron request for ${patronId}`);
+  const fromOkapi = await sess.okapiFetch('POST', '/rs/patronrequests', payload);
   passOkapiResponse(ctx.response, fromOkapi);
 
   await next();
